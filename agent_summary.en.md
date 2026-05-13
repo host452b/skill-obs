@@ -137,3 +137,99 @@ Four foundational picks have essentially no debate:
 ---
 
 _This summary aggregates from 5 external LLM evaluations; for our scoring methodology see [`EVALUATION.en.md`](./EVALUATION.en.md) §2-§12._
+
+---
+
+## 7. Supplement: deep-essay "operational value" perspective (single-model detailed view)
+
+> Unlike §1-§6 (the 5-model horizontal intersection), this section is **another independent LLM's** detailed taxonomy + ranking through the "operational value" lens.
+> Provides: taxonomy (systemic / official-standard / vertical-augment / catalog) + 5-step evaluation + per-repo table + final ranking.
+> Note: the original text includes a few external citations that look like LLM-generated hallucinations; **preserved verbatim** — not ground-truth references.
+
+Looking through the **operational value** lens (not star count alone), of these 15 skill sets the truly long-term-reusable ones fall into **4 categories**: systemic, official-standard, vertical-augment, and catalog.
+
+> **Bottom line of this perspective**: in S-tier the strongest are `gstack` and `open-design`; in A-tier the steadiest is `anthropics/skills`; in B-tier the most situationally valuable are `openai/skills`, `vercel-labs/agent-skills`, `mattpocock/skills`.
+
+### 7.1 5-step evaluation
+
+1. First ask "**is this a system?**", not the star count; whether it covers planning, implementation, review, testing, delivery determines the ceiling.
+2. Then ask "**is this official or near-standard?**"; official repos are better as a foundation, community repos better as an acceleration layer.
+3. Then ask "**is this vertically specialized?**"; design / frontend / marketing / DX repos are often strong at one point but unsuitable as overall framework.
+4. Only then look at our scoring metrics; `Total` determines composite quality, `D1` determines first impression, `Stars/day` shows heat, `Forks/Contribs` shows ecosystem depth.
+5. So the most important question isn't "who's the most popular" — it's "**are you using it as an OS, a template library, or an inspiration library?**"
+
+### 7.2 Per-repo evaluation table
+
+| Repo | Strengths | Weaknesses | Verdict |
+|---|---|---|---|
+| **garrytan/gstack** | Most complete system, clear role split, planning → delivery coverage | Heavy, opinionated, steep learning curve | Strongest systemic |
+| **affaan-m/everything-claude-code** | High heat, many contributors, resource-hub feel | Easy to become a junk drawer; methodology may not be unified | Strong resource hub, not necessarily systemic |
+| **nexu-io/open-design** | D1 saturated, design-focused | Design-side bias, not full-stack | Strong design vector |
+| **obra/superpowers** | Methodology-strong, good for agent capability augmentation | May be abstract; less landed than gstack | Good augmentation layer |
+| **msitarzewski/agency-agents** | Super-broad, 222 agents catches the eye | "Personality agents" risk vapor; consistency risk high | Broad but not necessarily deep |
+| **anthropics/skills** | Official, normative, good baseline | More reference impl than battle workflow | Steadiest foundation |
+| **addyosmani/agent-skills** | Engineering-oriented, production-friendly | Range narrow, more like an engineering augment pack | Good for engineering teams |
+| **mattpocock/skills** | Engineer-facing, hands-on | Few contributors, strong authorial voice | Good for TS/eng devs |
+| **openai/skills** | Official endorsement, clarifies skill abstraction | Codex-oriented; not the Claude best-practice center | Worth referencing, not primary |
+| **ComposioHQ/awesome-claude-skills** | Good for project discovery | Catalog itself provides no methodology | Navigation only |
+| **coreyhaines31/marketingskills** | Clear sub-domain | Too vertical, weak generality | Good for marketing teams |
+| **nextlevelbuilder/ui-ux-pro-max-skill** | Strong UI/UX scenarios | Tends to stay at visual layer | Patches the design gap |
+| **vercel-labs/agent-skills** | Practical Web/Next.js/Vercel scenarios | Tech-stack-locked | Good for frontend product teams |
+| **multica-ai/andrej-karpathy-skills** | Strong philosophy, strong rule sense | More principle-set than skill system | Good as CLAUDE.md thought source |
+| **kepano/obsidian-skills** | Great for Obsidian users | Narrow scenario, low general value | Typical niche repo |
+
+### 7.3 Key evaluations
+
+1. **`gstack`**: if you want an "AI software factory", it looks more like a complete product than a skill example; the repo positions itself as 23 specialists + 8 power tools, organized as a full pipeline from thinking → planning → building → review → testing → delivery.[^nngroup-en]
+2. `gstack`'s problem is exactly its completeness: strongly tied to the author's methodology, command system, and rhythm. Small teams ramp up fast; big teams will face governance cost to standardize.
+3. **`anthropics/skills`**: most suitable as an "official baseline"; explicitly the Claude-skills public reference + sample library — includes spec, template, examples across categories, plus an explicit note that much content is for demonstration/education.[^reddit-en]
+4. `anthropics/skills` downside: more "standard reference + sample repo" than an OS for running a complete R&D process.
+5. **`openai/skills`**: value lies in clear official abstraction; positioned as the Codex skills catalog, with skills defined as discoverable, composable, self-contained folders.[^github-en]
+6. `openai/skills` downside: ecosystem signals and Claude-compatibility mindshare are both weaker than Anthropic's side, so good for structural reference, not for primary framework on Claude.
+
+[^nngroup-en]: Original cites https://www.nngroup.com/articles/why-repositories-fail/ — link's actual content has no apparent relation to gstack evaluation; suspected LLM-hallucinated citation.
+[^reddit-en]: Original cites reddit.com/r/programming — same as above, likely hallucinated.
+[^github-en]: Original cites github.com/openai/skills/pulls — link is valid but loosely tied to the argument.
+
+### 7.4 Recommended selection
+
+1. If you want a "**main workflow**", pick `gstack`; it most resembles a system that can be deployed directly.
+2. If you want a "**standard foundation**", pick `anthropics/skills`; it most resembles official spec, samples, templates.
+3. If you're **design-driven product**, add `open-design` or `ui-ux-pro-max-skill`.
+4. If you're a **Next.js / Vercel team**, add `vercel-labs/agent-skills`.
+5. If you're a **multi-model team**, keep `openai/skills` for compatibility thinking, not as the sole source.
+
+### 7.5 Final ranking (by "long-term reusability")
+
+| Rank | Repo | Lens |
+|---:|---|---|
+| 1 | `garrytan/gstack` | Heavy-duty combat system |
+| 2 | `anthropics/skills` | Official standard component |
+| 3 | `nexu-io/open-design` | Design special forces |
+| 4 | `addyosmani/agent-skills` | Engineering augment pack |
+| 5 | `vercel-labs/agent-skills` | Vercel/Next.js operational |
+| 6 | `mattpocock/skills` | TS engineer's toolbox |
+| 7 | `openai/skills` | Codex compatibility reference |
+| 8 | `obra/superpowers` | Methodology augmentation layer |
+| 9 | `everything-claude-code` | Resource hub (not necessarily systemic) |
+| 10 | `andrej-karpathy-skills` | CLAUDE.md thought source |
+| 11 | `awesome-claude-skills` | Discovery navigation |
+| 12 | `ui-ux-pro-max-skill` | UI visual patch |
+| 13 | `marketingskills` | Marketing vertical |
+| 14 | `agency-agents` | Inspiration library (not recommended primary) |
+| 15 | `obsidian-skills` | Niche |
+
+> **One-liner summary**: `gstack` is the "heavy-duty combat system", `anthropics/skills` is the "official standard component", `open-design` is "design special forces"; the rest are mostly **augment packs or navigation packs**.
+
+### 7.6 §7 vs §1-§6 contrast
+
+| Lens | §1-§6 (5-LLM horizontal intersection) | §7 (single-LLM operational-value view) |
+|---|---|---|
+| Top operational layer recommendation | `gstack` OR `everything-claude-code` | **`gstack` only** (ECC drops to #9) |
+| Top foundation | `anthropics/skills` | Same |
+| `obra/superpowers` positioning | Must-have methodology layer | **Downgraded to #8 "augmentation"** |
+| `everything-claude-code` positioning | Operational layer alternative | **#9 "resource hub, not necessarily systemic"** |
+| `addyosmani` | Disagreement | **#4 engineering augment** (explicit eng-team recommendation) |
+| **Biggest divergence** | Whether obra & ECC are core layer | §7 thinks only gstack is the core system; everything else is auxiliary |
+
+**Interpretation**: §7's "systemic" perspective is more **confident in declaring gstack as the sole primary workflow** than §1-§6's "consensus" view; §1-§6 leans toward "obra is must-have" as a mandatory methodology layer, §7 downgrades obra. That itself is an interesting meta-data — **different LLMs disagree on what counts as a "production-ready framework" standard**.

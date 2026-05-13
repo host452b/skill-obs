@@ -136,3 +136,99 @@
 ---
 
 _本总结收录自外部 5 个 LLM 的横向对比；具体评分方法学见 [`EVALUATION.md`](./EVALUATION.md) §2-§12。_
+
+---
+
+## 7. 补充：以"实战价值"视角的深度评测（单模型详细版）
+
+> 不同于 §1-§6 的"5 模型横向交集"，本节是**另一个独立 LLM**从"实战价值"出发的详细分类 + 排名。
+> 提供：分类学（系统型 / 官方标准型 / 垂直增强型 / 清单型）+ 5 步评价法 + 详细分档表 + 最终排名。
+> 注：原文含若干外链 citation 看起来是 AI 生成的伪引用，**已照原文保留**；不构成 ground truth 参考。
+
+按**实战价值**而不是单纯星数看，这 15 个 skills set 里，真正有长期复用价值的主要分成 **4 类**：系统型、官方标准型、垂直增强型、清单型。
+
+> **本视角核心结论**：S 档里最强的是 `gstack` 和 `open-design`，A 档里最稳的是 `anthropics/skills`，B 档里最值得按场景选的是 `openai/skills`、`vercel-labs/agent-skills`、`mattpocock/skills`。
+
+### 7.1 评价 5 步法
+
+1. 先看"**这是不是一个系统**"，不是看星数；能不能覆盖从规划、实现、评审、测试到交付，决定上限。
+2. 再看"**是不是官方或接近标准**"；官方仓库通常更适合作为底座，社区仓库更适合做加速层。
+3. 再看"**是不是垂直专精**"；设计、前端、营销、开发体验这类 repo，往往单点强，但不适合拿来当总框架。
+4. 最后才看本仓库的指标；`Total` 决定综合质量，`D1` 决定第一印象，`Stars/day` 看热度，`Forks/Contribs` 看生态深度。
+5. 所以最重要的问题不是"谁最火"，而是"**你要拿它做操作系统、模板库，还是灵感库**"。
+
+### 7.2 分档判断
+
+| Repo | 优点 | 缺点 | 判断 |
+|---|---|---|---|
+| **garrytan/gstack** | 体系最完整，角色分工清晰，覆盖规划到上线 | 太重、太强势、学习成本高 | 最强系统型 |
+| **affaan-m/everything-claude-code** | 热度高、贡献者多、像资源中枢 | 容易杂，方法论不一定统一 | 强资源型，不一定强系统 |
+| **nexu-io/open-design** | D1 满分，设计导向非常明确 | 偏设计侧，不一定适合全栈流程 | 设计方向很强 |
+| **obra/superpowers** | 方法论感强，适合增强 agent 能力 | 可能偏抽象，落地闭环弱于 gstack | 好的增强层 |
+| **msitarzewski/agency-agents** | 覆盖面超广，222 agents 很吸睛 | "人格代理"容易虚胖，一致性风险高 | 广而不一定深 |
+| **anthropics/skills** | 官方、规范、适合作为基线 | 更像参考实现，不像战斗工作流 | 最稳底座 |
+| **addyosmani/agent-skills** | 工程化导向强，生产环境友好 | 范围偏窄，像工程增强包 | 适合工程团队 |
+| **mattpocock/skills** | 面向工程师，实操味道强 | 贡献者少，作者风格浓 | 适合 TS/工程开发者 |
+| **openai/skills** | 官方背书，便于理解 skill 抽象 | Codex 导向，不是 Claude 最佳实践中心 | 值得参考，不是主框架 |
+| **ComposioHQ/awesome-claude-skills** | 适合发现项目 | 清单本身不提供方法论 | 只能当导航站 |
+| **coreyhaines31/marketingskills** | 细分场景明确 | 太垂直，通用性弱 | 适合营销团队 |
+| **nextlevelbuilder/ui-ux-pro-max-skill** | UI/UX 场景强 | 容易停留在视觉层 | 适合补设计短板 |
+| **vercel-labs/agent-skills** | Web/Next.js/Vercel 场景很实用 | 技术栈绑定明显 | 适合前端产品团队 |
+| **multica-ai/andrej-karpathy-skills** | 理念强、规则感强 | 更像原则集，不是完整技能系统 | 适合当 CLAUDE.md 思想源 |
+| **kepano/obsidian-skills** | Obsidian 用户会很受用 | 场景窄，通用价值低 | 典型 niche repo |
+
+### 7.3 重点评价
+
+1. **`gstack`**：如果你要的是"AI 软件工厂"，它最像完整产品而不是 skill 样例；仓库把自己定义成 23 个 specialist 加 8 个 power tools，并把流程组织成从思考、规划、构建、评审、测试到交付的完整链路。[^nngroup]
+2. `gstack` 的问题也正因为它太完整：强依赖作者的方法论、命令体系和工作节奏，小团队上手会快，大团队统一采用会有治理成本。
+3. **`anthropics/skills`**：这是最适合拿来当"官方基线"的仓库；它明确是 Claude skills 的公开实现和示例库，包含 spec、template、不同类别的示例技能，还特别说明很多内容主要用于演示和教育。[^reddit]
+4. `anthropics/skills` 的缺点是：它更像"标准参考 + 样例仓库"，不是帮你直接跑完整研发流程的操作系统。
+5. **`openai/skills`**：价值在于官方抽象清晰，定位是 Codex 的 skills catalog，并把 skills 定义成可发现、可组合的自包含文件夹。[^github1]
+6. `openai/skills` 的缺点是生态信号和 Claude 兼容心智都不如 Anthropic 这边强，所以更适合借鉴结构，不适合直接拿来当 Claude 主框架。
+
+[^nngroup]: 原文引用 https://www.nngroup.com/articles/why-repositories-fail/ — 该链接看起来与 gstack 评价无明显对应关系，疑为 LLM 生成的伪引用。
+[^reddit]: 原文引用 reddit.com/r/programming — 同上，伪引用可能性高。
+[^github1]: 原文引用 github.com/openai/skills/pulls — 链接本身有效但与上下文论点关联弱。
+
+### 7.4 推荐选择
+
+1. 如果你要一个"**主工作流**"，选 `gstack`；它最像可直接投入实战的系统。
+2. 如果你要一个"**标准底座**"，选 `anthropics/skills`；它最像官方规范、示例和模板库。
+3. 如果你是**设计驱动产品**，额外叠加 `open-design` 或 `ui-ux-pro-max-skill`。
+4. 如果你是 **Next.js / Vercel 团队**，叠加 `vercel-labs/agent-skills`。
+5. 如果你是**多模型团队**，保留 `openai/skills` 作为兼容层思路，而不是唯一来源。
+
+### 7.5 最终排名（按"长期可用性"）
+
+| Rank | Repo | 视角 |
+|---:|---|---|
+| 1 | `garrytan/gstack` | 重型作战系统 |
+| 2 | `anthropics/skills` | 官方标准件 |
+| 3 | `nexu-io/open-design` | 设计特种兵 |
+| 4 | `addyosmani/agent-skills` | 工程增强包 |
+| 5 | `vercel-labs/agent-skills` | Vercel/Next.js 实战 |
+| 6 | `mattpocock/skills` | TS 工程师工具箱 |
+| 7 | `openai/skills` | Codex 兼容参考 |
+| 8 | `obra/superpowers` | 方法论增强层 |
+| 9 | `everything-claude-code` | 资源中枢（不一定系统）|
+| 10 | `andrej-karpathy-skills` | CLAUDE.md 思想源 |
+| 11 | `awesome-claude-skills` | 发现导航 |
+| 12 | `ui-ux-pro-max-skill` | UI 视觉补丁 |
+| 13 | `marketingskills` | 营销垂直 |
+| 14 | `agency-agents` | 灵感库（不建议主用）|
+| 15 | `obsidian-skills` | Niche |
+
+> **一句话总结**：`gstack` 是"重型作战系统"，`anthropics/skills` 是"官方标准件"，`open-design` 是"设计特种兵"，其余大多是**增强包或导航包**。
+
+### 7.6 §7 与 §1-§6 的对比
+
+| 视角 | §1-§6 (5-LLM 横向交集) | §7 (单 LLM 实战价值视角) |
+|---|---|---|
+| 推荐 #1 实战层 | `gstack` 或 `everything-claude-code` | **`gstack` 一票**（ECC 跌到 #9）|
+| 推荐 #1 底座 | `anthropics/skills` | 一致 |
+| `obra/superpowers` 定位 | 必装方法论层 | **降至 #8 "增强层"** |
+| `everything-claude-code` 定位 | 实战层备选 | **#9 "资源中枢，不一定系统"** |
+| `addyosmani` | 分歧 | **#4 工程增强包**（明确推荐工程团队）|
+| **最大分歧点** | obra & ECC 是否核心层 | §7 认为只有 gstack 是核心系统，其他都是辅助 |
+
+**判读**：§7 的"系统主义"视角比 §1-§6 的"合议式"视角更**自信地把 gstack 定为唯一主工作流**；§1-§6 倾向"obra 必装"作为方法论强制层，§7 把 obra 降级。这本身就是一个有意思的元数据 —— 不同 LLM 对"什么算 production-ready 框架"的标准本身有分歧。
