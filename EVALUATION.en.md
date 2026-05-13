@@ -3,10 +3,10 @@
 > 🌐 **Language**: [🇨🇳 中文](./EVALUATION.md) · **🇬🇧 English**
 
 > Evaluation date: **2026-05-13**
-> Current snapshot: **v1.2** — **15-repo cohort × 19 dims** (v1.0 / v1.1 retained in `scoring.ipynb` history)
+> Current snapshot: **v1.3** — **15-repo cohort × 21 dims** (v1.0 / v1.1 / v1.2 retained in `scoring.ipynb` history)
 > Scoring scale: **1–10** (10 = best in cohort)
-> Max total: **190** (19 dims × 10)
-> ⚠ Note: §3/§4/§5 tables in this markdown still show v1.1 baseline for context. Full v1.2 data (including GS / AA / D16-D19) lives in `scoring.ipynb`. §11 below gives the v1.2 ranking + D16-D19 sampling methodology.
+> Max total: **210** (21 dims × 10)
+> ⚠ Note: §3/§4/§5 tables in this markdown still show v1.1 baseline for context. Latest v1.3 data (including GS / AA / D16-D21) lives in `scoring.ipynb`. §11 covers v1.2 (D16-D19 social signals); **§12 covers v1.3 (D20-D21 task-quality signals)**.
 
 ## 1. Cohort
 
@@ -419,3 +419,103 @@ _All raw queries are reproducible via `gh repo view --json` + local `find`; subm
 - Both new repos take **D16/D17 top spots** (Reddit avg score 2769 / 2897 vs third-place A at 151.7) — they significantly widen the social-dim spread.
 
 > For the full 19-dim × 15-repo colored matrix: open `scoring.ipynb` (renders directly on GitHub, no execution needed).
+
+## 12. v1.3 Snapshot — D20-D21 (Task Decomposition + Lesson-Encoded Quality)
+
+> **The user's two theoretical principles**:
+> 1. *"Each repo splits different tasks into specific skills; theoretically, the smaller each skill's text length, the better."* → **D20 Task Decomposition**
+> 2. *"Valuable skills should contain: (1) knowledge the model doesn't know, (2) environment-specific context, (3) lessons learned from real failures."* → **D21 Lesson-Encoded Quality**
+
+### 12.1 New dimension definitions
+
+| Dim | Name | Measurement | Theoretical premise |
+|---|---|---|---|
+| **D20** | **Task Decomposition** | rank-based, inverted `avg_skill_bytes` — smaller = better | "Each skill should focus on one task"; fat skills (>10KB) bundle multiple tasks together, hurting trigger precision and context cost |
+| **D21** | **Lesson-Encoded Quality** | rank-based `value_density_pct` — higher = better; composite = 60% × lesson markers + 25% × version markers + 15% × context markers | A valuable skill should encode (1)+(2)+(3); keyword scan estimates this — lesson markers ≈ criterion (3), version markers ≈ (1), context markers ≈ (2) |
+
+### 12.2 D21 marker-scan methodology
+
+`scan_lessons.py` (committed in repo root) scans every `*.md` per submodule:
+
+**Lesson markers (criterion #3 — real-failure lessons)**:
+`anti-pattern`, `red flag`, `common mistake`, `common pitfall`, `common rationalization`, `when not to use`, `do not use`, `failure mode`, `pitfall`, `lessons learned`, `avoid this/the/using/over`, `don't do/use`, `wrong way`, `common failure/error`, `gotchas`, `caveats`, `hard-gate`, `why not`, `mistake`
+
+**Version markers (criterion #1 — model-unknown / time-sensitive info)**:
+`as of YYYY`, `since vN.N`, `api version`, `deprecated since`, version-comparison operators
+
+**Context markers (criterion #2 — environment-specific context)**:
+`export`, `process.env`, `${VAR}`, `~/.config`, `.env`, `localhost`, `127.0.0.1`, `/usr/local`, `/etc/`, `/opt/`
+
+Per-repo output: `lesson_pct`, `version_pct`, `context_pct`, `value_density_pct` (composite).
+
+### 12.3 D20 + D21 raw data + scoring
+
+| Repo | avg_skill_bytes | D20 (inverted) | lesson_pct | version_pct | context_pct | value_density_pct | D21 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| MA | 2,518 | **10** | 66.7% | 0% | 16.7% | 42.5 | 9 |
+| M | 3,321 | 9 | 6.7% | 0% | 3.3% | 4.5 | 1 |
+| NX | 3,438 | 9 | 18.5% | 1.3% | 12.8% | 13.3 | 4 |
+| C | 3,444 | 8 | **94.7%** ⚠ | 0.6% | 2.0% | 57.3 | **10** |
+| K | 6,040 | 7 | 18.2% | 0% | 0% | 10.9 | 3 |
+| V | 7,224 | 7 | 10.6% | 0% | 16.2% | 8.8 | 3 |
+| O | 8,168 | 6 | 37.1% | 1.4% | 15.7% | 25.0 | 7 |
+| AM | 8,847 | 5 | 10.5% | 3.2% | 28.1% | 11.3 | 4 |
+| OAI | 9,435 | 4 | 41.9% | 0.4% | 42.3% | 31.6 | 8 |
+| AD | 10,703 | 4 | 59.3% | 1.9% | 22.2% | 39.4 | 9 |
+| A | 10,995 | 3 | 31.5% | 6.7% | 12.4% | 22.4 | 6 |
+| CH | 11,443 | 3 | 18.4% | 1.0% | 14.6% | 13.5 | 5 |
+| NL | 12,272 | 2 | 4.6% | 4.6% | 23.1% | 7.4 | 2 |
+| AA | 12,293 | 2 | 25.2% | 2.2% | 17.7% | 18.3 | 5 |
+| **GS** | **52,730** | **1** | 56.0% | 1.6% | 35.2% | 39.3 | 8 |
+
+### 12.4 Full v1.3 ranking (max 210)
+
+| Rank | Repo | Score | Tier | Δ vs v1.2 |
+|---:|---|---:|:---:|---:|
+| 🥇 1 | **`garrytan/gstack`** | **156** | S | +9 (D9+D21 strong / D20 cost) |
+| 🥈 2 | `affaan-m/everything-claude-code` | 154 | S | +9 |
+| 🥉 3 | `nexu-io/open-design` | 152 | S | +13 (D20=9 boost) |
+| 4 | `obra/superpowers` | 150 | S | +13 |
+| 5 | `msitarzewski/agency-agents` | 146 | S | +7 |
+| 6 | `anthropics/skills` | 136 | A | +9 |
+| 7 | `addyosmani/agent-skills` | 128 | A | +13 (D21=9 big boost) |
+| 8 | `mattpocock/skills` | 114 | B | +10 (D20=9 / D21=1) |
+| 9 | `openai/skills` | 113 | B | +12 |
+| 10 | `ComposioHQ/awesome-claude-skills` | 111 | B | **+18** (D21=10 ⚠ with caveat) |
+| 11 | `coreyhaines31/marketingskills` | 103 | B | +8 |
+| 12 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | +4 |
+| 13 | `vercel-labs/agent-skills` | 101 | B | +10 |
+| 14 | `multica-ai/andrej-karpathy-skills` | 92 | C | **+19** (D20+D21 both high) |
+| 15 | `kepano/obsidian-skills` | 72 | D | +10 |
+
+> Note: tier thresholds rescaled for max=210: S+ ≥165, S ≥145, A ≥125, B ≥100, C ≥80, D <80.
+
+### 12.5 Caveats
+
+1. **C's D21=10 (94.7%)**: requires careful interpretation — ComposioHQ is an awesome-list of 864 SKILL.md files, each averaging just 3.4KB (mostly short stubs). The 94.7% lesson-marker hit rate could be: (a) fragmentary keyword matches in short descriptions ("common ...", "avoid ..."), (b) genuine lessons-learned content. Regex alone **cannot** distinguish; suggest manual sampling of ~30 ComposioHQ SKILL.mds to judge real value vs noise.
+2. **D21's 60/25/15 weighting**: based on the assumption "lesson markers signal 'real-world value' more strongly than version/context markers"; debatable. Equal weighting would re-rank C and OAI.
+3. **D20 vs D9 (Skill Depth) are negatively correlated / directly conflicting**: D9 assumes "deep = substantive"; D20 assumes "small = focused". Both give GS extreme scores (D9=10, D20=1), net out to no change for GS; but for mid-tier repos (NL 12KB) this is a -1/-2 difference. **Why have both**: balance of evaluation lenses — D9 alone favors "broad-and-deep"; D20 alone favors "small-and-focused".
+4. **value_density_pct is not absolutely comparable across repos**: 1/5 SKILL.md containing anti-pattern = 20%; 100/500 SKILL.md containing it = also 20%. But repo B has 100× absolute volume. **Ratio vs absolute** has no single right answer; we use ratio to avoid letting large repos win automatically.
+5. **Theory vs reality**: D20's "smaller = better" is the user's *theoretical assumption*. GS's 52KB SKILL.md is actually a role definition (CEO/Designer/QA), not a single-task implementation. So GS D20=1 reflects **"the decomposition cost of role-style fat skills"**, not a quality judgment on GS content itself (D21=8).
+6. **Runtime caveats**: v1.2 D16-D19 caveats (query contamination / launch wave / HN sparsity) still apply.
+
+### 12.6 Major v1.3 ranking shifts
+
+**Big climbers**:
+- **MA +19**: single-file 2.5KB (D20=10 max) + Karpathy's 4 principles are all anti-pattern warnings (D21=9)
+- **C +18**: D21=10 but with the awesome-list noise caveat
+- **AD +13**: existing "Verifiable / Battle-tested" sections already had heavy Red Flags content
+- **O +13**: original methodology already includes anti-pattern education
+- **NX +13**: 3.4KB average + 13.3% value-density
+
+**Small / unchanged**:
+- **NL +4**: D20=2 + D21=2 both low; UI/UX docs lean toward components, less lessons-learned content
+- **NL** still rank 12 (despite D9=9 in v1.2/v1.3)
+- **M +10 but D21=1**: mattpocock uses skill names like /diagnose, /tdd rather than "anti-pattern" keywords, scan misses
+
+**Big-picture takeaway**:
+- v1.0-v1.2 emphasized popularity + engineering measurements
+- v1.3 adds D20+D21, introducing a **"signal quality / lesson density"** differentiation axis — MA's 4 anti-pattern principles alone lift it to 92 vs V's 101 (close!)
+- **GS's #1 is no longer popularity-only**; it's popularity + D9 (deepest) + D21 (rich lessons) combined — multi-dimensional robust win
+
+> For the full 21-dim × 15-repo colored matrix + Δ v1.2→v1.3: open `scoring.ipynb` (renders directly on GitHub, no execution needed).

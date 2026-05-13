@@ -9,9 +9,10 @@
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Task Guide](https://img.shields.io/badge/任务→repo-TASK__GUIDE-red)](./TASK_GUIDE.md)
 [![Cohort size](https://img.shields.io/badge/repos-15-green)](./.gitmodules)
-[![Dimensions](https://img.shields.io/badge/dimensions-19-purple)](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions)
-[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2-yellow)](./scoring.ipynb)
+[![Dimensions](https://img.shields.io/badge/dimensions-21-purple)](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions)
+[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2_·_v1.3-yellow)](./scoring.ipynb)
 [![Social signals](https://img.shields.io/badge/Reddit_+_HN-30d_sampled-orange)](./scoring.ipynb)
+[![Quality signals](https://img.shields.io/badge/D20_Decomp_+_D21_Lessons-v1.3-pink)](./EVALUATION.md)
 
 ---
 
@@ -73,41 +74,43 @@ skill-obs/
     └── vercel-labs__agent-skills/
 ```
 
-## 🏆 Top-line Findings (latest snapshot **v1.2** · 2026-05-13 · max **190**)
+## 🏆 Top-line Findings (latest snapshot **v1.3** · 2026-05-13 · max **210**)
 
-| Rank | Repo | Score / 190 | Tier | 标签 |
+| Rank | Repo | Score / 210 | Tier | 标签 |
 |---:|---|---:|:---:|---|
-| 🥇 1 | **[`garrytan/gstack`](https://github.com/garrytan/gstack)** | **147** | S | 🆕 v1.2 · Garry Tan 实战 setup — 23 个角色 agent，平均 SKILL.md 52KB（cohort 最深）·  Reddit 热度爆炸 |
-| 🥈 2 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 145 | S | 大而全 — 事实标准 |
-| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 139 | S | 15 天上线就吃下设计赛道 |
-| 3= | **[`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents)** | 139 | S | 🆕 v1.2 · "AI agency" — 222 个个性化 agent 跨 18 个领域（**填补 game-dev 缺口**）|
-| 5 | [`obra/superpowers`](https://github.com/obra/superpowers) | 137 | S | 原创方法论 — 思想最深 |
-| 6 | `anthropics/skills` | 127 | A | 官方规范 |
-| 7 | `addyosmani/agent-skills` | 115 | A | 生产级通用 |
-| 8 | `mattpocock/skills` | 104 | B | TS 工程师视角 |
-| 9 | `openai/skills` | 101 | B | Codex 配套 |
-| 10 | `nextlevelbuilder/ui-ux-pro-max-skill` | 98 | B | UI/UX 产品化 |
-| 11 | `coreyhaines31/marketingskills` | 95 | B | 营销垂直 |
-| 12 | `ComposioHQ/awesome-claude-skills` | 93 | B | 数量碾压（864 SKILL.md）|
-| 13 | `vercel-labs/agent-skills` | 91 | B | Vercel 官方 — D10 辅料密度 第一 |
-| 14 | `multica-ai/andrej-karpathy-skills` | 73 | C | 单文件 drop-in |
-| 15 | `kepano/obsidian-skills` | 62 | D | Obsidian 垂直 |
+| 🥇 1 | **[`garrytan/gstack`](https://github.com/garrytan/gstack)** | **156** | S | Garry Tan 实战 setup — D9=10 (52KB 最深) + D21=8 (lessons 丰富)；D20=1 是代价 |
+| 🥈 2 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 154 | S | 大而全 — 事实标准 |
+| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 152 | S | 设计赛道 + D20=9 (3.4KB 良好分解) |
+| 4 | [`obra/superpowers`](https://github.com/obra/superpowers) | 150 | S | 原创方法论 — D21=7 (anti-pattern 丰富) |
+| 5 | **[`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents)** | 146 | S | "AI agency" — 222 个 agent 跨 18 领域 |
+| 6 | `anthropics/skills` | 136 | A | 官方规范 |
+| 7 | `addyosmani/agent-skills` | 128 | A | 生产级 — D21=9 (强 Red Flags 段) |
+| 8 | `mattpocock/skills` | 114 | B | TS 视角 — D20=9 (轻量) |
+| 9 | `openai/skills` | 113 | B | Codex 配套 — D21=8 |
+| 10 | `ComposioHQ/awesome-claude-skills` | 111 | B | D21=10 (94.7% 含 anti-pattern 关键词，但 awesome-list 浅 stub 居多) |
+| 11 | `coreyhaines31/marketingskills` | 103 | B | 营销垂直 |
+| 12 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | UI/UX 产品化 |
+| 13 | `vercel-labs/agent-skills` | 101 | B | Vercel 官方 |
+| 14 | `multica-ai/andrej-karpathy-skills` | 92 | C | D20=10 + D21=9 但其他维度低 |
+| 15 | `kepano/obsidian-skills` | 72 | D | Obsidian 垂直 |
 
-> **v1.1 → v1.2 主要变更**：
-> 1. 新增 **4 个 social dimensions**（D16-D19）：Reddit Heat / Reddit Sentiment / HN Heat / HN Sentiment（公共 API 采样最近 30 天）
-> 2. 新增 2 个 repos：`garrytan/gstack` + `msitarzewski/agency-agents` → **15-repo cohort**
-> 3. 总分上限：150 → **190**（19 dims × 10）
-> 4. **GS** 取代 AM 登顶（深度 + Reddit 热度）；**AA** 与 NX 并列第 3
-> 5. **AA 填补 game-dev 缺口**（20 个 game-development agents — 之前 cohort 完全无 game 覆盖）
-> 6. 完整 v1.1 → v1.2 Δ-diff 见 `scoring.ipynb` 第 7 cell。
+> **v1.2 → v1.3 主要变更**：
+> 1. 新增 **2 个任务质量 dimensions**（D20-D21）：
+>    - **D20 Task Decomposition** = 反转 `avg_skill_bytes`（更小 = 更好的任务拆分，假设"每个 skill 应聚焦一个任务"）
+>    - **D21 Lesson-Encoded Quality** = 含 failure-marker / version / context 信号的 .md 占比（"有价值的 skill 应包含 模型未知知识 + 环境上下文 + 真实失败教训"）
+> 2. 总分上限：190 → **210**（21 dims × 10）；tier 阈值同比例放大
+> 3. Cohort 保持 15 repos
+> 4. **GS 仍 #1**（D9+D21 拉满 / D20=1 拉低，但其他维度足够多）；MA 从 cohort 末位上升（D20=10 + D21=9 显著加分）；C 因 D21=10（94.7% lesson markers — 含 caveat）上升 2 位
+> 5. **理念**：D20 与 D9 形成"广而深 vs 小而精"的张力对照；D21 量化"skill 是否承载真实价值密度"（v1.0-v1.2 没测到的维度）
+> 6. 完整 v1.2 → v1.3 Δ-diff 见 `scoring.ipynb` 第 7 cell。
 
 完整评分矩阵、按领域/角色推荐、方法论与 caveat 见 **[`EVALUATION.md`](./EVALUATION.md)**。
 
 按 **具体任务 → 该装哪个 repo** 的功能正交决策手册见 **[`TASK_GUIDE.md`](./TASK_GUIDE.md)**（含 AM × O × NX overlap/正交/互补深度对比 + ~50 个任务 lookup + 推荐 stacks + 覆盖缺口）。
 
-## 📐 19 个评测维度 / 19 Dimensions
+## 📐 21 个评测维度 / 21 Dimensions
 
-简表（详见 [`EVALUATION.md §2`](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions) + [`§11`](./EVALUATION.md#11-v12-snapshot--新增-d16-d19social-signals--gs--aa)）：
+简表（详见 [`EVALUATION.md §2`](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions) + [`§11`](./EVALUATION.md#11-v12-snapshot--新增-d16-d19social-signals--gs--aa) + [`§12`](./EVALUATION.md#12-v13-snapshot--新增-d20-d21--task-decomposition--lesson-encoded-quality)）：
 
 | 类别 | Dimensions |
 |---|---|
@@ -118,7 +121,8 @@ skill-obs/
 | 工程化 | D11 Doc Quality, D12 Eng. Hygiene |
 | 生态可移植 | D13 Multi-Agent Portability |
 | 战略价值 | D14 Domain Breadth, D15 Originality / Authority |
-| **🆕 社交信号 (v1.2)** | **D16 Reddit Heat** (30d posts + comments) · **D17 Reddit Sentiment** (30d avg upvote) · **D18 HN Heat** (30d stories + comments) · **D19 HN Sentiment** (30d avg points) |
+| 社交信号 (v1.2) | **D16 Reddit Heat** (30d posts + comments) · **D17 Reddit Sentiment** (30d avg upvote) · **D18 HN Heat** (30d stories + comments) · **D19 HN Sentiment** (30d avg points) |
+| **🆕 任务质量信号 (v1.3)** | **D20 Task Decomposition** (反转 avg SKILL.md 字节，越小越好 — 每个 skill 应聚焦一个任务) · **D21 Lesson-Encoded Quality** (含 anti-pattern / red-flag / lessons-learned / version / context 标记的 .md 占比 — "有价值的 skill 应包含 模型未知知识 + 环境上下文 + 真实失败教训") |
 
 ## 🎨 Notebook 渲染示意 / Notebook preview
 

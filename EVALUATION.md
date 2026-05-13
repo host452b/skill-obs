@@ -3,10 +3,10 @@
 > 🌐 **Language**: **🇨🇳 中文** · [🇬🇧 English](./EVALUATION.en.md)
 
 > 评测日期 / Date: **2026-05-13**  
-> 当前 Snapshot / Current: **v1.2** — **15-repo cohort × 19 dims**（v1.0 / v1.1 历史在 `scoring.ipynb`）  
+> 当前 Snapshot / Current: **v1.3** — **15-repo cohort × 21 dims**（v1.0 / v1.1 / v1.2 历史在 `scoring.ipynb`）  
 > 评分量表 / Scale: **1–10** (10 = best in cohort)  
-> 总分上限 / Max total: **190** (19 dims × 10)  
-> ⚠ 注意：本 markdown 中 §3/§4/§5 表格仍展示 v1.1 baseline 数据用于上下文。v1.2 完整数据（含 GS / AA / D16-D19）请看 `scoring.ipynb`。本节 §11 给出 v1.2 排行 + D16-D19 采样方法学。
+> 总分上限 / Max total: **210** (21 dims × 10)  
+> ⚠ 注意：本 markdown 中 §3/§4/§5 表格仍展示 v1.1 baseline 数据用于上下文。最新 v1.3 数据（含 GS / AA / D16-D21）请看 `scoring.ipynb`。§11 给出 v1.2 (D16-D19 社交信号)；**§12 给出 v1.3 (D20-D21 任务质量信号)**。
 
 ## 1. 入选仓库 / Cohort
 
@@ -418,3 +418,103 @@ _所有原始查询通过 `gh repo view --json` + 本地 `find` 完成；submodu
 - 两个新 repo 都是 **D16/D17 顶部**（Reddit avg score 2769 / 2897 vs 第三名 A 的 151.7）— 显著拉开 social 维度的 spread。
 
 > 想看完整 19-dim × 15-repo 染色矩阵：打开 `scoring.ipynb`（GitHub 直接渲染，无需执行）。
+
+## 12. v1.3 Snapshot — 新增 D20-D21 (Task Decomposition + Lesson-Encoded Quality)
+
+> **用户提出的两条理论**：
+> 1. *"每个 repo 可能会拆分不同任务到每个具体的 skill，那么从理论上来讲每个具体任务的 skill 长度或者文字字数越小越好"* → **D20 Task Decomposition**
+> 2. *"有价值的技能应包含——(1) 模型不知道的知识，(2) 特定环境的上下文信息，(3) 从真实失败中总结的教训"* → **D21 Lesson-Encoded Quality**
+
+### 12.1 新增维度定义
+
+| Dim | 名字 | 测量 | 假设 / 理论依据 |
+|---|---|---|---|
+| **D20** | **Task Decomposition** | rank-based 反转 `avg_skill_bytes` — 越小越好 | "每个 skill 应聚焦一个具体任务"；fat skills (>10KB) 意味着把多个任务捏成一个，触发精度差、上下文成本高 |
+| **D21** | **Lesson-Encoded Quality** | rank-based `value_density_pct` — 越大越好；composite = 60% × lesson markers + 25% × version markers + 15% × context markers | 有价值的 skill 应承载 (1)+(2)+(3)；通过 keyword scan 估算 — lesson markers 主要捕捉 (3)，version 捕捉 (1)，context 捕捉 (2) |
+
+### 12.2 D21 marker scan 方法学
+
+`scan_lessons.py`（提交在 repo 根目录）扫描每个 submodule 的所有 `*.md`：
+
+**Lesson markers (criterion #3 — 真实失败教训)**：
+`anti-pattern`, `red flag`, `common mistake`, `common pitfall`, `common rationalization`, `when not to use`, `do not use`, `failure mode`, `pitfall`, `lessons learned`, `avoid this/the/using/over`, `don't do/use`, `wrong way`, `common failure/error`, `gotchas`, `caveats`, `hard-gate`, `why not`, `mistake`
+
+**Version markers (criterion #1 — 模型未知知识 / 时间敏感信息)**：
+`as of YYYY`, `since vN.N`, `api version`, `deprecated since`, version comparisons
+
+**Context markers (criterion #2 — 环境特定上下文)**：
+`export`, `process.env`, `${VAR}`, `~/.config`, `.env`, `localhost`, `127.0.0.1`, `/usr/local`, `/etc/`, `/opt/`
+
+每个 repo 的输出：`lesson_pct`, `version_pct`, `context_pct`, `value_density_pct` (composite)。
+
+### 12.3 D20 + D21 原始数据 + 评分
+
+| Repo | avg_skill_bytes | D20 (反转) | lesson_pct | version_pct | context_pct | value_density_pct | D21 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| MA | 2,518 | **10** | 66.7% | 0% | 16.7% | 42.5 | 9 |
+| M | 3,321 | 9 | 6.7% | 0% | 3.3% | 4.5 | 1 |
+| NX | 3,438 | 9 | 18.5% | 1.3% | 12.8% | 13.3 | 4 |
+| C | 3,444 | 8 | **94.7%** ⚠ | 0.6% | 2.0% | 57.3 | **10** |
+| K | 6,040 | 7 | 18.2% | 0% | 0% | 10.9 | 3 |
+| V | 7,224 | 7 | 10.6% | 0% | 16.2% | 8.8 | 3 |
+| O | 8,168 | 6 | 37.1% | 1.4% | 15.7% | 25.0 | 7 |
+| AM | 8,847 | 5 | 10.5% | 3.2% | 28.1% | 11.3 | 4 |
+| OAI | 9,435 | 4 | 41.9% | 0.4% | 42.3% | 31.6 | 8 |
+| AD | 10,703 | 4 | 59.3% | 1.9% | 22.2% | 39.4 | 9 |
+| A | 10,995 | 3 | 31.5% | 6.7% | 12.4% | 22.4 | 6 |
+| CH | 11,443 | 3 | 18.4% | 1.0% | 14.6% | 13.5 | 5 |
+| NL | 12,272 | 2 | 4.6% | 4.6% | 23.1% | 7.4 | 2 |
+| AA | 12,293 | 2 | 25.2% | 2.2% | 17.7% | 18.3 | 5 |
+| **GS** | **52,730** | **1** | 56.0% | 1.6% | 35.2% | 39.3 | 8 |
+
+### 12.4 v1.3 完整排行（max 210）
+
+| Rank | Repo | Score | Tier | Δ vs v1.2 |
+|---:|---|---:|:---:|---:|
+| 🥇 1 | **`garrytan/gstack`** | **156** | S | +9 (D9+D21 强 / D20 是代价) |
+| 🥈 2 | `affaan-m/everything-claude-code` | 154 | S | +9 |
+| 🥉 3 | `nexu-io/open-design` | 152 | S | +13 (D20=9 加分) |
+| 4 | `obra/superpowers` | 150 | S | +13 |
+| 5 | `msitarzewski/agency-agents` | 146 | S | +7 |
+| 6 | `anthropics/skills` | 136 | A | +9 |
+| 7 | `addyosmani/agent-skills` | 128 | A | +13 (D21=9 加大分) |
+| 8 | `mattpocock/skills` | 114 | B | +10 (D20=9 / D21=1) |
+| 9 | `openai/skills` | 113 | B | +12 |
+| 10 | `ComposioHQ/awesome-claude-skills` | 111 | B | **+18** (D21=10 ⚠ 含 caveat) |
+| 11 | `coreyhaines31/marketingskills` | 103 | B | +8 |
+| 12 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | +4 |
+| 13 | `vercel-labs/agent-skills` | 101 | B | +10 |
+| 14 | `multica-ai/andrej-karpathy-skills` | 92 | C | **+19** (D20+D21 双高) |
+| 15 | `kepano/obsidian-skills` | 72 | D | +10 |
+
+> 注：Tier 阈值随 max=210 重新校准：S+ ≥165, S ≥145, A ≥125, B ≥100, C ≥80, D <80。
+
+### 12.5 关键 caveat / Caveats
+
+1. **C 的 D21=10 (94.7%)**：值得高度警惕——ComposioHQ 是 864 SKILL.md 的 awesome-list，平均每个 SKILL.md 只有 3.4KB（多为短 stub）。94.7% 的 lesson-marker 命中可能是：(a) 短 description 里含 "common ..." / "avoid ..." 等关键词的零碎匹配，(b) 真实有意义的 lessons-learned。我**无法**单纯从 regex 判断；建议人工抽样 30 个 ComposioHQ SKILL.md 判断是真知识还是噪声。
+2. **D21 的三个 sub-criterion 权重 (60/25/15)**：基于"lesson markers 比 version/context 更明确表示 'real-world value'"假设；可争议。如果给三者等权，C/OAI 的 ranking 会不同。
+3. **D20 与 D9 (Skill Depth) 是负相关 / 直接冲突**：D9 假设"深 = substantive"，D20 假设"小 = 聚焦"。两个维度都给 GS 极端分数（D9=10, D20=1），所以 GS 总分 net 不变；但对于中段 repo (NL 12KB) 这是 -1 / -2 的差。**两者同时存在的意义**：评估视角的平衡——单看 D9 偏 "大而全"，单看 D20 偏 "小而精"。
+4. **value_density_pct 跨 repo 不绝对可比**：repo A 有 5 个 SKILL.md，1 个含 anti-pattern → 20%；repo B 有 500 个 SKILL.md，100 个含 → 也是 20%。但 repo B 的 100 个反 anti-pattern 含量是 100 倍。**绝对量 vs 比例**没有单一最佳指标；这里用比例避免大 repo 自动赢。
+5. **理论 vs 实测**：D20 的"小 = 好"是用户的*理论假设*。GS 的 52KB SKILL.md 实际是角色定义（CEO/Designer/QA 等），不是单任务实现。所以 GS D20=1 的"惩罚"反映的是**"角色式 fat skill 在分解层面的代价"**，但不否定 GS 内容质量本身（D21=8）。
+6. **运行 caveat**：v1.2 D16-D19 caveats（query 污染 / launch wave / HN 稀疏）继续适用。
+
+### 12.6 D20+D21 引发的 ranking 大变
+
+**大幅上升**：
+- **MA** +19：单文件 2.5KB（D20=10 满）+ Karpathy 4 条原则全是 anti-pattern 警示（D21=9）
+- **C** +18：D21=10 但含强 caveat（可能是 awesome-list 噪声）
+- **AD** +13：原本"Verifiable/Battle-tested"段就大量 Red Flags 内容
+- **O** +13：原创方法论本来含 anti-pattern 教育
+- **NX** +13：3.4KB 平均 + 13.3% value-density
+
+**小幅 / 不变**：
+- **NL** +4：D20=2 + D21=2 双低；UI/UX 文档侧重组件，少 lessons-learned 语料
+- **NL** 仍排 12（虽 D9=9 在 v1.2/v1.3 都高）
+- **M** +10 但 D21=1：mattpocock 用 /diagnose / /tdd 等名字而非"anti-pattern"等关键词，scan miss
+
+**对 v1.3 排行的总体启示**：
+- v1.0-v1.2 偏向 popularity + 工程化测量
+- v1.3 引入 D20+D21 后，**"信号质量 / 教训密度"**成为新的差异化轴 — MA 凭 4 条 anti-pattern 原则就比 V (Vercel 官方) 拉到 92 vs 101（接近！）
+- **GS 的 #1 不再纯靠 popularity**，而是 popularity + D9（最深）+ D21（rich lessons）的组合— 多维度 robust win
+
+> 想看完整 21-dim × 15-repo 染色矩阵 + Δ v1.2→v1.3：打开 `scoring.ipynb`（GitHub 直接渲染，无需执行）。

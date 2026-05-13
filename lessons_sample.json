@@ -1,0 +1,320 @@
+{
+  "sampled_at": "2026-05-13T09:34:46+00:00",
+  "per_repo": {
+    "AM": {
+      "md_total": 1714,
+      "files_with_lesson": 180,
+      "files_with_version": 55,
+      "files_with_context": 481,
+      "lesson_pct": 10.5,
+      "version_pct": 3.2,
+      "context_pct": 28.1,
+      "value_density_pct": 11.3,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 24,
+        "\\bred[-\\s]?flag\\b": 13,
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 15,
+        "\\bwhen not to use\\b": 15,
+        "\\bdo not use\\b": 44,
+        "\\bfailure mode\\b": 11,
+        "\\bpitfalls?\\b": 29,
+        "\\blessons? learned\\b": 2,
+        "\\bavoid (this|the|using|over)\\b": 14,
+        "\\bdon'?t (do|use)\\b": 22,
+        "\\bcommon (failure|error)s?\\b": 17,
+        "\\b(?:gotchas?|caveats?)\\b": 20,
+        "\\bhard[-\\s]?gate\\b": 3,
+        "\\bwhy not\\b": 3,
+        "\\bmistake[s]?\\b": 26
+      }
+    },
+    "O": {
+      "md_total": 70,
+      "files_with_lesson": 26,
+      "files_with_version": 1,
+      "files_with_context": 11,
+      "lesson_pct": 37.1,
+      "version_pct": 1.4,
+      "context_pct": 15.7,
+      "value_density_pct": 25.0,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 6,
+        "\\bred[-\\s]?flag\\b": 5,
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 15,
+        "\\bwhen not to use\\b": 2,
+        "\\bdo not use\\b": 1,
+        "\\bfailure mode\\b": 3,
+        "\\bpitfalls?\\b": 2,
+        "\\bavoid (this|the|using|over)\\b": 1,
+        "\\bdon'?t (do|use)\\b": 5,
+        "\\bwrong way\\b": 1,
+        "\\bcommon (failure|error)s?\\b": 4,
+        "\\b(?:gotchas?|caveats?)\\b": 1,
+        "\\bhard[-\\s]?gate\\b": 2,
+        "\\bmistake[s]?\\b": 14
+      }
+    },
+    "NX": {
+      "md_total": 623,
+      "files_with_lesson": 115,
+      "files_with_version": 8,
+      "files_with_context": 80,
+      "lesson_pct": 18.5,
+      "version_pct": 1.3,
+      "context_pct": 12.8,
+      "value_density_pct": 13.3,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 3,
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 11,
+        "\\bdo not use\\b": 24,
+        "\\bfailure mode\\b": 7,
+        "\\bpitfalls?\\b": 3,
+        "\\bdon'?t (do|use)\\b": 60,
+        "\\bcommon (failure|error)s?\\b": 3,
+        "\\b(?:gotchas?|caveats?)\\b": 15,
+        "\\bhard[-\\s]?gate\\b": 1,
+        "\\bwhy not\\b": 2,
+        "\\bmistake[s]?\\b": 10
+      }
+    },
+    "A": {
+      "md_total": 89,
+      "files_with_lesson": 28,
+      "files_with_version": 6,
+      "files_with_context": 11,
+      "lesson_pct": 31.5,
+      "version_pct": 6.7,
+      "context_pct": 12.4,
+      "value_density_pct": 22.4,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 2,
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 10,
+        "\\bdo not use\\b": 7,
+        "\\bfailure mode\\b": 1,
+        "\\bpitfalls?\\b": 11,
+        "\\bavoid (this|the|using|over)\\b": 2,
+        "\\bdon'?t (do|use)\\b": 6,
+        "\\bcommon (failure|error)s?\\b": 2,
+        "\\b(?:gotchas?|caveats?)\\b": 3,
+        "\\bmistake[s]?\\b": 4
+      }
+    },
+    "NL": {
+      "md_total": 65,
+      "files_with_lesson": 3,
+      "files_with_version": 3,
+      "files_with_context": 15,
+      "lesson_pct": 4.6,
+      "version_pct": 4.6,
+      "context_pct": 23.1,
+      "value_density_pct": 7.4,
+      "per_marker": {
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 1,
+        "\\bpitfalls?\\b": 1,
+        "\\bdon'?t (do|use)\\b": 2
+      }
+    },
+    "AD": {
+      "md_total": 54,
+      "files_with_lesson": 32,
+      "files_with_version": 1,
+      "files_with_context": 12,
+      "lesson_pct": 59.3,
+      "version_pct": 1.9,
+      "context_pct": 22.2,
+      "value_density_pct": 39.4,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 9,
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 25,
+        "\\bwhen not to use\\b": 11,
+        "\\bdo not use\\b": 1,
+        "\\bfailure mode\\b": 5,
+        "\\bavoid (this|the|using|over)\\b": 1,
+        "\\bdon'?t (do|use)\\b": 4,
+        "\\bcommon (failure|error)s?\\b": 1,
+        "\\b(?:gotchas?|caveats?)\\b": 2,
+        "\\bwhy not\\b": 1,
+        "\\bmistake[s]?\\b": 1
+      }
+    },
+    "CH": {
+      "md_total": 206,
+      "files_with_lesson": 38,
+      "files_with_version": 2,
+      "files_with_context": 30,
+      "lesson_pct": 18.4,
+      "version_pct": 1.0,
+      "context_pct": 14.6,
+      "value_density_pct": 13.5,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 1,
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 16,
+        "\\bdo not use\\b": 2,
+        "\\blessons? learned\\b": 1,
+        "\\bavoid (this|the|using|over)\\b": 2,
+        "\\bdon'?t (do|use)\\b": 7,
+        "\\bwrong way\\b": 1,
+        "\\bcommon (failure|error)s?\\b": 2,
+        "\\b(?:gotchas?|caveats?)\\b": 4,
+        "\\bhard[-\\s]?gate\\b": 1,
+        "\\bmistake[s]?\\b": 27
+      }
+    },
+    "C": {
+      "md_total": 892,
+      "files_with_lesson": 845,
+      "files_with_version": 5,
+      "files_with_context": 18,
+      "lesson_pct": 94.7,
+      "version_pct": 0.6,
+      "context_pct": 2.0,
+      "value_density_pct": 57.3,
+      "per_marker": {
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 5,
+        "\\bwhen not to use\\b": 2,
+        "\\bdo not use\\b": 3,
+        "\\bpitfalls?\\b": 838,
+        "\\bavoid (this|the|using|over)\\b": 3,
+        "\\bdon'?t (do|use)\\b": 2,
+        "\\bcommon (failure|error)s?\\b": 2,
+        "\\bmistake[s]?\\b": 4
+      }
+    },
+    "M": {
+      "md_total": 60,
+      "files_with_lesson": 4,
+      "files_with_version": 0,
+      "files_with_context": 2,
+      "lesson_pct": 6.7,
+      "version_pct": 0.0,
+      "context_pct": 3.3,
+      "value_density_pct": 4.5,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 1,
+        "\\bdo not use\\b": 1,
+        "\\bfailure mode\\b": 2,
+        "\\bcommon (failure|error)s?\\b": 1
+      }
+    },
+    "OAI": {
+      "md_total": 530,
+      "files_with_lesson": 222,
+      "files_with_version": 2,
+      "files_with_context": 224,
+      "lesson_pct": 41.9,
+      "version_pct": 0.4,
+      "context_pct": 42.3,
+      "value_density_pct": 31.6,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 1,
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 16,
+        "\\bwhen not to use\\b": 8,
+        "\\bdo not use\\b": 23,
+        "\\bfailure mode\\b": 3,
+        "\\bpitfalls?\\b": 24,
+        "\\bavoid (this|the|using|over)\\b": 5,
+        "\\bdon'?t (do|use)\\b": 7,
+        "\\bcommon (failure|error)s?\\b": 75,
+        "\\b(?:gotchas?|caveats?)\\b": 187,
+        "\\bmistake[s]?\\b": 17
+      }
+    },
+    "MA": {
+      "md_total": 6,
+      "files_with_lesson": 4,
+      "files_with_version": 0,
+      "files_with_context": 1,
+      "lesson_pct": 66.7,
+      "version_pct": 0.0,
+      "context_pct": 16.7,
+      "value_density_pct": 42.5,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 1,
+        "\\bpitfalls?\\b": 2,
+        "\\bmistake[s]?\\b": 3
+      }
+    },
+    "K": {
+      "md_total": 11,
+      "files_with_lesson": 2,
+      "files_with_version": 0,
+      "files_with_context": 0,
+      "lesson_pct": 18.2,
+      "version_pct": 0.0,
+      "context_pct": 0.0,
+      "value_density_pct": 10.9,
+      "per_marker": {
+        "\\bdo not use\\b": 1,
+        "\\bpitfalls?\\b": 1
+      }
+    },
+    "V": {
+      "md_total": 142,
+      "files_with_lesson": 15,
+      "files_with_version": 0,
+      "files_with_context": 23,
+      "lesson_pct": 10.6,
+      "version_pct": 0.0,
+      "context_pct": 16.2,
+      "value_density_pct": 8.8,
+      "per_marker": {
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 2,
+        "\\bwhen not to use\\b": 4,
+        "\\bdo not use\\b": 3,
+        "\\bavoid (this|the|using|over)\\b": 2,
+        "\\bdon'?t (do|use)\\b": 8,
+        "\\bmistake[s]?\\b": 2
+      }
+    },
+    "GS": {
+      "md_total": 125,
+      "files_with_lesson": 70,
+      "files_with_version": 2,
+      "files_with_context": 44,
+      "lesson_pct": 56.0,
+      "version_pct": 1.6,
+      "context_pct": 35.2,
+      "value_density_pct": 39.3,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 2,
+        "\\bred[-\\s]?flag\\b": 4,
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 1,
+        "\\bdo not use\\b": 47,
+        "\\bfailure mode\\b": 17,
+        "\\bpitfalls?\\b": 27,
+        "\\bavoid (this|the|using|over)\\b": 2,
+        "\\bdon'?t (do|use)\\b": 7,
+        "\\bcommon (failure|error)s?\\b": 3,
+        "\\b(?:gotchas?|caveats?)\\b": 16,
+        "\\bhard[-\\s]?gate\\b": 16,
+        "\\bwhy not\\b": 4,
+        "\\bmistake[s]?\\b": 9
+      }
+    },
+    "AA": {
+      "md_total": 226,
+      "files_with_lesson": 57,
+      "files_with_version": 5,
+      "files_with_context": 40,
+      "lesson_pct": 25.2,
+      "version_pct": 2.2,
+      "context_pct": 17.7,
+      "value_density_pct": 18.3,
+      "per_marker": {
+        "\\banti[-\\s]?pattern\\b": 3,
+        "\\bred[-\\s]?flag\\b": 6,
+        "\\bcommon (mistake|pitfall|rationalization)s?\\b": 5,
+        "\\bdo not use\\b": 3,
+        "\\bfailure mode\\b": 5,
+        "\\bpitfalls?\\b": 11,
+        "\\blessons? learned\\b": 9,
+        "\\bavoid (this|the|using|over)\\b": 3,
+        "\\bdon'?t (do|use)\\b": 7,
+        "\\bcommon (failure|error)s?\\b": 2,
+        "\\b(?:gotchas?|caveats?)\\b": 7,
+        "\\bwhy not\\b": 2,
+        "\\bmistake[s]?\\b": 11
+      }
+    }
+  }
+}

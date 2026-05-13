@@ -9,9 +9,10 @@
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Task Guide](https://img.shields.io/badge/task→repo-TASK__GUIDE-red)](./TASK_GUIDE.en.md)
 [![Cohort size](https://img.shields.io/badge/repos-15-green)](./.gitmodules)
-[![Dimensions](https://img.shields.io/badge/dimensions-19-purple)](./EVALUATION.en.md#2-15-evaluation-dimensions)
-[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2-yellow)](./scoring.ipynb)
+[![Dimensions](https://img.shields.io/badge/dimensions-21-purple)](./EVALUATION.en.md#2-15-evaluation-dimensions)
+[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2_·_v1.3-yellow)](./scoring.ipynb)
 [![Social signals](https://img.shields.io/badge/Reddit_+_HN-30d_sampled-orange)](./scoring.ipynb)
+[![Quality signals](https://img.shields.io/badge/D20_Decomp_+_D21_Lessons-v1.3-pink)](./EVALUATION.en.md)
 
 ---
 
@@ -78,41 +79,43 @@ skill-obs/
     └── msitarzewski__agency-agents/            ← 🆕 v1.2
 ```
 
-## 🏆 Top-line Findings (latest snapshot **v1.2** · 2026-05-13 · max **190**)
+## 🏆 Top-line Findings (latest snapshot **v1.3** · 2026-05-13 · max **210**)
 
-| Rank | Repo | Score /190 | Tier | Tagline |
+| Rank | Repo | Score /210 | Tier | Tagline |
 |---:|---|---:|:---:|---|
-| 🥇 1 | **[`garrytan/gstack`](https://github.com/garrytan/gstack)** | **147** | S | 🆕 v1.2 · Garry Tan's actual setup — 23 role agents, avg SKILL.md 52KB (cohort deepest); Reddit heat champion |
-| 🥈 2 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 145 | S | Comprehensive — de-facto standard |
-| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 139 | S | Ate the design lane in 15 days |
-| 3= | **[`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents)** | 139 | S | 🆕 v1.2 · "AI agency" — 222 personality-driven agents across 18 domains (**fills the game-dev gap**) |
-| 5 | [`obra/superpowers`](https://github.com/obra/superpowers) | 137 | S | Original methodology — deepest thinking |
-| 6 | `anthropics/skills` | 127 | A | Official spec |
-| 7 | `addyosmani/agent-skills` | 115 | A | Production-grade engineering |
-| 8 | `mattpocock/skills` | 104 | B | TS engineering lens |
-| 9 | `openai/skills` | 101 | B | Codex companion |
-| 10 | `nextlevelbuilder/ui-ux-pro-max-skill` | 98 | B | UI/UX product polish |
-| 11 | `coreyhaines31/marketingskills` | 95 | B | Marketing-specialized |
-| 12 | `ComposioHQ/awesome-claude-skills` | 93 | B | Volume champion (864 SKILL.md) |
-| 13 | `vercel-labs/agent-skills` | 91 | B | Vercel official — #1 on D10 supp. density |
-| 14 | `multica-ai/andrej-karpathy-skills` | 73 | C | Single-file drop-in |
-| 15 | `kepano/obsidian-skills` | 62 | D | Obsidian-specialized |
+| 🥇 1 | **[`garrytan/gstack`](https://github.com/garrytan/gstack)** | **156** | S | Garry Tan setup — D9=10 (52KB deepest) + D21=8 (rich lessons); D20=1 is the cost |
+| 🥈 2 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 154 | S | Comprehensive — de-facto standard |
+| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 152 | S | Design lane + D20=9 (3.4KB good decomposition) |
+| 4 | [`obra/superpowers`](https://github.com/obra/superpowers) | 150 | S | Original methodology — D21=7 (anti-pattern rich) |
+| 5 | **[`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents)** | 146 | S | "AI agency" — 222 agents across 18 domains |
+| 6 | `anthropics/skills` | 136 | A | Official spec |
+| 7 | `addyosmani/agent-skills` | 128 | A | Production-grade — D21=9 (strong Red Flags sections) |
+| 8 | `mattpocock/skills` | 114 | B | TS lens — D20=9 (lightweight) |
+| 9 | `openai/skills` | 113 | B | Codex companion — D21=8 |
+| 10 | `ComposioHQ/awesome-claude-skills` | 111 | B | D21=10 (94.7% match anti-pattern keywords, but caveat: awesome-list shallow stubs dominate) |
+| 11 | `coreyhaines31/marketingskills` | 103 | B | Marketing vertical |
+| 12 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | UI/UX product polish |
+| 13 | `vercel-labs/agent-skills` | 101 | B | Vercel official |
+| 14 | `multica-ai/andrej-karpathy-skills` | 92 | C | D20=10 + D21=9 but other dims weak |
+| 15 | `kepano/obsidian-skills` | 72 | D | Obsidian-specialized |
 
-> **v1.1 → v1.2 major changes**:
-> 1. Added **4 new social dimensions** D16-D19: Reddit Heat / Reddit Sentiment / HN Heat / HN Sentiment (sampled from public APIs over the last 30 days)
-> 2. Added 2 new repos: `garrytan/gstack` + `msitarzewski/agency-agents` → **15-repo cohort**
-> 3. Max total: 150 → **190** (19 dims × 10)
-> 4. **GS** dethrones AM (deepest SKILL.md + Reddit heat champion); **AA** ties NX at #3
-> 5. **AA fills the game-dev gap** with 20 game-development agents (cohort previously had no game coverage)
-> 6. Full v1.1 → v1.2 Δ-diff in `scoring.ipynb` cell 7.
+> **v1.2 → v1.3 major changes**:
+> 1. Added **2 new task-quality dimensions** D20-D21:
+>    - **D20 Task Decomposition** = inverse of `avg_skill_bytes` (smaller = better; theory: each skill should focus on one task)
+>    - **D21 Lesson-Encoded Quality** = % of *.md with failure-marker / version / context signals (proxy for "valuable skills should contain model-unknown knowledge + env context + real-failure lessons")
+> 2. Max total: 190 → **210** (21 dims × 10); tier thresholds rescaled proportionally
+> 3. Cohort unchanged at 15 repos
+> 4. **GS still #1** (D9+D21 saturated / D20=1 penalty, but other dims sufficient); MA climbs from cohort bottom (D20=10 + D21=9 add ~19 points); C jumps 2 places thanks to D21=10 (caveat included)
+> 5. **Philosophy**: D20 vs D9 creates a "broad-and-deep vs small-and-focused" tension; D21 quantifies whether skills carry *real value density* (a dimension not measured in v1.0-v1.2)
+> 6. Full v1.2 → v1.3 Δ-diff in `scoring.ipynb` cell 7.
 
 Full score matrix, by-domain recommendations, methodology, and caveats: **[`EVALUATION.en.md`](./EVALUATION.en.md)**.
 
 A task-first decision matrix (which repo for which AI-agent task?) — see **[`TASK_GUIDE.en.md`](./TASK_GUIDE.en.md)** (AM × O × NX overlap/orthogonality/complementarity deep-dive + ~50 task lookup + recommended stacks + coverage gaps).
 
-## 📐 19 Evaluation Dimensions
+## 📐 21 Evaluation Dimensions
 
-Brief (full definitions in [`EVALUATION.en.md §2`](./EVALUATION.en.md#2-15-evaluation-dimensions) + [`§11`](./EVALUATION.en.md#11-v12-snapshot--d16-d19-social-signals--gs--aa)):
+Brief (full definitions in [`EVALUATION.en.md §2`](./EVALUATION.en.md#2-15-evaluation-dimensions) + [`§11`](./EVALUATION.en.md#11-v12-snapshot--d16-d19-social-signals--gs--aa) + [`§12`](./EVALUATION.en.md#12-v13-snapshot--d20-d21--task-decomposition--lesson-encoded-quality)):
 
 | Category | Dimensions |
 |---|---|
@@ -123,7 +126,8 @@ Brief (full definitions in [`EVALUATION.en.md §2`](./EVALUATION.en.md#2-15-eval
 | Engineering hygiene | D11 Doc Quality, D12 Eng. Hygiene |
 | Portability | D13 Multi-Agent Portability |
 | Strategic value | D14 Domain Breadth, D15 Originality / Authority |
-| **🆕 Social signals (v1.2)** | **D16 Reddit Heat** (30d posts + comments) · **D17 Reddit Sentiment** (30d avg upvote) · **D18 HN Heat** (30d stories + comments) · **D19 HN Sentiment** (30d avg points) |
+| Social signals (v1.2) | **D16 Reddit Heat** (30d posts + comments) · **D17 Reddit Sentiment** (30d avg upvote) · **D18 HN Heat** (30d stories + comments) · **D19 HN Sentiment** (30d avg points) |
+| **🆕 Task-quality signals (v1.3)** | **D20 Task Decomposition** (inverse of avg SKILL.md bytes — smaller = better; theory: each skill should focus on one task) · **D21 Lesson-Encoded Quality** (% of *.md with anti-pattern / red-flag / lessons-learned / version / context markers — proxy for "valuable skills should contain model-unknown knowledge + env context + real-failure lessons") |
 
 ## 🎨 Notebook Layout
 
