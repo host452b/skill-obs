@@ -7,8 +7,9 @@
 
 [![Eval baseline](https://img.shields.io/badge/eval-2026--05--13-blue)](./EVALUATION.en.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
-[![Cohort size](https://img.shields.io/badge/repos-12-green)](./.gitmodules)
+[![Cohort size](https://img.shields.io/badge/repos-13-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-15-purple)](./EVALUATION.en.md#2-15-evaluation-dimensions)
+[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1-yellow)](./scoring.ipynb)
 
 ---
 
@@ -69,25 +70,29 @@ skill-obs/
     ├── nexu-io__open-design/
     ├── obra__superpowers/
     ├── openai__skills/
-    └── addyosmani__agent-skills/
+    ├── addyosmani__agent-skills/
+    └── vercel-labs__agent-skills/
 ```
 
-## 🏆 Top-line Findings (baseline 2026-05-13)
+## 🏆 Top-line Findings (latest snapshot **v1.1** · 2026-05-13)
 
-| Rank | Repo | Score /150 | Tier | Tagline |
-|---:|---|---:|:---:|---|
-| 🥇 1 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | **129** | S | Comprehensive — de-facto standard |
-| 🥈 2 | [`obra/superpowers`](https://github.com/obra/superpowers) | 116 | S | Original methodology — deepest thinking |
-| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 110 | S | Ate the design lane in 15 days |
-| 4= | `anthropics/skills` | 94 | A | Official spec |
-| 4= | `nextlevelbuilder/ui-ux-pro-max-skill` | 94 | A | UI/UX product polish |
-| 6 | `addyosmani/agent-skills` | 90 | A | Production-grade engineering |
-| 7 | `coreyhaines31/marketingskills` | 86 | A | Marketing-specialized |
-| 8 | `ComposioHQ/awesome-claude-skills` | 80 | B | Volume champion (864 SKILL.md) |
-| 9 | `mattpocock/skills` | 76 | B | TS engineering lens |
-| 10 | `openai/skills` | 73 | B | Codex companion |
-| 11 | `multica-ai/andrej-karpathy-skills` | 70 | B | Single-file drop-in |
-| 12 | `kepano/obsidian-skills` | 50 | C | Obsidian-specialized |
+| Rank | Repo | Score /150 | Tier | Δ vs v1.0 | Tagline |
+|---:|---|---:|:---:|---:|---|
+| 🥇 1 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | **129** | S | 0 | Comprehensive — de-facto standard |
+| 🥈 2 | [`obra/superpowers`](https://github.com/obra/superpowers) | 115 | S | −1 | Original methodology — deepest thinking |
+| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 110 | S | 0 | Ate the design lane in 15 days |
+| 4= | `anthropics/skills` | 93 | A | −1 | Official spec |
+| 4= | `nextlevelbuilder/ui-ux-pro-max-skill` | 93 | A | −1 | UI/UX product polish |
+| 6 | `addyosmani/agent-skills` | 90 | A | 0 | Production-grade engineering |
+| 7 | `coreyhaines31/marketingskills` | 85 | A | −1 | Marketing-specialized |
+| 8 | `ComposioHQ/awesome-claude-skills` | 80 | B | 0 | Volume champion (864 SKILL.md) |
+| 9 | `mattpocock/skills` | 76 | B | 0 | TS engineering lens |
+| **10** | **[`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills)** | **75** | **B** | 🆕 | **Vercel official — #1 on D10 supp. density** |
+| 11 | `openai/skills` | 72 | B | −1 | Codex companion |
+| 12 | `multica-ai/andrej-karpathy-skills` | 69 | B | −1 | Single-file drop-in |
+| 13 | `kepano/obsidian-skills` | 50 | C | 0 | Obsidian-specialized |
+
+> **v1.0 → v1.1 change**: added `vercel-labs/agent-skills` (13-repo cohort). V is #1 on D10 (supplementary material density: 19.3 supp. docs per skill), displacing OAI from 10 → 9 and dragging 5 other incumbents down by 1 on D10. Six repos lose 1 total point. Full Δ-diff in `scoring.ipynb` cell 7.
 
 Full score matrix, by-domain recommendations, methodology, and caveats: **[`EVALUATION.en.md`](./EVALUATION.en.md)**.
 
@@ -166,6 +171,7 @@ Then re-run: `python3 build_scoring_notebook.py`. The notebook regenerates with 
 | [nexu-io/open-design](https://github.com/nexu-io/open-design) | 38,735 | 2026-04-28 | Apache-2.0 |
 | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | 30,825 | 2026-01-02 | MIT |
 | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 28,215 | 2026-01-15 | MIT |
+| [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | 26,494 | 2025-12-08 | — |
 | [openai/skills](https://github.com/openai/skills) | 18,982 | 2025-11-25 | — |
 
 Snapshot date: **2026-05-13**. For current numbers, see each repo's GitHub page or the `raw_metrics` block in `scoring.ipynb`.

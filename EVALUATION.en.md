@@ -3,7 +3,7 @@
 > 🌐 **Language**: [🇨🇳 中文](./EVALUATION.md) · **🇬🇧 English**
 
 > Evaluation date: **2026-05-13**
-> Cohort: 12 Agent Skills / Claude Skills / Skill-adjacent repos (vendored as git submodules)
+> Current snapshot: **v1.1** — 13-repo cohort (v1.0 is the 12-repo baseline, retained in `scoring.ipynb` history)
 > Scoring scale: **1–10** (10 = best in cohort)
 > Max total: **150** (15 dims × 10)
 
@@ -22,6 +22,7 @@
 | NX | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 38,735 | 4,403 | 2026-04-28 | 2026-05-13 | OSS Claude Design alternative |
 | K  | [`kepano/obsidian-skills`](https://github.com/kepano/obsidian-skills) | 30,825 | 2,100 | 2026-01-02 | 2026-05-07 | Obsidian-native skills |
 | CH | [`coreyhaines31/marketingskills`](https://github.com/coreyhaines31/marketingskills) | 28,215 | 4,550 | 2026-01-15 | 2026-05-06 | Marketing / CRO / SEO |
+| **V** | **[`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills)** | **26,494** | **2,416** | **2025-12-08** | **2026-05-07** | **Vercel deploy + React/Next.js skills (🆕 v1.1)** |
 | OAI| [`openai/skills`](https://github.com/openai/skills) | 18,982 | 1,259 | 2025-11-25 | 2026-05-12 | Codex skills catalog |
 
 > Note: `forrestchang/andrej-karpathy-skills` is redirected by GitHub to `multica-ai/andrej-karpathy-skills` (owner rename/transfer); merged as a single entry.
@@ -77,74 +78,79 @@ These 15 dimensions are distilled from CHAOSS OSS-health metrics + awesome-list 
 | NX | 15 | **2,582.3** | 38,735 | 4,403 | 142 | 0  | **42.5** | **186** | 218 | 3,438 | 1.86 | **9** |
 | K  | 131 | 235.3 | 30,825 | 2,100 | 185 | 6  | 0.30 | 13  | 5   | 6,040 | 1.2  | 3 |
 | CH | 118 | 239.1 | 28,215 | 4,550 | 288 | 7  | 2.21 | 16  | 41  | 11,443 | 4.02 | 5 |
-| OAI| 169 | 112.3 | 18,982 | 1,259 | 110 | 1  | 0.64 | 34  | 43  | 9,435 | **11.33** | 1 |
+| **V** | **156** | 169.8 | 26,494 | 2,416 | 114 | 6 | 1.27 | 21 | 7 | 7,224 | **19.3** | 4 |
+| OAI| 169 | 112.3 | 18,982 | 1,259 | 110 | 1  | 0.64 | 34  | 43  | 9,435 | 11.33 | 1 |
 
 > **D1 caveat**: NX (`nexu-io/open-design`) is only 15 days alive — its velocity score of 2,582 stars/day includes early-peak bias and cannot be extrapolated 6 months out.
 
-## 4. Score Matrix
+## 4. Score Matrix (Snapshot **v1.1** · 13 repos)
 
 ```
-Column order: AM | O | NX | A | NL | AD | CH | C | M | OAI | MA | K
+Column order: AM | O | NX | A | NL | AD | CH | C | M | V | OAI | MA | K
 ```
 
-| Dim | Description | AM | O | NX | A | NL | AD | CH | C | M | OAI | MA | K |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| D1  | Star Velocity ⭐ | 9 | 8 | **10** | 6 | 5 | 5 | 3 | 4 | 7 | 1 | 9 | 2 |
-| D2  | Total Stars | 9 | **10** | 4 | 9 | 7 | 4 | 2 | 5 | 6 | 1 | 8 | 3 |
-| D3  | Forks | **10** | 9 | 3 | 8 | 6 | 4 | 4 | 5 | 5 | 1 | 7 | 2 |
-| D4  | Watchers | **10** | 8 | 2 | 9 | 5 | 3 | 4 | 5 | 6 | 1 | 7 | 2 |
-| D5  | Commit Recency | **10** | **10** | **10** | 8 | 2 | 8 | 6 | 7 | 9 | 9 | 4 | 7 |
-| D6  | Commit Cadence | 9 | 7 | **10** | 1 | 6 | 7 | 8 | 3 | 5 | 4 | 2 | 3 |
-| D7  | Contributors | 9 | 7 | **10** | 3 | 6 | 4 | 4 | 5 | 1 | 8 | 2 | 3 |
-| D8  | Skill Volume | 9 | 3 | 8 | 3 | 2 | 4 | 6 | **10** | 5 | 7 | 1 | 1 |
-| D9  | Skill Depth | 6 | 5 | 3 | 9 | **10** | 8 | 9 | 3 | 2 | 7 | 1 | 4 |
-| D10 | Supp. Material Density | 5 | 7 | 4 | 7 | 9 | 3 | 7 | 1 | 2 | **10** | 8 | 2 |
-| D11 | Doc Quality | **10** | 8 | **10** | 6 | 9 | 9 | 8 | 8 | 7 | 3 | 7 | 4 |
-| D12 | Eng. Hygiene | **10** | 9 | **10** | 6 | 8 | 8 | 9 | 4 | 6 | 3 | 3 | 3 |
-| D13 | Multi-Agent Portability | 8 | 7 | **10** | 1 | 9 | 8 | 6 | 8 | 2 | 1 | 2 | 4 |
-| D14 | Domain Breadth | **10** | 9 | 8 | 8 | 4 | 8 | 4 | 9 | 6 | 7 | 1 | 3 |
-| D15 | Originality / Authority | 5 | 9 | 8 | **10** | 6 | 7 | 6 | 3 | 7 | **10** | 8 | 7 |
-| **Σ** | **Total (out of 150)** | **129** | **116** | **110** | **94** | **94** | **90** | **86** | **80** | **76** | **73** | **70** | **50** |
+| Dim | Description | AM | O | NX | A | NL | AD | CH | C | M | **V** | OAI | MA | K |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| D1  | Star Velocity ⭐ | 9 | 8 | **10** | 6 | 5 | 5 | 3 | 4 | 7 | 2 | 1 | 9 | 2 |
+| D2  | Total Stars | 9 | **10** | 4 | 9 | 7 | 4 | 2 | 5 | 6 | 2 | 1 | 8 | 3 |
+| D3  | Forks | **10** | 9 | 3 | 8 | 6 | 4 | 4 | 5 | 5 | 3 | 1 | 7 | 2 |
+| D4  | Watchers | **10** | 8 | 2 | 9 | 5 | 3 | 4 | 5 | 6 | 2 | 1 | 7 | 2 |
+| D5  | Commit Recency | **10** | **10** | **10** | 8 | 2 | 8 | 6 | 7 | 9 | 7 | 9 | 4 | 7 |
+| D6  | Commit Cadence | 9 | 7 | **10** | 1 | 6 | 7 | 8 | 3 | 5 | 6 | 4 | 2 | 3 |
+| D7  | Contributors | 9 | 7 | **10** | 3 | 6 | 4 | 4 | 5 | 1 | 4 | 8 | 2 | 3 |
+| D8  | Skill Volume | 9 | 3 | 8 | 3 | 2 | 4 | 6 | **10** | 5 | 2 | 7 | 1 | 1 |
+| D9  | Skill Depth | 6 | 5 | 3 | 9 | **10** | 8 | 9 | 3 | 2 | 5 | 7 | 1 | 4 |
+| D10 | Supp. Material Density | 5 | 6 | 4 | 6 | 8 | 3 | 6 | 1 | 2 | **10** | 9 | 7 | 2 |
+| D11 | Doc Quality | **10** | 8 | **10** | 6 | 9 | 9 | 8 | 8 | 7 | 8 | 3 | 7 | 4 |
+| D12 | Eng. Hygiene | **10** | 9 | **10** | 6 | 8 | 8 | 9 | 4 | 6 | 6 | 3 | 3 | 3 |
+| D13 | Multi-Agent Portability | 8 | 7 | **10** | 1 | 9 | 8 | 6 | 8 | 2 | 5 | 1 | 2 | 4 |
+| D14 | Domain Breadth | **10** | 9 | 8 | 8 | 4 | 8 | 4 | 9 | 6 | 4 | 7 | 1 | 3 |
+| D15 | Originality / Authority | 5 | 9 | 8 | **10** | 6 | 7 | 6 | 3 | 7 | 9 | **10** | 8 | 7 |
+| **Σ** | **Total (out of 150)** | **129** | **115** | **110** | **93** | **93** | **90** | **85** | **80** | **76** | **75** | **72** | **69** | **50** |
+
+> **v1.0 → v1.1 Δ**: V (vercel-labs) added. V displaces OAI atop D10 (supp. material density 19.3); OAI/O/A/NL/CH/MA each drop 1 on D10 due to cohort re-rank; six repos lose 1 total point. v1.0 baseline preserved in `scoring.ipynb`.
 
 ## 5. Overall Ranking
 
 ### 5.1 Equal-weighted (default)
 
-| Rank | Repo | Score | Tier |
-|---:|---|---:|---|
-| 🥇 1 | `affaan-m/everything-claude-code` | **129** | S |
-| 🥈 2 | `obra/superpowers` | 116 | S |
-| 🥉 3 | `nexu-io/open-design` | 110 | S |
-| 4 | `anthropics/skills` | 94 | A |
-| 4 | `nextlevelbuilder/ui-ux-pro-max-skill` | 94 | A |
-| 6 | `addyosmani/agent-skills` | 90 | A |
-| 7 | `coreyhaines31/marketingskills` | 86 | A |
-| 8 | `ComposioHQ/awesome-claude-skills` | 80 | B |
-| 9 | `mattpocock/skills` | 76 | B |
-| 10 | `openai/skills` | 73 | B |
-| 11 | `multica-ai/andrej-karpathy-skills` | 70 | B |
-| 12 | `kepano/obsidian-skills` | 50 | C |
+| Rank | Repo | Score | Tier | Δ vs v1.0 |
+|---:|---|---:|---|---:|
+| 🥇 1 | `affaan-m/everything-claude-code` | **129** | S | 0 |
+| 🥈 2 | `obra/superpowers` | 115 | S | −1 |
+| 🥉 3 | `nexu-io/open-design` | 110 | S | 0 |
+| 4 | `anthropics/skills` | 93 | A | −1 |
+| 4 | `nextlevelbuilder/ui-ux-pro-max-skill` | 93 | A | −1 |
+| 6 | `addyosmani/agent-skills` | 90 | A | 0 |
+| 7 | `coreyhaines31/marketingskills` | 85 | A | −1 |
+| 8 | `ComposioHQ/awesome-claude-skills` | 80 | B | 0 |
+| 9 | `mattpocock/skills` | 76 | B | 0 |
+| **10** | **`vercel-labs/agent-skills`** | **75** | **B** | **🆕** |
+| 11 | `openai/skills` | 72 | B | −1 |
+| 12 | `multica-ai/andrej-karpathy-skills` | 69 | B | −1 |
+| 13 | `kepano/obsidian-skills` | 50 | C | 0 |
 
 ### 5.2 Velocity-emphasized (D1 weighted ×3)
 
-If D1 (star velocity, the user-emphasized dimension) is weighted ×3 while others stay at ×1:
+If D1 (star velocity, the user-emphasized dimension) is weighted ×3 while others stay at ×1 — i.e. total + 2×D1:
 
 | Rank | Repo | Adj. Score |
 |---:|---|---:|
 | 🥇 1 | `affaan-m/everything-claude-code` | 147 |
-| 🥈 2 | `obra/superpowers` | 132 |
+| 🥈 2 | `obra/superpowers` | 131 |
 | 🥉 3 | `nexu-io/open-design` | 130 |
-| 4 | `anthropics/skills` | 106 |
-| 5 | `nextlevelbuilder/ui-ux-pro-max-skill` | 104 |
+| 4 | `anthropics/skills` | 105 |
+| 5 | `nextlevelbuilder/ui-ux-pro-max-skill` | 103 |
 | 6 | `addyosmani/agent-skills` | 100 |
-| 7 | `coreyhaines31/marketingskills` | 92 |
+| 7 | `coreyhaines31/marketingskills` | 91 |
 | 8 | `mattpocock/skills` | 90 |
 | 9 | `ComposioHQ/awesome-claude-skills` | 88 |
-| 9 | `multica-ai/andrej-karpathy-skills` | 88 |
-| 11 | `openai/skills` | 75 |
-| 12 | `kepano/obsidian-skills` | 54 |
+| 9 | `multica-ai/andrej-karpathy-skills` | 87 |
+| 11 | `vercel-labs/agent-skills` | 79 |
+| 12 | `openai/skills` | 74 |
+| 13 | `kepano/obsidian-skills` | 54 |
 
-> Top-3 is invariant; middle-tier shuffles modestly. The velocity dimension is robust to weighting.
+> Top-3 invariant; V at #11 even with velocity emphasis. The velocity dimension is robust to weighting.
 
 ## 6. One-liner per Repo
 
@@ -159,7 +165,8 @@ If D1 (star velocity, the user-emphasized dimension) is weighted ×3 while other
 | **coreyhaines31/marketingskills** (A) | Vertical marketing / CRO / SEO skills | ✅ Good engineering, validators; ⚠ narrow domain |
 | **ComposioHQ/awesome-claude-skills** (B) | Large awesome-list / index (864 SKILL.md) | ✅ Volume crushes; ⚠ near-zero supplementary docs (D10=1), highly homogeneous |
 | **mattpocock/skills** (B) | TypeScript guru's "skills engineers actually use" | ✅ Distinct personal voice; ⚠ only 2 contributors, narrow platform |
-| **openai/skills** (B) | Official Codex skill catalog | ✅ Highest supplementary density (D10=10) + official authority; ⚠ Codex-only, small community |
+| **vercel-labs/agent-skills** (B · 🆕 v1.1) | Vercel official — deploy + React/Next.js engineering skills | ✅ #1 on D10 supp. density (19.3) + official authority; ⚠ only 7 skills, web-only, no LICENSE |
+| **openai/skills** (B) | Official Codex skill catalog | ✅ Second-highest supp. density (D10=9) + official authority; ⚠ Codex-only, small community |
 | **multica-ai/andrej-karpathy-skills** (B) | A CLAUDE.md based on Karpathy's observations | ✅ Extreme velocity; ⚠ single file, single point of value |
 | **kepano/obsidian-skills** (C) | Obsidian / Markdown / Canvas vertical | ✅ Authoritative creator; ⚠ smallest volume, narrow coverage |
 
@@ -204,6 +211,7 @@ If D1 (star velocity, the user-emphasized dimension) is weighted ×3 while other
 | 10 | **Obsidian / Markdown knowledge management** | [`kepano/obsidian-skills`](https://github.com/kepano/obsidian-skills) | Obsidian creator (kepano) maintains personally; only repo covering Canvas / Bases / JSON Canvas |
 | 11 | **Zero-friction CLAUDE.md drop-in** | [`multica-ai/andrej-karpathy-skills`](https://github.com/multica-ai/andrej-karpathy-skills) | Single-file drop-in; Karpathy's LLM-coding anti-patterns |
 | 12 | **Browsing / discovery of the skill ecosystem** | [`ComposioHQ/awesome-claude-skills`](https://github.com/ComposioHQ/awesome-claude-skills) | 864 SKILL.md index; biggest awesome-list |
+| **13** | **Vercel / Next.js / React production engineering** | [`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills) | Vercel official; 40+ React perf rules; #1 on D10 (supp. density) across cohort |
 
 ### 9.2 Cross-cutting Needs
 
@@ -220,11 +228,139 @@ If D1 (star velocity, the user-emphasized dimension) is weighted ×3 while other
 |---|---|
 | Backend / DevOps engineer | `obra/superpowers` (methodology) + `addyosmani/agent-skills` (engineering practice) |
 | Frontend / designer | `nextlevelbuilder/ui-ux-pro-max-skill` (component-level) + `nexu-io/open-design` (design systems) |
+| **Vercel / Next.js / React engineer** | **`vercel-labs/agent-skills` (official deploy + 40+ React perf rules)** |
 | Marketing / Growth | `coreyhaines31/marketingskills` |
 | Research / knowledge worker | `kepano/obsidian-skills` + `anthropics/skills` (doc-coauthoring etc.) |
 | AI tool / skill builder | `anthropics/skills` (spec) + `affaan-m/everything-claude-code` (reference impl) |
 | Quick trial (5-min onboarding) | `multica-ai/andrej-karpathy-skills` (single-file drop-in) |
 
+## 10. Philosophy · Skill Validity · Long-term Iteration
+
+> **User questions**: For each repo, what's the author's philosophy? How do they ensure skill validity along [Anthropic's two axes](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills):
+> 1. **Output quality** — given the skill is active, does it give good answers?
+> 2. **Trigger precision** — does Claude activate the skill when it should, and **only** then?
+>
+> And: how do they decide to *add vs remove* skills over time?
+
+This section is based on careful reading of each of the 13 repos' README / AGENTS.md / CLAUDE.md / CONTRIBUTING / sampled SKILL.md files.
+
+### 10.1 "What a skill IS" — five paradigms
+
+| Paradigm | Representative repos | Core tenet |
+|---|---|---|
+| **Mandatory workflow** | `obra/superpowers` (O), `addyosmani/agent-skills` (AD) | "If a task matches a skill, you MUST invoke it" — hard-gates prevent agents from skipping steps; O's TDD skill literally says _"NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST"_ |
+| **Optional reference** | `anthropics/skills` (A), `openai/skills` (OAI), `affaan-m/everything-claude-code` (AM), `mattpocock/skills` (M), `kepano/obsidian-skills` (K) | "Skills are tools Claude **can choose** when relevant" — capability offered, not enforced; OAI's three-tier `.system / .curated / .experimental` lets users opt in by tier |
+| **Composable artifact** | `nexu-io/open-design` (NX) | Skills + Design Systems + Craft form a layered capability stack; each skill answers "what to produce", design systems answer "how it should look" |
+| **Domain-expert workflow** | `coreyhaines31/marketingskills` (CH), `vercel-labs/agent-skills` (V), `nextlevelbuilder/ui-ux-pro-max-skill` (NL) | Skill = packaged domain decision tree (CH: marketing CRO/SEO frameworks; V: 40+ React rules sorted by Impact; NL: CSV-backed BM25 reasoning engine) |
+| **Behavioral directive** | `multica-ai/andrej-karpathy-skills` (MA) | No "activation timing" — 4 Karpathy principles always-on (Don't assume / Simplicity first / Surgical changes / Goal-driven) |
+| **Aggregated index** | `ComposioHQ/awesome-claude-skills` (C) | Awesome-list-style governance; PR reviewer judges "real use / tested / attributable"; admission = approval |
+
+### 10.2 Output Quality strategy (how skills give good answers when active)
+
+| Repo | Strategy | Source |
+|---|---|---|
+| **O** | **Eval evidence required for PRs**: must submit a transcript proving "input 'Let's make a react todo list' triggers brainstorming skill"; ~94% PR rejection rate | `CONTRIBUTING.md`: reject "compliance changes without eval evidence" |
+| **AD** | **Forced internal structure**: every SKILL.md has Verification section + exit criteria + Red Flags table + Common Rationalizations; CONTRIBUTING enforces four principles (Specific / Verifiable / Battle-tested / Minimal) | `docs/skill-anatomy.md`; `CONTRIBUTING.md` "Don't add skills that are vague advice" |
+| **AM** | **Structure + bundled resources**: every SKILL.md has "When to Activate" + code examples + anti-patterns + cross-platform mapping; scripts/ and references/ enable progressive context loading | `CONTRIBUTING.md` "Skill Development Guide"; 500-line cap |
+| **NX** | **Per-skill independent checklists**: P0/P1/P2 gates in `references/checklist.md`; "honesty rules" (release-notes skill must write "None" rather than fabricate); live-artifact preview validation pre-emit | per-skill `references/` directories |
+| **NL** | **CSV-driven reasoning**: BM25 ranking + 161 industry-specific decision rules + 20+ pre-delivery checklist (contrast ≥4.5:1, cursor-pointer on clickables, hover 150–300ms, etc.) | `src/ui-ux-pro-max/data/*.csv`; README §"Pre-delivery checklist" |
+| **CH** | **Automated `validate-skills.sh`**: enforces frontmatter, 500-line hard cap, trigger-phrase presence, related-skill references; CONTRIBUTING includes "Skill Quality Checklist" | `validate-skills.sh`; `CONTRIBUTING.md` |
+| **V** | **Priority matrix + per-rule files**: rules/ contains separate `Explanation / Incorrect Example / Correct Example / Context`; `web-design-guidelines` uses `WebFetch` for fresh rules instead of vendoring | `skills/react-best-practices/rules/`; `skills/web-design-guidelines/SKILL.md` |
+| **A** | **Official spec + template**: `template/SKILL.md` shows minimal frontmatter; progressive disclosure (metadata always / SKILL.md body when triggered / bundled resources unlimited) | `template/`; agentskills.io spec |
+| **OAI** | **Degrees of Freedom design**: high-freedom text instructions / medium pseudocode / low-freedom scripts; "context window is a public good" — large references must include TOC + grep patterns | `.system/skill-creator/SKILL.md` |
+| **M** | **Anti-failure-mode design**: each skill targets a specific agent failure (/grill-me fixes alignment, /diagnose fixes feedback loops, /tdd fixes test quality); CONTEXT.md + ADRs ground skills in project vocabulary | README "Why These Skills Exist" |
+| **K** | **Specification completeness**: every skill includes `references/*.md` exhaustively covering one Obsidian format (properties / embeds / callouts), loaded on-demand by the agent | `skills/obsidian-markdown/references/` |
+| **MA** | **Four negative principles**: Don't assume / Simplicity first / Surgical changes / Goal-driven; README "How to Know It's Working" gives meta-criteria (smaller diffs, fewer rewrites) | `CLAUDE.md`; README |
+| **C** | **PR authenticity proof**: must be "based on a real use case, not hypothetical"; must "be tested across Claude.ai, Claude Code, and API"; attribution traceable | `CONTRIBUTING.md` |
+
+### 10.3 Trigger Precision strategy (correct activation)
+
+| Repo | Strategy | Typical execution |
+|---|---|---|
+| **CH** | **Exhaustive enumeration**: single skill description lists 15+ trigger phrase variations ("CRO" / "conversion rate optimization" / "this page isn't converting" / "bounce rate is too high" ...) | `page-cro` skill description |
+| **NL** | **Mega-description**: 200+ phrases / projects / elements / topics packed into one description (actions × projects × elements × topics) | `SKILL.md` frontmatter `description` field |
+| **NX** | **Frontmatter `triggers:` array**: 4-6 variants per skill; `od:mode / od:scenario` extension fields distinguish intent (prototype vs workflow) | `od:` frontmatter |
+| **AD** | **Positive + negative boundaries**: every skill has "Use when" + explicit "When NOT to use" (e.g. "Single-line fixes, typo corrections") to exclude false positives; AGENTS.md maps intents → skills explicitly | `skill-anatomy.md` §Frontmatter |
+| **O** | **Prescriptive imperatives**: description directly says _"You MUST use this before any creative work"_, _"Use when implementing any feature or bugfix, before writing implementation code"_ | brainstorming / TDD skills |
+| **V** | **"Use when:" + task conditions**: description includes trigger phrases ("Deploy my app") and task types ("when asked to review UI code for Web Interface Guidelines compliance") | per-skill SKILL.md |
+| **K** | **Specific format terminology**: description embeds Obsidian-specific terms ("wikilinks" / "callouts" / "properties") so agents trigger by exact word | `obsidian-markdown` description |
+| **M** | **Multi-faceted description**: trigger scenarios × user phrasings (e.g. /tdd: "Use when user wants to build features or fix bugs using TDD, mentions 'red-green-refactor', wants integration tests, or asks for test-first development") | per-skill descriptions |
+| **AM** | **"When to Activate" section**: required in every skill; description specifies both "what" and "when"; related-skills links cascade contextual activation | `docs/SKILL-DEVELOPMENT-GUIDE.md` |
+| **A / OAI** | **Minimal precision**: "Default assumption: Codex is already very smart" — description carries only name + key scenarios; trust the model to judge intent | `template/SKILL.md` |
+| **C** | **Problem-statement style**: 1-2 sentences focus on "what problem" not exhaustive phrases; categorization guides discovery (Business & Marketing / Communication & Writing) | README §Categorization |
+| **MA** | **Implicit / global trigger**: CLAUDE.md applies to all coding work after install; no fine-grained triggering | single-file design |
+
+### 10.4 Long-term iteration / Add vs Remove
+
+| Repo | Admission gate | Removal / deprecation |
+|---|---|---|
+| **O** | ⛔ Strictest: ~94% PR rejection; require eval evidence + one-problem-per-PR + human reviewed complete diff | Not explicit, but CONTRIBUTING rejects "compliance changes" |
+| **AD** | CONTRIBUTING four principles; vague advice rejected outright; new skills must reference existing ones to avoid duplication | Not explicit; once added, treated as permanent |
+| **AM** | "Skill Adaptation Policy": copy ideas not product identity; new skills must be single-domain with examples, anti-patterns, tested | Not explicit |
+| **NX** | PR against "Common rejection patterns"; design systems must meet 5-point bar (9 sections present / hex verifiable / no marketing fluff / ASCII slug / etc.) | CHANGELOG accretion (v0.6.0 = 136 PRs), no removal pattern |
+| **NL** | npm CLI (`uipro-cli`) + semver; changes via CSV row addition; source-of-truth `src/ui-ux-pro-max/`, symlinks auto-sync | "Continuous data enhancement" — no skill add/remove, just CSV row changes |
+| **CH** | `validate-skills.sh` auto PR validation; CONTRIBUTING enforces PR templates (new-skill.md / skill-update.md) + Skill Quality Checklist; version metadata | Not explicit; via fork / selective install |
+| **V** | AGENTS.md mandates: kebab-case directory / SKILL.md required / scripts/ required / .zip package / **500-line cap** | Not explicit, but "End-User Installation" distinguishes stable vs experimental |
+| **A** | No CONTRIBUTING; strict curation of demo examples; THIRD_PARTY_NOTICES.md for license rigor | No retirement policy; "demonstration purposes only" |
+| **OAI** | 12-line CONTRIBUTING.md ("Be kind and inclusive"); low technical bar; skill-creator includes eval scripts (`generate_review.py`, `eval-viewer`) | Three tiers `.system / .curated / .experimental` ≈ stable / mature / preview |
+| **M** | No formal CONTRIBUTING; **directory segregation**: `engineering/ productivity/ misc/` must register in README + plugin.json; `in-progress/ personal/ deprecated/` do not | **`deprecated/` directory** preserves history without recommending — graceful retirement |
+| **K** | No CONTRIBUTING; points to agentskills.io spec | Static references, only updated when Obsidian adds new syntax |
+| **MA** | Single-file, read-only | "These guidelines are designed to be merged" — no external skill intake |
+| **C** | PR must be "based on a real use case, not hypothetical" + tested across Claude.ai / Claude Code / API + attribution traceable | No removal; relies on category organization (Business / Communication / ...) |
+
+### 10.5 Cross-cutting insights
+
+**Three philosophical poles**:
+
+| Pole | Repos | Stance |
+|---|---|---|
+| Enforce | O, AD | "If it matches, you **must** use it" |
+| Offer | A, OAI, AM, M, K, V | "I provide capability; you choose" |
+| Always-on | MA | "This is how you code, period" |
+
+**Two QA paradigms**:
+
+| Paradigm | Repos | Tooling |
+|---|---|---|
+| Mechanical / automated | CH, O, V, NX, NL | shell scripts / eval transcripts / 500-line caps / P0-P2 checklists / 20-test pre-delivery |
+| Judgment / manual review | C, A, MA | PR reviewer judges authenticity / official curation / immutable principles |
+
+**Trigger strategy spectrum**:
+
+```
+High recall ←———————————————————————→ High precision
+Enumeration       Positive+Negative     Minimal description
+(CH / NL)         boundary (AD)          (A / OAI)
+```
+
+CH/NL's 200+ phrase enumeration maximizes recall (no missed activations) but risks over-triggering. A/OAI's minimal descriptions trust the model's judgment (more model-quality-sensitive). AD's "Use when X / When NOT to use Y" gives both positive and negative boundaries — currently the most balanced approach.
+
+**Iteration governance spectrum**:
+
+```
+Heavy gates ←————————————————————→ Light governance
+O / AD     CH / V     NX / NL      C       MA / K / OAI
+eval req   validator  CHANGELOG    PR attest  ~no gate
+```
+
+**Best practices for the user's two questions**:
+
+1. **Output Quality**: the strongest pattern is **"structure inside the skill body"** + **"PR-time verification"** as double insurance. AD's Verification + Red Flags + Use When structure plus O's eval transcript requirement is the combination that works.
+2. **Trigger Precision**: **positive + negative boundaries** beats **pure enumeration**. AD's "When NOT to use" sections suppress false positives more than CH's 15-phrase enumeration. But for domains with high linguistic variation (marketing users phrase requests many ways), CH's approach remains effective.
+
+**Decision signals for long-term add/remove**:
+
+| Signal | Implies | Action |
+|---|---|---|
+| Skill has no eval evidence | "May never trigger when it should" | **Reject / remove** |
+| Skill triggers overlap with existing skills | False positives / mis-fires | **Merge or add "see X" boundary clause** |
+| Skill body > 500 lines | High context cost; dilutes instruction weight | **Split / move to `references/`** |
+| Skill content stales easily (e.g. SDK versions) | Vendored content rots | **Switch to live `WebFetch`** (V's approach) |
+| Skill can't go cross-platform | Claude-only | **Downgrade to `experimental/`** (OAI's 3-tier) |
+| Skill seldom triggers | Users don't actually need it | **Move to `deprecated/`** (M's directory segregation) |
+
+> **Conclusion**: comparing the 13 repos reveals a counter-intuitive fact — **community popularity does not correlate with governance rigor**. The strictest O (~94% rejection) and the lightest MA (single-file, read-only) both sit in the cohort top tier; the largest C (864 skills) has the lowest D10 supp. density (0.03). Both "strict" and "loose" can work — what *doesn't* work is **strict-on-paper-but-not-enforced**: claiming high gates but waving things through.
+
 ---
 
-_All raw queries are reproducible via `gh repo view --json` + local `find`; submodules are shallow-cloned at `skills/<owner>__<repo>/`. Reproduction recipe: see this repo's `.gitmodules` and rank-based equal-weighted methodology in §7._
+_All raw queries are reproducible via `gh repo view --json` + local `find`; submodules are shallow-cloned at `skills/<owner>__<repo>/`. Reproduction recipe: see `.gitmodules` and rank-based equal-weighted methodology in §7. §10 philosophy archaeology is based on sampled docs from all 13 repos._

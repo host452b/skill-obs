@@ -34,3 +34,6 @@
 [submodule "skills/nexu-io__open-design"]
 	path = skills/nexu-io__open-design
 	url = https://github.com/nexu-io/open-design.git
+[submodule "skills/vercel-labs__agent-skills"]
+	path = skills/vercel-labs__agent-skills
+	url = https://github.com/vercel-labs/agent-skills.git

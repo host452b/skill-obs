@@ -7,8 +7,9 @@
 
 [![Eval baseline](https://img.shields.io/badge/eval-2026--05--13-blue)](./EVALUATION.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
-[![Cohort size](https://img.shields.io/badge/repos-12-green)](./.gitmodules)
+[![Cohort size](https://img.shields.io/badge/repos-13-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-15-purple)](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions)
+[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1-yellow)](./scoring.ipynb)
 
 ---
 
@@ -51,7 +52,7 @@ skill-obs/
 ├── EVALUATION.md                      ← 完整评测报告：15 维度 × 12 repos
 ├── scoring.ipynb                      ← 可视化 notebook（绿→红分阶染色）
 ├── build_scoring_notebook.py          ← 从源码重新生成 notebook 的脚本
-├── .gitmodules                        ← 12 个 submodule 注册
+├── .gitmodules                        ← 13 个 submodule 注册
 └── skills/                            ← 各 submodule（shallow clone）
     ├── affaan-m__everything-claude-code/
     ├── anthropics__skills/
@@ -64,25 +65,29 @@ skill-obs/
     ├── nexu-io__open-design/
     ├── obra__superpowers/
     ├── openai__skills/
-    └── addyosmani__agent-skills/
+    ├── addyosmani__agent-skills/
+    └── vercel-labs__agent-skills/
 ```
 
-## 🏆 Top-line Findings (eval baseline 2026-05-13)
+## 🏆 Top-line Findings (latest snapshot **v1.1** · 2026-05-13)
 
-| Rank | Repo | Score / 150 | Tier | 标签 |
-|---:|---|---:|:---:|---|
-| 🥇 1 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | **129** | S | 大而全 — 事实标准 |
-| 🥈 2 | [`obra/superpowers`](https://github.com/obra/superpowers) | 116 | S | 原创方法论 — 思想最深 |
-| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 110 | S | 15 天上线就吃下设计赛道 |
-| 4= | `anthropics/skills` | 94 | A | 官方规范 |
-| 4= | `nextlevelbuilder/ui-ux-pro-max-skill` | 94 | A | UI/UX 产品化 |
-| 6 | `addyosmani/agent-skills` | 90 | A | 生产级通用 |
-| 7 | `coreyhaines31/marketingskills` | 86 | A | 营销垂直 |
-| 8 | `ComposioHQ/awesome-claude-skills` | 80 | B | 数量碾压（864 SKILL.md） |
-| 9 | `mattpocock/skills` | 76 | B | TS 工程师视角 |
-| 10 | `openai/skills` | 73 | B | Codex 配套 |
-| 11 | `multica-ai/andrej-karpathy-skills` | 70 | B | 单文件 drop-in |
-| 12 | `kepano/obsidian-skills` | 50 | C | Obsidian 垂直 |
+| Rank | Repo | Score / 150 | Tier | Δ vs v1.0 | 标签 |
+|---:|---|---:|:---:|---:|---|
+| 🥇 1 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | **129** | S | 0 | 大而全 — 事实标准 |
+| 🥈 2 | [`obra/superpowers`](https://github.com/obra/superpowers) | 115 | S | −1 | 原创方法论 — 思想最深 |
+| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 110 | S | 0 | 15 天上线就吃下设计赛道 |
+| 4= | `anthropics/skills` | 93 | A | −1 | 官方规范 |
+| 4= | `nextlevelbuilder/ui-ux-pro-max-skill` | 93 | A | −1 | UI/UX 产品化 |
+| 6 | `addyosmani/agent-skills` | 90 | A | 0 | 生产级通用 |
+| 7 | `coreyhaines31/marketingskills` | 85 | A | −1 | 营销垂直 |
+| 8 | `ComposioHQ/awesome-claude-skills` | 80 | B | 0 | 数量碾压（864 SKILL.md） |
+| 9 | `mattpocock/skills` | 76 | B | 0 | TS 工程师视角 |
+| **10** | **[`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills)** | **75** | **B** | 🆕 | **Vercel 官方 — D10 辅料密度 第一** |
+| 11 | `openai/skills` | 72 | B | −1 | Codex 配套 |
+| 12 | `multica-ai/andrej-karpathy-skills` | 69 | B | −1 | 单文件 drop-in |
+| 13 | `kepano/obsidian-skills` | 50 | C | 0 | Obsidian 垂直 |
+
+> **v1.0 → v1.1 变更**：新增 `vercel-labs/agent-skills`（13 repos cohort）；V 在 D10（supplementary material density）排第一（19.3 辅料/skill），把 OAI 从 10 → 9 顶下来，连带 5 个排名靠前的 repo 在 D10 维度各掉 1 分，6 个 repo 总分降 1。完整 Δ-diff 见 `scoring.ipynb` 第 7 cell。
 
 完整评分矩阵、按领域/角色推荐、方法论与 caveat 见 **[`EVALUATION.md`](./EVALUATION.md)**。
 
@@ -162,6 +167,7 @@ Re-run all cells，Cell 10 会自动渲染新旧 snapshot 的 Δ-diff。
 | [nexu-io/open-design](https://github.com/nexu-io/open-design) | 38,735 | 2026-04-28 | Apache-2.0 |
 | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | 30,825 | 2026-01-02 | MIT |
 | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 28,215 | 2026-01-15 | MIT |
+| [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | 26,494 | 2025-12-08 | — |
 | [openai/skills](https://github.com/openai/skills) | 18,982 | 2025-11-25 | — |
 
 数据快照时间：**2026-05-13**。最新数据见各仓库 GitHub 页或 `scoring.ipynb` 内 `raw_metrics`。

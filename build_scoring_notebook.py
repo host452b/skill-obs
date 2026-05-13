@@ -62,6 +62,7 @@ REPOS = [
     ('OAI', 'openai',           'skills',                   'Codex skill catalog'),
     ('MA',  'multica-ai',       'andrej-karpathy-skills',   'Karpathy-derived CLAUDE.md'),
     ('K',   'kepano',           'obsidian-skills',          'Obsidian-native'),
+    ('V',   'vercel-labs',      'agent-skills',             'Vercel deploy + React/Next.js skills'),
 ]
 REPO_BY_CODE = {c: (c, o, r, l) for c, o, r, l in REPOS}
 
@@ -114,6 +115,57 @@ EVALUATIONS = [
             'K':   {'D1': 2, 'D2': 3, 'D3': 2, 'D4': 2, 'D5': 7, 'D6': 3, 'D7': 3, 'D8': 1, 'D9': 4, 'D10': 2, 'D11': 4, 'D12': 3, 'D13': 4, 'D14': 3, 'D15': 7},
         },
     },
+    {
+        'eval_date': '2026-05-13T16:30:00Z',
+        'version': '1.1',
+        'note': 'Added vercel-labs/agent-skills to cohort (13 repos). V displaces OAI on D10 (supp. material density 19.3 vs 11.33); 6 incumbents lose 1 point on D10 from cohort re-rank. Other dims stable.',
+        'submodule_shas': {
+            'skills/affaan-m__everything-claude-code':      'd4728a0d801f1ebbc2384547009df17cbf16bfd1',
+            'skills/obra__superpowers':                     'f2cbfbefebbfef77321e4c9abc9e949826bea9d7',
+            'skills/nexu-io__open-design':                  '6341b2677aa7075b8027e3647310d61060b63e1b',
+            'skills/anthropics__skills':                    'f458cee31a7577a47ba0c9a101976fa599385174',
+            'skills/nextlevelbuilder__ui-ux-pro-max-skill': 'b7e3af80f6e331f6fb456667b82b12cade7c9d35',
+            'skills/addyosmani__agent-skills':              '3ff4b518b3cd3077ca27cf883aa21d21faf53802',
+            'skills/coreyhaines31__marketingskills':        '906c2fb28e471c5b1d149d4159ec5ddb40b7c364',
+            'skills/ComposioHQ__awesome-claude-skills':     'f2b5e29bc315f04c8e09591ba275f4c4f7d4b8fe',
+            'skills/mattpocock__skills':                    'f304057d61d3df3c9fd992ac2b6e3833cb9325fb',
+            'skills/openai__skills':                        'c25113bf4c64c8dba6bfe61acf06051d79aa43f6',
+            'skills/multica-ai__andrej-karpathy-skills':    '2c606141936f1eeef17fa3043a72095b4765b9c2',
+            'skills/kepano__obsidian-skills':               'ac9398734fe719565809f7a6048b05c36b1ca38f',
+            'skills/vercel-labs__agent-skills':             'b9c8ee0643d87d3c5a953d1e22382ff2ead39229',
+        },
+        'raw_metrics': {
+            'AM':  {'stars': 180838, 'forks': 27876, 'watchers': 899, 'contribs': 183, 'skill_md': 572, 'avg_skill_bytes': 8847,  'days_alive': 115, 'stars_per_day': 1572.5, 'commits_per_day': 14.82, 'platforms': 7, 'last_push_days_ago': 0},
+            'O':   {'stars': 188498, 'forks': 16759, 'watchers': 753, 'contribs': 33,  'skill_md': 14,  'avg_skill_bytes': 8168,  'days_alive': 216, 'stars_per_day': 872.7,  'commits_per_day': 2.04,  'platforms': 6, 'last_push_days_ago': 0},
+            'NX':  {'stars': 38735,  'forks': 4403,  'watchers': 142, 'contribs': 186, 'skill_md': 218, 'avg_skill_bytes': 3438,  'days_alive': 15,  'stars_per_day': 2582.3, 'commits_per_day': 42.5,  'platforms': 9, 'last_push_days_ago': 0},
+            'A':   {'stars': 133251, 'forks': 15715, 'watchers': 865, 'contribs': 13,  'skill_md': 18,  'avg_skill_bytes': 10995, 'days_alive': 233, 'stars_per_day': 571.9,  'commits_per_day': 0.15,  'platforms': 1, 'last_push_days_ago': 4},
+            'NL':  {'stars': 77723,  'forks': 7977,  'watchers': 381, 'contribs': 31,  'skill_md': 7,   'avg_skill_bytes': 12272, 'days_alive': 164, 'stars_per_day': 474.0,  'commits_per_day': 0.82,  'platforms': 8, 'last_push_days_ago': 40},
+            'AD':  {'stars': 40580,  'forks': 4472,  'watchers': 255, 'contribs': 23,  'skill_md': 22,  'avg_skill_bytes': 10703, 'days_alive': 87,  'stars_per_day': 466.4,  'commits_per_day': 2.0,   'platforms': 7, 'last_push_days_ago': 3},
+            'CH':  {'stars': 28215,  'forks': 4550,  'watchers': 288, 'contribs': 16,  'skill_md': 41,  'avg_skill_bytes': 11443, 'days_alive': 118, 'stars_per_day': 239.1,  'commits_per_day': 2.21,  'platforms': 5, 'last_push_days_ago': 7},
+            'C':   {'stars': 59518,  'forks': 6462,  'watchers': 399, 'contribs': 26,  'skill_md': 864, 'avg_skill_bytes': 3444,  'days_alive': 208, 'stars_per_day': 286.1,  'commits_per_day': 0.34,  'platforms': 7, 'last_push_days_ago': 6},
+            'M':   {'stars': 77173,  'forks': 6656,  'watchers': 532, 'contribs': 2,   'skill_md': 28,  'avg_skill_bytes': 3321,  'days_alive': 99,  'stars_per_day': 779.5,  'commits_per_day': 0.78,  'platforms': 2, 'last_push_days_ago': 1},
+            'OAI': {'stars': 18982,  'forks': 1259,  'watchers': 110, 'contribs': 34,  'skill_md': 43,  'avg_skill_bytes': 9435,  'days_alive': 169, 'stars_per_day': 112.3,  'commits_per_day': 0.64,  'platforms': 1, 'last_push_days_ago': 1},
+            'MA':  {'stars': 127547, 'forks': 12958, 'watchers': 671, 'contribs': 7,   'skill_md': 1,   'avg_skill_bytes': 2518,  'days_alive': 106, 'stars_per_day': 1203.3, 'commits_per_day': 0.26,  'platforms': 2, 'last_push_days_ago': 23},
+            'K':   {'stars': 30825,  'forks': 2100,  'watchers': 185, 'contribs': 13,  'skill_md': 5,   'avg_skill_bytes': 6040,  'days_alive': 131, 'stars_per_day': 235.3,  'commits_per_day': 0.30,  'platforms': 3, 'last_push_days_ago': 6},
+            'V':   {'stars': 26494,  'forks': 2416,  'watchers': 114, 'contribs': 21,  'skill_md': 7,   'avg_skill_bytes': 7224,  'days_alive': 156, 'stars_per_day': 169.8,  'commits_per_day': 1.27,  'platforms': 4, 'last_push_days_ago': 6},
+        },
+        'scores': {
+            # Unchanged from v1.0 except where V displaces in D10.
+            'AM':  {'D1': 9, 'D2': 9, 'D3':10, 'D4':10, 'D5':10, 'D6': 9, 'D7': 9, 'D8': 9, 'D9': 6, 'D10': 5, 'D11':10, 'D12':10, 'D13': 8, 'D14':10, 'D15': 5},
+            'O':   {'D1': 8, 'D2':10, 'D3': 9, 'D4': 8, 'D5':10, 'D6': 7, 'D7': 7, 'D8': 3, 'D9': 5, 'D10': 6, 'D11': 8, 'D12': 9, 'D13': 7, 'D14': 9, 'D15': 9},  # D10 7→6
+            'NX':  {'D1':10, 'D2': 4, 'D3': 3, 'D4': 2, 'D5':10, 'D6':10, 'D7':10, 'D8': 8, 'D9': 3, 'D10': 4, 'D11':10, 'D12':10, 'D13':10, 'D14': 8, 'D15': 8},
+            'A':   {'D1': 6, 'D2': 9, 'D3': 8, 'D4': 9, 'D5': 8, 'D6': 1, 'D7': 3, 'D8': 3, 'D9': 9, 'D10': 6, 'D11': 6, 'D12': 6, 'D13': 1, 'D14': 8, 'D15':10},  # D10 7→6
+            'NL':  {'D1': 5, 'D2': 7, 'D3': 6, 'D4': 5, 'D5': 2, 'D6': 6, 'D7': 6, 'D8': 2, 'D9':10, 'D10': 8, 'D11': 9, 'D12': 8, 'D13': 9, 'D14': 4, 'D15': 6},  # D10 9→8
+            'AD':  {'D1': 5, 'D2': 4, 'D3': 4, 'D4': 3, 'D5': 8, 'D6': 7, 'D7': 4, 'D8': 4, 'D9': 8, 'D10': 3, 'D11': 9, 'D12': 8, 'D13': 8, 'D14': 8, 'D15': 7},
+            'CH':  {'D1': 3, 'D2': 2, 'D3': 4, 'D4': 4, 'D5': 6, 'D6': 8, 'D7': 4, 'D8': 6, 'D9': 9, 'D10': 6, 'D11': 8, 'D12': 9, 'D13': 6, 'D14': 4, 'D15': 6},  # D10 7→6
+            'C':   {'D1': 4, 'D2': 5, 'D3': 5, 'D4': 5, 'D5': 7, 'D6': 3, 'D7': 5, 'D8':10, 'D9': 3, 'D10': 1, 'D11': 8, 'D12': 4, 'D13': 8, 'D14': 9, 'D15': 3},
+            'M':   {'D1': 7, 'D2': 6, 'D3': 5, 'D4': 6, 'D5': 9, 'D6': 5, 'D7': 1, 'D8': 5, 'D9': 2, 'D10': 2, 'D11': 7, 'D12': 6, 'D13': 2, 'D14': 6, 'D15': 7},
+            'OAI': {'D1': 1, 'D2': 1, 'D3': 1, 'D4': 1, 'D5': 9, 'D6': 4, 'D7': 8, 'D8': 7, 'D9': 7, 'D10': 9, 'D11': 3, 'D12': 3, 'D13': 1, 'D14': 7, 'D15':10},  # D10 10→9
+            'MA':  {'D1': 9, 'D2': 8, 'D3': 7, 'D4': 7, 'D5': 4, 'D6': 2, 'D7': 2, 'D8': 1, 'D9': 1, 'D10': 7, 'D11': 7, 'D12': 3, 'D13': 2, 'D14': 1, 'D15': 8},  # D10 8→7
+            'K':   {'D1': 2, 'D2': 3, 'D3': 2, 'D4': 2, 'D5': 7, 'D6': 3, 'D7': 3, 'D8': 1, 'D9': 4, 'D10': 2, 'D11': 4, 'D12': 3, 'D13': 4, 'D14': 3, 'D15': 7},
+            'V':   {'D1': 2, 'D2': 2, 'D3': 3, 'D4': 2, 'D5': 7, 'D6': 6, 'D7': 4, 'D8': 2, 'D9': 5, 'D10':10, 'D11': 8, 'D12': 6, 'D13': 5, 'D14': 4, 'D15': 9},  # NEW (total = 75 → B)
+        },
+    },
     # ── Append new snapshots here ─────────────────────────────────────────────
 ]
 
@@ -131,6 +183,7 @@ DOMAIN_RECS = [
     ('Obsidian / 知识管理 / Knowledge management',             'K',   'kepano (Obsidian creator) maintains; only repo covering Canvas/Bases'),
     ('零负担 CLAUDE.md / Drop-in single-file',                'MA',  'Single CLAUDE.md drop-in; Karpathy LLM-coding anti-patterns'),
     ('浏览 / 发现 skill / Discovery / browse',                'C',   '864 SKILL.md index; biggest awesome-list'),
+    ('Vercel / Next.js / React 生产工程 / Vercel-native web',  'V',   'Official Vercel; 40+ React perf rules from Vercel engineering; D10=10 supplementary density'),
 ]
 
 
@@ -208,6 +261,13 @@ LEGEND = (
 )
 
 
+def iter_snapshot_repos(snapshot: dict):
+    """Yield (code, owner, repo, label) for repos present in a snapshot, in REPOS order."""
+    for code, owner, repo, label in REPOS:
+        if code in snapshot.get('scores', {}):
+            yield code, owner, repo, label
+
+
 def _fetch_current_shas() -> dict:
     try:
         out = subprocess.check_output(
@@ -231,7 +291,7 @@ def _fetch_current_shas() -> dict:
 
 def build_overall(snapshot: dict) -> str:
     rows = []
-    for code, owner, repo, label in REPOS:
+    for code, owner, repo, label in iter_snapshot_repos(snapshot):
         sc = snapshot['scores'][code]
         m = snapshot['raw_metrics'][code]
         total = sum(sc.values())
@@ -321,7 +381,7 @@ def build_overall(snapshot: dict) -> str:
 
 def build_score_matrix(snapshot: dict) -> str:
     rows = []
-    for code, owner, repo, label in REPOS:
+    for code, owner, repo, label in iter_snapshot_repos(snapshot):
         sc = snapshot['scores'][code]
         total = sum(sc.values())
         rows.append({'code': code, 'repo': f'{owner}/{repo}', 'total': total,
@@ -383,7 +443,7 @@ def build_score_matrix(snapshot: dict) -> str:
 
 def build_raw_metrics(snapshot: dict) -> str:
     rows = []
-    for code, owner, repo, _ in REPOS:
+    for code, owner, repo, _ in iter_snapshot_repos(snapshot):
         m = snapshot['raw_metrics'][code]
         rows.append({'code': code, 'repo': f'{owner}/{repo}', **m})
     # Sort by stars desc
@@ -509,6 +569,8 @@ def build_domain_recs(snapshot: dict) -> str:
         f'</tr>',
     ]
     for i, (domain, code, reason) in enumerate(DOMAIN_RECS, 1):
+        if code not in snapshot['scores']:
+            continue  # repo not present in this snapshot; skip domain entry
         _, owner, repo, _ = REPO_BY_CODE[code]
         total = sum(snapshot['scores'][code].values())
         tier = tier_for_total(total)
@@ -541,10 +603,23 @@ def build_diff(snap_new: dict, snap_old: dict) -> str:
         + f'<th style="{TH};text-align:right">ΔTotal</th>'
         '</tr>',
     ]
+    NEW_BADGE = '<span style="background:rgba(40,200,100,0.45);padding:1px 6px;border-radius:3px;font-size:0.78em;font-weight:600;margin-left:6px">NEW</span>'
     for code, owner, repo, _ in REPOS:
-        new = snap_new['scores'].get(code, {})
-        old = snap_old['scores'].get(code, {})
-        deltas = {did: new.get(did, 0) - old.get(did, 0) for did in DIM_IDS}
+        new = snap_new['scores'].get(code)
+        old = snap_old['scores'].get(code)
+        if new is None:
+            continue  # not in new snapshot; nothing to diff
+        if old is None:
+            # NEW entry — display raw scores with NEW badge, neutral background
+            dtot = sum(new.values())
+            line = [f'<td style="{TD};text-align:left;white-space:nowrap"><b>{owner}/{repo}</b>{NEW_BADGE}</td>']
+            for did in DIM_IDS:
+                v = new[did]
+                line.append(f'<td style="background-color:rgba(120,160,220,0.20);{TD};text-align:right">{v}*</td>')
+            line.append(f'<td style="background-color:rgba(120,160,220,0.30);{TD};text-align:right;font-weight:600">{dtot}*</td>')
+            parts.append('<tr>' + ''.join(line) + '</tr>')
+            continue
+        deltas = {did: new[did] - old[did] for did in DIM_IDS}
         dtot = sum(deltas.values())
         line = [f'<td style="{TD};text-align:left;white-space:nowrap"><b>{owner}/{repo}</b></td>']
         for did in DIM_IDS:
