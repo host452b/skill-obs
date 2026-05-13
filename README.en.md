@@ -110,9 +110,9 @@ Full score matrix, by-domain recommendations, methodology, and caveats: **[`EVAL
 
 A task-first decision matrix (which repo for which AI-agent task?) — see **[`TASK_GUIDE.en.md`](./TASK_GUIDE.en.md)** (AM × O × NX overlap/orthogonality/complementarity deep-dive + ~50 task lookup + recommended stacks + coverage gaps).
 
-## 📐 15 Evaluation Dimensions
+## 📐 19 Evaluation Dimensions
 
-Brief (full definitions in [`EVALUATION.en.md §2`](./EVALUATION.en.md#2-15-evaluation-dimensions)):
+Brief (full definitions in [`EVALUATION.en.md §2`](./EVALUATION.en.md#2-15-evaluation-dimensions) + [`§11`](./EVALUATION.en.md#11-v12-snapshot--d16-d19-social-signals--gs--aa)):
 
 | Category | Dimensions |
 |---|---|
@@ -123,6 +123,7 @@ Brief (full definitions in [`EVALUATION.en.md §2`](./EVALUATION.en.md#2-15-eval
 | Engineering hygiene | D11 Doc Quality, D12 Eng. Hygiene |
 | Portability | D13 Multi-Agent Portability |
 | Strategic value | D14 Domain Breadth, D15 Originality / Authority |
+| **🆕 Social signals (v1.2)** | **D16 Reddit Heat** (30d posts + comments) · **D17 Reddit Sentiment** (30d avg upvote) · **D18 HN Heat** (30d stories + comments) · **D19 HN Sentiment** (30d avg points) |
 
 ## 🎨 Notebook Layout
 

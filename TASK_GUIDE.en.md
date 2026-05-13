@@ -2,7 +2,9 @@
 
 > 🌐 **Language**: [🇨🇳 中文](./TASK_GUIDE.md) · **🇬🇧 English**
 
-A task-first decision matrix across the 13 skill repos. Given a concrete AI-agent task, which repo (or stack) should you install?
+> 🔄 **v1.2 sync (2026-05-13)**: cohort expanded to **15 repos**, adding `garrytan/gstack` (GS) and `msitarzewski/agency-agents` (AA). See §1 bottom, §3.7-3.8, §5 recommended stacks, §6 gap update. **AA fills the game-dev gap** (20 game-dev agents).
+
+A task-first decision matrix across the 15 skill repos. Given a concrete AI-agent task, which repo (or stack) should you install?
 
 - §1 — Where each repo sits on the functional map
 - §2 — **AM × O × NX deep-dive**: overlaps, orthogonality, and complementary stacks (the most-asked comparison)
@@ -13,13 +15,15 @@ A task-first decision matrix across the 13 skill repos. Given a concrete AI-agen
 
 ---
 
-## 1. Functional positioning of the 13 repos
+## 1. Functional positioning of the 15 repos
 
 | Code | Repo | Orthogonal niche (unique value axis) |
 |---|---|---|
+| **GS** 🆕 | `garrytan/gstack` | **Opinionated role-based setup** — Garry Tan's actual 23-role-agent setup (CEO/Designer/Eng-Mgr/Release/Doc/QA); avg SKILL.md 52KB = cohort-deepest |
 | **AM** | `affaan-m/everything-claude-code` | **General-purpose agent harness** — 60 agents + 228 skills + commands + hooks + install; king of breadth |
 | **O**  | `obra/superpowers` | **Engineering methodology** — TDD / debug / brainstorm / plan / review meta-skills; king of depth |
 | **NX** | `nexu-io/open-design` | **Design output** — 19 skills + 71 design systems; multi-platform (web/desktop/mobile/slides/PDF) creative production |
+| **AA** 🆕 | `msitarzewski/agency-agents` | **Personality-driven multi-role agency** — 222 agents across **18 domains** (incl. game-dev / spatial / academic / finance); each agent has personality + emoji + vibe |
 | **A**  | `anthropics/skills` | **Official spec + practical demos** — Defines SKILL.md standard; ships PDF / theme / doc-coauthoring reference skills |
 | **NL** | `nextlevelbuilder/ui-ux-pro-max-skill` | **Component-level UI/UX** — 161 palettes + 57 font pairs + BM25 reasoning engine; visual polish |
 | **AD** | `addyosmani/agent-skills` | **Production engineering** — General software practice with strict quality gates (Specific / Verifiable / Battle-tested / Minimal) |
@@ -136,6 +140,28 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 
 → **When to use C**: discovery / browsing the skill ecosystem to see what's possible. **Not a primary install**; once you find a direction, switch to the matching specialist.
 
+### 3.7 AM vs GS — two "all-rounder" repos, opposite philosophies (v1.2 addition)
+
+| Common ground | Differences |
+|---|---|
+| Both are "team production-grade" general harnesses | **AM = breadth + neutral** (228 skills + 60 agents; "fill the capability pool"); **GS = depth + opinion** (51 skills but avg 52KB; "Garry Tan's personally-vetted operational flow") |
+
+→ **Choice**:
+- Team is startup / accepts strong opinion → **GS** (copy YC-leader's setup verbatim)
+- Team is enterprise / needs capability diversity → **AM** (compose your own / swap components)
+- Want "AM's breadth + GS's depth" → install both: **AM as capability pool, GS as high-quality reference**
+
+### 3.8 AM vs AA — two "big-bag" repos, different axes (v1.2 addition)
+
+| Common ground | Differences |
+|---|---|
+| Both are large-scale (AM 228 skills, AA 222 agents) | **AM = skill-centric** (each skill solves a capability); **AA = role-centric + personality** (each agent has personality + emoji + vibe, organized by *role* not *task*; 18 domains vs AM's mostly-engineering focus) |
+
+→ **Choice**:
+- You want "engineering capability pool" → **AM**
+- You want "multi-role / cross-domain agency" → **AA** (covers finance/academic/spatial-computing/game-dev that AM doesn't)
+- Use both? Possible, but trigger collisions may occur — set up priority / namespace ordering
+
 ### 3.6 V vs A vs OAI — three official authorities
 
 | | A | OAI | V |
@@ -164,7 +190,7 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 | 6 | Database / SQL optimization | AD ✅ | C ➕ | AD strong on Verification; C has DB-specific skills |
 | 7 | DevOps / CI / Deployment | AM ✅ | V ➕ | AM has hooks/commitlint/lint; V specializes in Vercel deploy |
 | 8 | Cloud IaC (Terraform/K8s) | AM ⚠ | — | ⚠ Cohort weak; rely on AM general engineering |
-| 9 | **Game development** (Web / Engine) | ⚠ no specialist | C search | ⚠ Cohort has **no game specialist**; C may have stray entries, else self-build |
+| 9 | **Game development** (Web / Engine) | **AA ✅** (v1.2) | C search | 🆕 **AA has 20 game-development agents** (cohort previously had no game specialist; AA fills the gap) |
 | 10 | Web3 / Smart Contracts | ⚠ no specialist | C search | ⚠ Same as above |
 | 11 | Embedded / Rust systems | M ✅ | MA ➕ | M's first-principles + MA's anti-pattern guard |
 
@@ -276,7 +302,10 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 | 73 | Learn the SKILL.md spec | A ✅ | OAI ➕ | A is official authority |
 | 74 | Multi-agent platform support | NX ✅ | NL ➕ V ➕ | NX covers 9 platforms |
 | 75 | Solo independent engineer | M ✅ | MA ➕ | M lightweight + MA anti-pattern |
-| 76 | Team / company adoption | AM ✅ | AD ➕ O ➕ | AM hooks/commitlint/CoC; AD strict quality gates; O methodology enforcement |
+| 76 | Team / company adoption (general enterprise) | AM ✅ | AD ➕ O ➕ | AM hooks/commitlint/CoC; AD strict quality gates; O methodology enforcement |
+| 77 | 🆕 **YC / Startup opinionated setup** | **GS ✅** | AM ➕ | 🆕 v1.2 · Garry Tan's actual role setup — copy verbatim, no component picking |
+| 78 | 🆕 Multi-role / multi-domain agency-as-agents | **AA ✅** | GS ➕ AM ➕ | 🆕 v1.2 · 222 agents across 18 domains (finance / academic / spatial-computing / game-dev etc.) |
+| 79 | 🆕 Deep SKILL.md template (learning to write "thick" SKILLs) | **GS ✅** | NL ➕ | 🆕 v1.2 · GS avg SKILL.md 52KB = cohort-deepest; NL 12KB is second |
 
 ---
 
@@ -296,16 +325,21 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 | **AI Agent / Skill builder** | A + AM + O | A spec + AM reference impl + O methodology |
 | **Try / evaluate the ecosystem** | MA + C | MA zero-friction install + C ecosystem browse |
 | **Codex user** | OAI + O + A | Codex companion + methodology + spec |
+| 🆕 **YC / Startup founding team (copy-paste)** | **GS** + optional O | GS gives Garry Tan's setup verbatim; O adds methodology discipline |
+| 🆕 **Cross-domain studio / multi-role agency** | **AA** + AM | AA provides 18-domain role agents; AM adds engineering harness |
+| 🆕 **Game development** | **AA** + M | AA has 20 game-dev agents (only v1.2 coverage); M adds engineering rigor |
+| 🆕 **"Best-in-class" SKILL.md template** | **GS** + A | GS avg 52KB = deepest cohort reference; A is the spec |
 
 ---
 
 ## 6. Coverage gaps (areas the cohort doesn't cover)
 
-The 13-repo cohort has **no specialist** for these domains — opportunities for future cohort additions:
+The 15-repo cohort has **no specialist** for these domains — opportunities for future cohort additions:
+
+> ✅ **v1.2 closed**: ~~Game development~~ — **AA ships 20 game-development agents**
 
 | Gap | Best fallback | Suggestion |
 |---|---|---|
-| **Game development** (Web / Unity / Unreal) | C search (sparse) | ⚠ Needs specialist; today rely on M's rigor + self-build |
 | **GPU kernel** (CUDA / Triton / MPS) | MA + M (indirect) | ⚠ Needs specialist; MA anti-pattern + M /diagnose as discipline scaffolding |
 | **Web3 / Smart Contracts** | C search | ⚠ Needs specialist |
 | **Cloud IaC** (Terraform / K8s / Pulumi) | AM (general) | ⚠ Missing depth; AM hooks/commands work but shallow |
@@ -318,7 +352,7 @@ The 13-repo cohort has **no specialist** for these domains — opportunities for
 | **Quant / Trading algorithms** | M + AD | ⚠ Missing specialist |
 | **Offensive security** (pentest / red team) | AM, AD (defensive) | ⚠ No offensive specialist |
 
-> **Key observation**: the cohort is strong in *agent dev + design + web frontend + marketing + KM*; weak in *low-level systems / GPU / game / multimodal ML / cloud IaC*. This matches community velocity — current skill ecosystem energy is in *application-layer agent + content + design*; deep systems work is still self-built territory.
+> **Key observation (v1.2 update)**: the cohort is strong in *agent dev + design + web frontend + marketing + KM + **multi-role agency (v1.2 AA) + game-dev (v1.2 AA)***; weak in *low-level systems / GPU / multimodal ML / cloud IaC / smart contracts*. Deep systems / GPU / Web3 are still self-built territory.
 
 ---
 
@@ -326,21 +360,24 @@ The 13-repo cohort has **no specialist** for these domains — opportunities for
 
 > Coverage strength per domain on a 1–5 scale. ✅ ≥ 4, ➕ ≥ 2, — = not covered.
 
-| Domain \ Repo | AM | O | NX | A | NL | AD | CH | C | M | OAI | MA | K | V |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| General engineering | ✅ | ✅ | — | ➕ | — | ✅ | — | ➕ | ✅ | ✅ | ✅ | — | — |
-| Web frontend | ➕ | — | — | — | ➕ | ➕ | ➕ | ➕ | — | — | — | — | **✅** |
-| UI/UX design | — | — | **✅** | ➕ | **✅** | — | — | ➕ | — | — | — | — | ➕ |
-| Design system / brand | — | — | **✅** | ➕ | ➕ | — | ➕ | — | — | — | — | — | — |
-| Methodology (TDD/debug/plan) | ➕ | **✅** | — | ➕ | — | ➕ | — | ➕ | ➕ | ➕ | ✅ | — | — |
-| AI / agent building | **✅** | ➕ | — | ✅ | — | ➕ | — | ➕ | — | ✅ | ➕ | — | — |
-| Skill meta-development | ➕ | ➕ | — | **✅** | — | ➕ | ➕ | ➕ | — | **✅** | — | — | ➕ |
-| Marketing / growth | — | — | ➕ | — | — | — | **✅** | ➕ | — | — | — | — | ➕ |
-| Knowledge management | — | — | — | ➕ | — | — | — | — | — | — | — | **✅** | — |
-| Document output | ➕ | — | ➕ | ✅ | — | ➕ | ➕ | ➕ | — | — | — | ➕ | — |
-| Performance / optimization | ➕ | — | — | — | — | ✅ | — | — | ➕ | — | ➕ | — | **✅** |
-| Research / eval | ➕ | **✅** | — | ➕ | — | ➕ | — | — | ✅ | — | ➕ | ➕ | — |
-| Discovery / browse | — | — | — | — | — | — | — | **✅** | — | — | — | — | — |
+| Domain \ Repo | AM | O | NX | A | NL | AD | CH | C | M | OAI | MA | K | V | **GS** 🆕 | **AA** 🆕 |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| General engineering | ✅ | ✅ | — | ➕ | — | ✅ | — | ➕ | ✅ | ✅ | ✅ | — | — | **✅** | ➕ |
+| Web frontend | ➕ | — | — | — | ➕ | ➕ | ➕ | ➕ | — | — | — | — | **✅** | ➕ | ➕ |
+| UI/UX design | — | — | **✅** | ➕ | **✅** | — | — | ➕ | — | — | — | — | ➕ | ➕ | ➕ |
+| Design system / brand | — | — | **✅** | ➕ | ➕ | — | ➕ | — | — | — | — | — | — | ➕ | ➕ |
+| Methodology (TDD/debug/plan) | ➕ | **✅** | — | ➕ | — | ➕ | — | ➕ | ➕ | ➕ | ✅ | — | — | ➕ | — |
+| AI / agent building | **✅** | ➕ | — | ✅ | — | ➕ | — | ➕ | — | ✅ | ➕ | — | — | **✅** | **✅** |
+| Skill meta-development | ➕ | ➕ | — | **✅** | — | ➕ | ➕ | ➕ | — | **✅** | — | — | ➕ | ➕ | ➕ |
+| Marketing / growth | — | — | ➕ | — | — | — | **✅** | ➕ | — | — | — | — | ➕ | — | ➕ |
+| Knowledge management | — | — | — | ➕ | — | — | — | — | — | — | — | **✅** | — | ➕ | ➕ |
+| Document output | ➕ | — | ➕ | ✅ | — | ➕ | ➕ | ➕ | — | — | — | ➕ | — | ✅ | ➕ |
+| Performance / optimization | ➕ | — | — | — | — | ✅ | — | — | ➕ | — | ➕ | — | **✅** | ➕ | — |
+| Research / eval | ➕ | **✅** | — | ➕ | — | ➕ | — | — | ✅ | — | ➕ | ➕ | — | ➕ | ➕ |
+| Discovery / browse | — | — | — | — | — | — | — | **✅** | — | — | — | — | — | — | ➕ |
+| **Game development** 🆕 | — | — | — | — | — | — | — | — | — | — | — | — | — | — | **✅** |
+| **Multi-role agency (CEO/Designer/QA/etc)** 🆕 | ➕ | — | — | — | — | — | — | — | — | — | — | — | — | **✅** | **✅** |
+| **Cross-domain (academic/finance/spatial)** 🆕 | ➕ | — | — | — | — | — | — | ➕ | — | — | — | — | — | — | **✅** |
 
 ---
 

@@ -2,7 +2,9 @@
 
 > 🌐 **Language**: **🇨🇳 中文** · [🇬🇧 English](./TASK_GUIDE.en.md)
 
-从 13 个 skill repo 的**功能正交**角度，给定具体 AI agent 任务，应该装哪个 repo（或哪个组合）？本手册覆盖：
+> 🔄 **v1.2 同步 (2026-05-13)**：cohort 已扩到 **15 repos**，新增 `garrytan/gstack` (GS) 和 `msitarzewski/agency-agents` (AA)。详见 §1 末尾、§3.7、§5 推荐 stacks、§6 缺口更新。**AA 已填补 game-dev 缺口**（20 game-dev agents）。
+
+从 15 个 skill repo 的**功能正交**角度，给定具体 AI agent 任务，应该装哪个 repo（或哪个组合）？本手册覆盖：
 
 - §1 — 13 个 repo 在功能版图上的位置
 - §2 — **AM × O × NX 三大代表 repo 的 overlap / 正交 / 互补**（用户重点关注）
@@ -13,13 +15,15 @@
 
 ---
 
-## 1. 13 个 repo 的功能正交位置 / Functional positioning
+## 1. 15 个 repo 的功能正交位置 / Functional positioning
 
 | Code | Repo | 正交位置（独占价值轴）|
 |---|---|---|
+| **GS** 🆕 | `garrytan/gstack` | **Opinionated 角色 setup** — Garry Tan 实战 23 个角色 agent (CEO/Designer/Eng-Mgr/Release/Doc/QA)；avg SKILL.md 52KB 是 cohort 最深 |
 | **AM** | `affaan-m/everything-claude-code` | **通用 agent harness** — 60 agents + 228 skills + commands + hooks + install 一站；breadth 之王 |
 | **O**  | `obra/superpowers` | **工程方法论** — TDD / debug / brainstorm / plan / review 等元技能；depth 之王 |
 | **NX** | `nexu-io/open-design` | **设计输出** — 19 skills + 71 design systems；多平台 (web/desktop/mobile/slides/PDF) creative production |
+| **AA** 🆕 | `msitarzewski/agency-agents` | **个性化 multi-role agency** — 222 agents 跨 **18 个领域**（含 game-dev / spatial / academic / finance）；每个 agent 有 personality + emoji + vibe |
 | **A**  | `anthropics/skills` | **官方规范 + 实用 demo** — SKILL.md 标准定义者；含 PDF / theme / doc-coauthoring 等 reference skills |
 | **NL** | `nextlevelbuilder/ui-ux-pro-max-skill` | **UI/UX 组件级** — 161 调色板 + 57 字体 + BM25 推理引擎；component-level 视觉 polish |
 | **AD** | `addyosmani/agent-skills` | **生产工程** — 通用 engineering 实践，重质量门（Specific / Verifiable / Battle-tested / Minimal）|
@@ -136,6 +140,28 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 
 → **何时用 C**：discovery / 浏览市场上有哪些 skill 形态。**不当主装**，可以挖到具体方向后转向对应的 specialist repo。
 
+### 3.7 AM vs GS — 两个 "全能型" 但哲学相反（v1.2 新增）
+
+| 共性 | 差异 |
+|---|---|
+| 都是"团队 production 级"通用 harness | **AM = breadth + neutral**（228 skills + 60 agents，"装满 capability 池"）；**GS = depth + opinion**（51 skills，但平均 52KB，"Garry Tan 个人验证过的实战流程"）|
+
+→ **选择决策**：
+- 你的团队是 startup / 接受 strong opinion → **GS**（直接照搬 YC 大佬 setup）
+- 你的团队是 enterprise / 需要 capability 多样性 → **AM**（自己组合 / 替换组件）
+- 你想要 "AM 的广度 + GS 的深度" → 两者叠加，**AM 给 capability pool + GS 给 high-quality reference**
+
+### 3.8 AM vs AA — 两个 "大全包" 但维度不同（v1.2 新增）
+
+| 共性 | 差异 |
+|---|---|
+| 都是大体量（AM 228 skills，AA 222 agents） | **AM = skill-centric**（每个 skill 解决一个能力）；**AA = role-centric + personality**（每个 agent 有 personality + emoji + vibe，按 *角色* 而非 *任务* 组织，18 个领域 vs AM 的工程领域为主）|
+
+→ **选择决策**：
+- 你要 "engineering capability 池" → **AM**
+- 你要 "多角色 / 跨领域 agency" → **AA**（含 finance/academic/spatial-computing/game-dev 等 AM 不覆盖的领域）
+- 同时用？— 可以，但 trigger 可能冲突，建议设置好优先级 / namespace
+
 ### 3.6 V vs A vs OAI — 三个官方 / Three official authorities
 
 | | A | OAI | V |
@@ -164,7 +190,7 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 | 6 | 数据库 / SQL 优化 | AD ✅ | C ➕ | AD 强 Verification；C 有 DB-specific skills |
 | 7 | DevOps / CI / Deployment | AM ✅ | V ➕ | AM 含 hooks/commitlint/lint；V 专 Vercel deploy |
 | 8 | 云基础设施 / IaC (Terraform/K8s) | AM ⚠ | — | ⚠ cohort 弱，靠 AM 通用工程 |
-| 9 | **Game 开发** (Web / Engine) | ⚠ no specialist | C 搜 | ⚠ cohort **完全无 game 专项**；C 可能有零星，否则只能靠通用 + 自建 |
+| 9 | **Game 开发** (Web / Engine) | **AA ✅** (v1.2) | C 搜 | 🆕 **AA 有 20 个 game-development agents**（之前 cohort 完全无 game 专项，AA 加入后填补）|
 | 10 | Web3 / Smart Contracts | ⚠ no specialist | C 搜 | ⚠ 同上 |
 | 11 | 嵌入式 / Rust systems | M ✅ | MA ➕ | M 的 first-principles + MA 反 anti-pattern |
 
@@ -276,7 +302,10 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 | 73 | 学 SKILL.md 规范 | A ✅ | OAI ➕ | A 是官方权威 |
 | 74 | 多 agent 平台兼容 | NX ✅ | NL ➕ V ➕ | NX 9 个平台覆盖最广 |
 | 75 | 个人独立工程师 | M ✅ | MA ➕ | M lightweight + MA 反 anti-pattern |
-| 76 | 团队 / 公司采用 | AM ✅ | AD ➕ O ➕ | AM 含 hooks/commitlint/CoC；AD 严质量门；O 强制方法论 |
+| 76 | 团队 / 公司采用（通用 enterprise） | AM ✅ | AD ➕ O ➕ | AM 含 hooks/commitlint/CoC；AD 严质量门；O 强制方法论 |
+| 77 | 🆕 **YC / 创业公司 opinionated setup** | **GS ✅** | AM ➕ | 🆕 v1.2 · Garry Tan 实战角色 setup — 直接照搬，不用挑组件 |
+| 78 | 🆕 多角色 / 多领域 agency-as-agents | **AA ✅** | GS ➕ AM ➕ | 🆕 v1.2 · 222 agents 跨 18 领域（finance / academic / spatial-computing / game-dev 等小众） |
+| 79 | 🆕 单 SKILL 深度模板（学怎么写"厚" SKILL.md）| **GS ✅** | NL ➕ | 🆕 v1.2 · GS 平均 SKILL.md 52KB 是 cohort 最深；NL 12KB 第二 |
 
 ---
 
@@ -296,16 +325,21 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 | **AI Agent / Skill Builder** | A + AM + O | A 规范 + AM 参考实现 + O 方法论纪律 |
 | **试水 / 评估生态** | MA + C | MA 零负担引入 + C 浏览全生态 |
 | **Codex 用户** | OAI + O + A | Codex 配套 + 方法论 + spec 参考 |
+| 🆕 **YC / Startup 创始团队 (照搬式)** | **GS** + 可选 O | GS 一键拿 Garry Tan 实战 setup；O 加方法论纪律 |
+| 🆕 **跨领域工作室 / 多角色 agency** | **AA** + AM | AA 给 18 个领域的角色化 agent；AM 补 engineering harness |
+| 🆕 **游戏开发** | **AA** + M | AA 含 20 game-dev agents（v1.2 唯一覆盖）；M 加工程严谨度 |
+| 🆕 **想拿"最佳实例" SKILL.md 模板** | **GS** + A | GS 平均 52KB 是 cohort 最深 reference；A 是规范 |
 
 ---
 
 ## 6. 覆盖缺口 / Coverage gaps（cohort 未覆盖领域）
 
-13 个 repo **没有专项覆盖**的领域 — 这是未来 cohort 扩张的方向：
+15 个 repo **没有专项覆盖**的领域 — 这是未来 cohort 扩张的方向：
+
+> ✅ **v1.2 已填补**：~~Game 开发~~ — **AA 含 20 个 game-development agents**
 
 | 缺口 / Gap | 当前最佳替代 | 建议 |
 |---|---|---|
-| **Game 开发** (Web / Unity / Unreal) | C 搜索（少量） | ⚠ 需要专项 repo；目前只能靠 M 工程严谨 + 自建 |
 | **GPU kernel** (CUDA / Triton / MPS) | MA + M（间接） | ⚠ 需要专项 repo；MA 反 anti-pattern 帮纪律，M /diagnose 帮调试 |
 | **Web3 / 智能合约** | C 搜索 | ⚠ 需要专项 repo |
 | **Cloud IaC** (Terraform / K8s / Pulumi) | AM（通用工程） | ⚠ 缺专项；AM 的 hooks/commands 可装但不够深 |
@@ -318,7 +352,7 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 | **Quant / Trading 算法** | M + AD | ⚠ 缺专项 |
 | **Security offensive** (pentest / red team) | AM, AD（防御侧） | ⚠ 缺 offensive 专项 |
 
-> **关键观察**：cohort 强在"agent 开发 + 设计 + web frontend + 营销 + 知识管理"五块；弱在"low-level systems / GPU / game / 多模态 ML / cloud IaC"。这与 community velocity 一致 — 当前 skill 生态主要在 _应用层 agent + 内容侧 + 设计侧_ 发力，深 system 还在自建阶段。
+> **关键观察 (v1.2 更新)**：cohort 强在"agent 开发 + 设计 + web frontend + 营销 + 知识管理 + **多角色 agency (v1.2 AA 加入) + game-dev (v1.2 AA 加入)**"；弱在"low-level systems / GPU / 多模态 ML / cloud IaC / 智能合约"。深 system / GPU / Web3 仍处自建阶段。
 
 ---
 
@@ -326,21 +360,24 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 
 > 简化 1-5 评分，每行表示该 repo 在该领域的覆盖强度。✅ ≥4，➕ ≥2，— = 不覆盖。
 
-| 领域 \ Repo | AM | O | NX | A | NL | AD | CH | C | M | OAI | MA | K | V |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-| 通用工程 | ✅ | ✅ | — | ➕ | — | ✅ | — | ➕ | ✅ | ✅ | ✅ | — | — |
-| Web 前端 | ➕ | — | — | — | ➕ | ➕ | ➕ | ➕ | — | — | — | — | **✅** |
-| UI/UX 设计 | — | — | **✅** | ➕ | **✅** | — | — | ➕ | — | — | — | — | ➕ |
-| Design system / 品牌 | — | — | **✅** | ➕ | ➕ | — | ➕ | — | — | — | — | — | — |
-| 方法论 (TDD/debug/plan) | ➕ | **✅** | — | ➕ | — | ➕ | — | ➕ | ➕ | ➕ | ✅ | — | — |
-| AI / Agent 建构 | **✅** | ➕ | — | ✅ | — | ➕ | — | ➕ | — | ✅ | ➕ | — | — |
-| Skill 元开发 | ➕ | ➕ | — | **✅** | — | ➕ | ➕ | ➕ | — | **✅** | — | — | ➕ |
-| 营销 / Growth | — | — | ➕ | — | — | — | **✅** | ➕ | — | — | — | — | ➕ |
-| 知识管理 | — | — | — | ➕ | — | — | — | — | — | — | — | **✅** | — |
-| 文档输出 | ➕ | — | ➕ | ✅ | — | ➕ | ➕ | ➕ | — | — | — | ➕ | — |
-| Performance / Optimization | ➕ | — | — | — | — | ✅ | — | — | ➕ | — | ➕ | — | **✅** |
-| Reseach / Eval | ➕ | **✅** | — | ➕ | — | ➕ | — | — | ✅ | — | ➕ | ➕ | — |
-| Discovery / Browse | — | — | — | — | — | — | — | **✅** | — | — | — | — | — |
+| 领域 \ Repo | AM | O | NX | A | NL | AD | CH | C | M | OAI | MA | K | V | **GS** 🆕 | **AA** 🆕 |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 通用工程 | ✅ | ✅ | — | ➕ | — | ✅ | — | ➕ | ✅ | ✅ | ✅ | — | — | **✅** | ➕ |
+| Web 前端 | ➕ | — | — | — | ➕ | ➕ | ➕ | ➕ | — | — | — | — | **✅** | ➕ | ➕ |
+| UI/UX 设计 | — | — | **✅** | ➕ | **✅** | — | — | ➕ | — | — | — | — | ➕ | ➕ | ➕ |
+| Design system / 品牌 | — | — | **✅** | ➕ | ➕ | — | ➕ | — | — | — | — | — | — | ➕ | ➕ |
+| 方法论 (TDD/debug/plan) | ➕ | **✅** | — | ➕ | — | ➕ | — | ➕ | ➕ | ➕ | ✅ | — | — | ➕ | — |
+| AI / Agent 建构 | **✅** | ➕ | — | ✅ | — | ➕ | — | ➕ | — | ✅ | ➕ | — | — | **✅** | **✅** |
+| Skill 元开发 | ➕ | ➕ | — | **✅** | — | ➕ | ➕ | ➕ | — | **✅** | — | — | ➕ | ➕ | ➕ |
+| 营销 / Growth | — | — | ➕ | — | — | — | **✅** | ➕ | — | — | — | — | ➕ | — | ➕ |
+| 知识管理 | — | — | — | ➕ | — | — | — | — | — | — | — | **✅** | — | ➕ | ➕ |
+| 文档输出 | ➕ | — | ➕ | ✅ | — | ➕ | ➕ | ➕ | — | — | — | ➕ | — | ✅ | ➕ |
+| Performance / Optimization | ➕ | — | — | — | — | ✅ | — | — | ➕ | — | ➕ | — | **✅** | ➕ | — |
+| Research / Eval | ➕ | **✅** | — | ➕ | — | ➕ | — | — | ✅ | — | ➕ | ➕ | — | ➕ | ➕ |
+| Discovery / Browse | — | — | — | — | — | — | — | **✅** | — | — | — | — | — | — | ➕ |
+| **Game 开发** 🆕 | — | — | — | — | — | — | — | — | — | — | — | — | — | — | **✅** |
+| **多角色 agency (CEO/Designer/QA/etc)** 🆕 | ➕ | — | — | — | — | — | — | — | — | — | — | — | — | **✅** | **✅** |
+| **跨领域 (academic/finance/spatial)** 🆕 | ➕ | — | — | — | — | — | — | ➕ | — | — | — | — | — | — | **✅** |
 
 ---
 

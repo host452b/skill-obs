@@ -105,9 +105,9 @@ skill-obs/
 
 按 **具体任务 → 该装哪个 repo** 的功能正交决策手册见 **[`TASK_GUIDE.md`](./TASK_GUIDE.md)**（含 AM × O × NX overlap/正交/互补深度对比 + ~50 个任务 lookup + 推荐 stacks + 覆盖缺口）。
 
-## 📐 15 个评测维度 / 15 Dimensions
+## 📐 19 个评测维度 / 19 Dimensions
 
-简表（详见 [`EVALUATION.md §2`](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions)）：
+简表（详见 [`EVALUATION.md §2`](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions) + [`§11`](./EVALUATION.md#11-v12-snapshot--新增-d16-d19social-signals--gs--aa)）：
 
 | 类别 | Dimensions |
 |---|---|
@@ -118,6 +118,7 @@ skill-obs/
 | 工程化 | D11 Doc Quality, D12 Eng. Hygiene |
 | 生态可移植 | D13 Multi-Agent Portability |
 | 战略价值 | D14 Domain Breadth, D15 Originality / Authority |
+| **🆕 社交信号 (v1.2)** | **D16 Reddit Heat** (30d posts + comments) · **D17 Reddit Sentiment** (30d avg upvote) · **D18 HN Heat** (30d stories + comments) · **D19 HN Sentiment** (30d avg points) |
 
 ## 🎨 Notebook 渲染示意 / Notebook preview
 
