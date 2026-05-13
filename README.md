@@ -1,5 +1,7 @@
 # skill-obs
 
+> 🌐 **Language**: **🇨🇳 中文** · [🇬🇧 English](./README.en.md)
+
 > **Skill Observatory** — 一个对当下 Agent Skills / Claude Skills 生态做横向评测的元仓库。
 > 12 个主流 skill collection repo 作为 git submodule，配 15 维度评分 + 可视化 notebook + append-only 评估历史。
 

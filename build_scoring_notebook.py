@@ -1,91 +1,34 @@
 """
-Regenerates `scoring.ipynb` from source.
+Rebuild `scoring.ipynb` with pre-baked HTML outputs (GitHub-renderable).
 
-This script is the canonical structure of the scoring notebook. The notebook
-itself supports day-to-day maintenance by appending new snapshots to its
-`EVALUATIONS` list (no need to re-run this script for that). Re-run this only
-if you want to restructure cells, add dimensions, or refresh the static layout.
+Pattern (mirrors gguf_exp_on_mac/benchmark_visualization.ipynb):
+  - Each code cell source is a one-line `# Title` comment.
+  - outputs[0].data['text/html'] holds a pre-rendered colored table.
+  - GitHub renders the notebook directly — no kernel, no execution needed.
 
-Usage:
-    python3 build_scoring_notebook.py
-    jupyter nbconvert --to notebook --execute --inplace scoring.ipynb   # optional
+Maintenance flow:
+  1. Edit EVALUATIONS below (append a new dict; never modify history).
+  2. python3 build_scoring_notebook.py
+  3. git add scoring.ipynb build_scoring_notebook.py && git commit && git push
+
+Color interpolation: rgba(220,60,60,0.35) worst → rgba(220,220,60,0.35) mid → rgba(40,200,100,0.35) best.
+Per-column min/max normalization; column-best is bolded.
 """
 from __future__ import annotations
 
-import nbformat as nbf
-
-
-def md(text: str):
-    return nbf.v4.new_markdown_cell(text.strip("\n"))
-
-
-def code(src: str):
-    return nbf.v4.new_code_cell(src.strip("\n"))
-
-
-cells = []
-
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(md(r"""
-# Skill Repo 评测 / Scoring Notebook
-
-**Cohort**：12 个 Agent Skills / Claude Skills / 类 Skills 仓库（明细见 `EVALUATION.md`，均作为本 repo 的 `submodule`）。
-
-**Notebook 的作用**
-- 用 **绿→黄→红分阶染色**（HTML 内置样式，不依赖外部 css）展示每个仓库在 15 个维度的得分。
-- **快照式记录**：每次 re-score 都把当时的 *submodule SHA*、*评估时间戳*、*raw 指标*、*1-10 评分*一起写入 `EVALUATIONS` 列表（append-only）。
-- **漂移检测**：对比 snapshot 中记录的 submodule SHA 与当前 HEAD，方便判断"评分基准是否已经过时"。
-- **未来扩展**：方法论变了？— 在新 snapshot 里写新的 `scores`；维度变了？— 改一次 `DIMENSIONS` 然后重新评。
-
-**Run**:
-```bash
-jupyter nbconvert --to html --execute scoring.ipynb       # 静态 HTML
-jupyter notebook scoring.ipynb                            # 交互
-```
-
-**长期维护**：每次重新评估，往下方 `EVALUATIONS` 列表追加一份 dict 即可，不用动其他 cell。
-"""))
-
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(code(r"""
-# Cell 2 — Imports, repo-root detection, current submodule SHA fetch
 import datetime as _dt
 import subprocess
 from pathlib import Path
 
-import pandas as pd
+import nbformat as nbf
 
-NB_DIR = Path.cwd()
+REPO_ROOT = Path(__file__).resolve().parent
 
+# ──────────────────────────────────────────────────────────────────────────────
+# DATA
+# ──────────────────────────────────────────────────────────────────────────────
 
-def fetch_current_submodule_shas(repo_root: Path = NB_DIR) -> dict:
-    '''Return {submodule_path: sha} via `git submodule status`. Empty dict on failure.'''
-    try:
-        out = subprocess.check_output(
-            ['git', 'submodule', 'status'], cwd=str(repo_root), text=True
-        )
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        return {}
-    result = {}
-    for line in out.strip().splitlines():
-        parts = line.strip().split()
-        if len(parts) >= 2:
-            # Status prefix: '-' uninit / '+' drift / 'U' merge conflict
-            sha = parts[0].lstrip('-+U')
-            path = parts[1]
-            result[path] = sha
-    return result
-
-
-CURRENT_SHAS = fetch_current_submodule_shas()
-print(f'Detected {len(CURRENT_SHAS)} submodules at current HEAD.')
-print(f'Notebook loaded at  {_dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds")}')
-"""))
-
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(code(r"""
-# Cell 3 — 15 dimensions + repo registry (stable identifiers)
-
+# 15 dims: (id, label, short description). D1 is user-required.
 DIMENSIONS = [
     ('D1',  'Star Velocity ⭐',          'stars/day since creation (user-required)'),
     ('D2',  'Total Stars',               'absolute popularity'),
@@ -105,7 +48,7 @@ DIMENSIONS = [
 ]
 DIM_IDS = [d[0] for d in DIMENSIONS]
 
-# Code → (owner, repo, oneliner)
+# Repo registry: code → (owner, repo, oneliner)
 REPOS = [
     ('AM',  'affaan-m',         'everything-claude-code',   'Agent harness perf framework'),
     ('O',   'obra',             'superpowers',              'Agentic skill methodology'),
@@ -120,58 +63,43 @@ REPOS = [
     ('MA',  'multica-ai',       'andrej-karpathy-skills',   'Karpathy-derived CLAUDE.md'),
     ('K',   'kepano',           'obsidian-skills',          'Obsidian-native'),
 ]
-print(f'{len(DIMENSIONS)} dims × {len(REPOS)} repos = {len(DIMENSIONS) * len(REPOS)} cells.')
-"""))
+REPO_BY_CODE = {c: (c, o, r, l) for c, o, r, l in REPOS}
 
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(code(r"""
-# Cell 4 — EVALUATIONS history (append-only).
-#
-# Schema per entry:
-#   eval_date:      ISO-8601 UTC string (when scoring was done)
-#   version:        human-readable version tag
-#   note:           free-form description
-#   submodule_shas: {path -> 40-char SHA}    submodule HEAD at scoring time
-#   raw_metrics:    {code -> {metric -> val}} preserved for re-scoring later
-#   scores:         {code -> {dim_id -> 1..10 int}}
-#
-# To add a new snapshot: append a new dict (do NOT mutate old ones).
-
+# Append-only snapshot history.
 EVALUATIONS = [
     {
         'eval_date': '2026-05-13T08:00:00Z',
         'version': '1.0',
         'note': 'Initial baseline — 12-repo cohort, rank-based 1-10 scoring within cohort.',
         'submodule_shas': {
-            'skills/affaan-m__everything-claude-code':     'd4728a0d801f1ebbc2384547009df17cbf16bfd1',
-            'skills/obra__superpowers':                    'f2cbfbefebbfef77321e4c9abc9e949826bea9d7',
-            'skills/nexu-io__open-design':                 '6341b2677aa7075b8027e3647310d61060b63e1b',
-            'skills/anthropics__skills':                   'f458cee31a7577a47ba0c9a101976fa599385174',
-            'skills/nextlevelbuilder__ui-ux-pro-max-skill':'b7e3af80f6e331f6fb456667b82b12cade7c9d35',
-            'skills/addyosmani__agent-skills':             '3ff4b518b3cd3077ca27cf883aa21d21faf53802',
-            'skills/coreyhaines31__marketingskills':       '906c2fb28e471c5b1d149d4159ec5ddb40b7c364',
-            'skills/ComposioHQ__awesome-claude-skills':    'f2b5e29bc315f04c8e09591ba275f4c4f7d4b8fe',
-            'skills/mattpocock__skills':                   'f304057d61d3df3c9fd992ac2b6e3833cb9325fb',
-            'skills/openai__skills':                       'c25113bf4c64c8dba6bfe61acf06051d79aa43f6',
-            'skills/multica-ai__andrej-karpathy-skills':   '2c606141936f1eeef17fa3043a72095b4765b9c2',
-            'skills/kepano__obsidian-skills':              'ac9398734fe719565809f7a6048b05c36b1ca38f',
+            'skills/affaan-m__everything-claude-code':      'd4728a0d801f1ebbc2384547009df17cbf16bfd1',
+            'skills/obra__superpowers':                     'f2cbfbefebbfef77321e4c9abc9e949826bea9d7',
+            'skills/nexu-io__open-design':                  '6341b2677aa7075b8027e3647310d61060b63e1b',
+            'skills/anthropics__skills':                    'f458cee31a7577a47ba0c9a101976fa599385174',
+            'skills/nextlevelbuilder__ui-ux-pro-max-skill': 'b7e3af80f6e331f6fb456667b82b12cade7c9d35',
+            'skills/addyosmani__agent-skills':              '3ff4b518b3cd3077ca27cf883aa21d21faf53802',
+            'skills/coreyhaines31__marketingskills':        '906c2fb28e471c5b1d149d4159ec5ddb40b7c364',
+            'skills/ComposioHQ__awesome-claude-skills':     'f2b5e29bc315f04c8e09591ba275f4c4f7d4b8fe',
+            'skills/mattpocock__skills':                    'f304057d61d3df3c9fd992ac2b6e3833cb9325fb',
+            'skills/openai__skills':                        'c25113bf4c64c8dba6bfe61acf06051d79aa43f6',
+            'skills/multica-ai__andrej-karpathy-skills':    '2c606141936f1eeef17fa3043a72095b4765b9c2',
+            'skills/kepano__obsidian-skills':               'ac9398734fe719565809f7a6048b05c36b1ca38f',
         },
         'raw_metrics': {
-            'AM':  {'stars': 180838, 'forks': 27876, 'watchers': 899, 'contribs': 183, 'skill_md': 572, 'avg_skill_bytes': 8847,  'days_alive': 115, 'stars_per_day': 1572.5, 'commits_per_day': 14.82, 'platforms': 7},
-            'O':   {'stars': 188498, 'forks': 16759, 'watchers': 753, 'contribs': 33,  'skill_md': 14,  'avg_skill_bytes': 8168,  'days_alive': 216, 'stars_per_day': 872.7,  'commits_per_day': 2.04,  'platforms': 6},
-            'NX':  {'stars': 38735,  'forks': 4403,  'watchers': 142, 'contribs': 186, 'skill_md': 218, 'avg_skill_bytes': 3438,  'days_alive': 15,  'stars_per_day': 2582.3, 'commits_per_day': 42.5,  'platforms': 9},
-            'A':   {'stars': 133251, 'forks': 15715, 'watchers': 865, 'contribs': 13,  'skill_md': 18,  'avg_skill_bytes': 10995, 'days_alive': 233, 'stars_per_day': 571.9,  'commits_per_day': 0.15,  'platforms': 1},
-            'NL':  {'stars': 77723,  'forks': 7977,  'watchers': 381, 'contribs': 31,  'skill_md': 7,   'avg_skill_bytes': 12272, 'days_alive': 164, 'stars_per_day': 474.0,  'commits_per_day': 0.82,  'platforms': 8},
-            'AD':  {'stars': 40580,  'forks': 4472,  'watchers': 255, 'contribs': 23,  'skill_md': 22,  'avg_skill_bytes': 10703, 'days_alive': 87,  'stars_per_day': 466.4,  'commits_per_day': 2.0,   'platforms': 7},
-            'CH':  {'stars': 28215,  'forks': 4550,  'watchers': 288, 'contribs': 16,  'skill_md': 41,  'avg_skill_bytes': 11443, 'days_alive': 118, 'stars_per_day': 239.1,  'commits_per_day': 2.21,  'platforms': 5},
-            'C':   {'stars': 59518,  'forks': 6462,  'watchers': 399, 'contribs': 26,  'skill_md': 864, 'avg_skill_bytes': 3444,  'days_alive': 208, 'stars_per_day': 286.1,  'commits_per_day': 0.34,  'platforms': 7},
-            'M':   {'stars': 77173,  'forks': 6656,  'watchers': 532, 'contribs': 2,   'skill_md': 28,  'avg_skill_bytes': 3321,  'days_alive': 99,  'stars_per_day': 779.5,  'commits_per_day': 0.78,  'platforms': 2},
-            'OAI': {'stars': 18982,  'forks': 1259,  'watchers': 110, 'contribs': 34,  'skill_md': 43,  'avg_skill_bytes': 9435,  'days_alive': 169, 'stars_per_day': 112.3,  'commits_per_day': 0.64,  'platforms': 1},
-            'MA':  {'stars': 127547, 'forks': 12958, 'watchers': 671, 'contribs': 7,   'skill_md': 1,   'avg_skill_bytes': 2518,  'days_alive': 106, 'stars_per_day': 1203.3, 'commits_per_day': 0.26,  'platforms': 2},
-            'K':   {'stars': 30825,  'forks': 2100,  'watchers': 185, 'contribs': 13,  'skill_md': 5,   'avg_skill_bytes': 6040,  'days_alive': 131, 'stars_per_day': 235.3,  'commits_per_day': 0.30,  'platforms': 3},
+            'AM':  {'stars': 180838, 'forks': 27876, 'watchers': 899, 'contribs': 183, 'skill_md': 572, 'avg_skill_bytes': 8847,  'days_alive': 115, 'stars_per_day': 1572.5, 'commits_per_day': 14.82, 'platforms': 7, 'last_push_days_ago': 0},
+            'O':   {'stars': 188498, 'forks': 16759, 'watchers': 753, 'contribs': 33,  'skill_md': 14,  'avg_skill_bytes': 8168,  'days_alive': 216, 'stars_per_day': 872.7,  'commits_per_day': 2.04,  'platforms': 6, 'last_push_days_ago': 0},
+            'NX':  {'stars': 38735,  'forks': 4403,  'watchers': 142, 'contribs': 186, 'skill_md': 218, 'avg_skill_bytes': 3438,  'days_alive': 15,  'stars_per_day': 2582.3, 'commits_per_day': 42.5,  'platforms': 9, 'last_push_days_ago': 0},
+            'A':   {'stars': 133251, 'forks': 15715, 'watchers': 865, 'contribs': 13,  'skill_md': 18,  'avg_skill_bytes': 10995, 'days_alive': 233, 'stars_per_day': 571.9,  'commits_per_day': 0.15,  'platforms': 1, 'last_push_days_ago': 4},
+            'NL':  {'stars': 77723,  'forks': 7977,  'watchers': 381, 'contribs': 31,  'skill_md': 7,   'avg_skill_bytes': 12272, 'days_alive': 164, 'stars_per_day': 474.0,  'commits_per_day': 0.82,  'platforms': 8, 'last_push_days_ago': 40},
+            'AD':  {'stars': 40580,  'forks': 4472,  'watchers': 255, 'contribs': 23,  'skill_md': 22,  'avg_skill_bytes': 10703, 'days_alive': 87,  'stars_per_day': 466.4,  'commits_per_day': 2.0,   'platforms': 7, 'last_push_days_ago': 3},
+            'CH':  {'stars': 28215,  'forks': 4550,  'watchers': 288, 'contribs': 16,  'skill_md': 41,  'avg_skill_bytes': 11443, 'days_alive': 118, 'stars_per_day': 239.1,  'commits_per_day': 2.21,  'platforms': 5, 'last_push_days_ago': 7},
+            'C':   {'stars': 59518,  'forks': 6462,  'watchers': 399, 'contribs': 26,  'skill_md': 864, 'avg_skill_bytes': 3444,  'days_alive': 208, 'stars_per_day': 286.1,  'commits_per_day': 0.34,  'platforms': 7, 'last_push_days_ago': 6},
+            'M':   {'stars': 77173,  'forks': 6656,  'watchers': 532, 'contribs': 2,   'skill_md': 28,  'avg_skill_bytes': 3321,  'days_alive': 99,  'stars_per_day': 779.5,  'commits_per_day': 0.78,  'platforms': 2, 'last_push_days_ago': 1},
+            'OAI': {'stars': 18982,  'forks': 1259,  'watchers': 110, 'contribs': 34,  'skill_md': 43,  'avg_skill_bytes': 9435,  'days_alive': 169, 'stars_per_day': 112.3,  'commits_per_day': 0.64,  'platforms': 1, 'last_push_days_ago': 1},
+            'MA':  {'stars': 127547, 'forks': 12958, 'watchers': 671, 'contribs': 7,   'skill_md': 1,   'avg_skill_bytes': 2518,  'days_alive': 106, 'stars_per_day': 1203.3, 'commits_per_day': 0.26,  'platforms': 2, 'last_push_days_ago': 23},
+            'K':   {'stars': 30825,  'forks': 2100,  'watchers': 185, 'contribs': 13,  'skill_md': 5,   'avg_skill_bytes': 6040,  'days_alive': 131, 'stars_per_day': 235.3,  'commits_per_day': 0.30,  'platforms': 3, 'last_push_days_ago': 6},
         },
         'scores': {
-            #     D1   D2   D3   D4   D5   D6   D7   D8   D9   D10  D11  D12  D13  D14  D15
             'AM':  {'D1': 9, 'D2': 9, 'D3':10, 'D4':10, 'D5':10, 'D6': 9, 'D7': 9, 'D8': 9, 'D9': 6, 'D10': 5, 'D11':10, 'D12':10, 'D13': 8, 'D14':10, 'D15': 5},
             'O':   {'D1': 8, 'D2':10, 'D3': 9, 'D4': 8, 'D5':10, 'D6': 7, 'D7': 7, 'D8': 3, 'D9': 5, 'D10': 7, 'D11': 8, 'D12': 9, 'D13': 7, 'D14': 9, 'D15': 9},
             'NX':  {'D1':10, 'D2': 4, 'D3': 3, 'D4': 2, 'D5':10, 'D6':10, 'D7':10, 'D8': 8, 'D9': 3, 'D10': 4, 'D11':10, 'D12':10, 'D13':10, 'D14': 8, 'D15': 8},
@@ -186,51 +114,58 @@ EVALUATIONS = [
             'K':   {'D1': 2, 'D2': 3, 'D3': 2, 'D4': 2, 'D5': 7, 'D6': 3, 'D7': 3, 'D8': 1, 'D9': 4, 'D10': 2, 'D11': 4, 'D12': 3, 'D13': 4, 'D14': 3, 'D15': 7},
         },
     },
-    # ── Append new snapshots here as the cohort evolves ───────────────────────
+    # ── Append new snapshots here ─────────────────────────────────────────────
 ]
 
-print(f'Loaded {len(EVALUATIONS)} evaluation snapshot(s):')
-for ev in EVALUATIONS:
-    print(f"  {ev['eval_date']}  v{ev['version']:<5}  {ev['note']}")
-"""))
+# Domain → recommended skill (used in §"By Domain" cell)
+DOMAIN_RECS = [
+    ('学 SKILL.md 官方规范 / Learn SKILL.md spec',           'A',   'Official Anthropic authority; D15=10 — frontmatter standard'),
+    ('OpenAI Codex 用户 / Codex users',                       'OAI', 'Official Codex companion; D10=10 — richest supplementary docs'),
+    ('大而全 agent 工程框架 / Comprehensive agent framework',  'AM',  'Overall #1 (129); commands + hooks + plugins + install scripts'),
+    ('方法论 / 元技能 / Engineering methodology',             'O',   'Original "superpowers" framework; D15=9 — deepest methodology'),
+    ('生产级软件工程 / Production engineering (general)',     'AD',  'Author authority + clean structure; D14=8'),
+    ('TypeScript / Real engineering',                         'M',   'Matt Pocock TS-first lens; opinionated curation'),
+    ('UI / UX 组件级 / Component-level UI/UX',                 'NL',  'D9=10 — most detailed color/font/component recipes'),
+    ('设计系统 + 多平台输出 / Design systems + multi-platform','NX',  '19 skills + 71 design systems; D13=10 (9 agent platforms)'),
+    ('营销 / Marketing / CRO / SEO',                          'CH',  'Only marketing-specialized repo; ships validate-skills.sh'),
+    ('Obsidian / 知识管理 / Knowledge management',             'K',   'kepano (Obsidian creator) maintains; only repo covering Canvas/Bases'),
+    ('零负担 CLAUDE.md / Drop-in single-file',                'MA',  'Single CLAUDE.md drop-in; Karpathy LLM-coding anti-patterns'),
+    ('浏览 / 发现 skill / Discovery / browse',                'C',   '864 SKILL.md index; biggest awesome-list'),
+]
 
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(code(r"""
-# Cell 5 — Staged green→red coloring (inline HTML CSS, no matplotlib needed).
 
-def stage_color(v):
-    '''9-stage gradient for 1..10 scores.'''
-    try:
-        v = float(v)
-    except (TypeError, ValueError):
+# ──────────────────────────────────────────────────────────────────────────────
+# COLOR
+# ──────────────────────────────────────────────────────────────────────────────
+
+def _interp(t: float) -> tuple[int, int, int]:
+    """Map t∈[0,1] to (r,g,b) along worst→mid→best."""
+    t = max(0.0, min(1.0, t))
+    if t < 0.5:
+        u = t / 0.5
+        return 220, int(60 + 160 * u), 60
+    u = (t - 0.5) / 0.5
+    return int(220 - 180 * u), int(220 - 20 * u), int(60 + 40 * u)
+
+
+def rgba(value, lo, hi, alpha: float = 0.35, inverted: bool = False) -> str:
+    """Color a value within [lo, hi]. Higher=better unless inverted."""
+    if value is None or hi == lo:
         return ''
-    if v >= 9:  return 'background-color:#006837;color:#fff;font-weight:600;'
-    if v >= 8:  return 'background-color:#1a9850;color:#fff;'
-    if v >= 7:  return 'background-color:#66bd63;'
-    if v >= 6:  return 'background-color:#a6d96a;'
-    if v >= 5:  return 'background-color:#fee08b;'
-    if v >= 4:  return 'background-color:#fdae61;'
-    if v >= 3:  return 'background-color:#f46d43;color:#fff;'
-    if v >= 2:  return 'background-color:#d73027;color:#fff;'
-    return 'background-color:#a50026;color:#fff;font-weight:600;'
+    t = (value - lo) / (hi - lo)
+    if inverted:
+        t = 1.0 - t
+    r, g, b = _interp(t)
+    return f'rgba({r},{g},{b},{alpha})'
 
 
-def total_color(v):
-    '''7-stage gradient for the 15..150 Total column.'''
-    try:
-        v = float(v)
-    except (TypeError, ValueError):
-        return ''
-    if v >= 120: return 'background-color:#006837;color:#fff;font-weight:700;'
-    if v >= 105: return 'background-color:#1a9850;color:#fff;font-weight:600;'
-    if v >= 90:  return 'background-color:#66bd63;font-weight:600;'
-    if v >= 75:  return 'background-color:#fee08b;font-weight:600;'
-    if v >= 60:  return 'background-color:#fdae61;font-weight:600;'
-    if v >= 45:  return 'background-color:#f46d43;color:#fff;font-weight:600;'
-    return 'background-color:#d73027;color:#fff;font-weight:600;'
+def bg(value, lo, hi, inverted: bool = False) -> str:
+    c = rgba(value, lo, hi, inverted=inverted)
+    return f'background-color:{c};' if c else ''
 
 
-def tier_for_total(v):
+# Tier badge colors
+def tier_for_total(v: int) -> str:
     if v >= 120: return 'S+'
     if v >= 105: return 'S'
     if v >= 90:  return 'A'
@@ -239,294 +174,484 @@ def tier_for_total(v):
     return 'D'
 
 
-def column_color(col_values):
-    '''Closure: rank a column's values into the same 9-stage gradient.'''
-    col_min = min(v for v in col_values if v is not None)
-    col_max = max(v for v in col_values if v is not None)
-    span = col_max - col_min if col_max != col_min else 1
-
-    def _color(v):
-        try:
-            v = float(v)
-        except (TypeError, ValueError):
-            return ''
-        pct = (v - col_min) / span  # 0..1, higher is better
-        if pct >= 0.88: return 'background-color:#006837;color:#fff;font-weight:600;'
-        if pct >= 0.75: return 'background-color:#1a9850;color:#fff;'
-        if pct >= 0.62: return 'background-color:#66bd63;'
-        if pct >= 0.50: return 'background-color:#a6d96a;'
-        if pct >= 0.37: return 'background-color:#fee08b;'
-        if pct >= 0.25: return 'background-color:#fdae61;'
-        if pct >= 0.12: return 'background-color:#f46d43;color:#fff;'
-        return 'background-color:#d73027;color:#fff;'
-
-    return _color
-
-
-print('Color functions ready (stage_color, total_color, column_color, tier_for_total).')
-"""))
-
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(code(r"""
-# Cell 6 — Build the score matrix and render with staged coloring.
-
-def build_score_df(snapshot):
-    rows = []
-    for code_id, owner, repo, label in REPOS:
-        scores = snapshot['scores'][code_id]
-        row = {'Repo': f'{owner}/{repo}', 'Code': code_id}
-        for did in DIM_IDS:
-            row[did] = scores.get(did)
-        row['Total'] = sum(scores.values())
-        row['Tier'] = tier_for_total(row['Total'])
-        rows.append(row)
-    return (pd.DataFrame(rows)
-              .set_index('Repo')
-              .sort_values('Total', ascending=False))
-
-
-def render_styled(df, caption=''):
-    return (df.style
-              .map(stage_color, subset=DIM_IDS)
-              .map(total_color, subset=['Total'])
-              .set_caption(caption)
-              .set_table_styles([
-                  {'selector': 'caption',
-                   'props': [('caption-side', 'top'), ('font-weight', '600'),
-                             ('font-size', '14px'), ('padding', '6px 0'),
-                             ('text-align', 'left')]},
-                  {'selector': 'th',
-                   'props': [('text-align', 'center'), ('padding', '4px 8px'),
-                             ('background-color', '#f5f5f5')]},
-                  {'selector': 'td',
-                   'props': [('text-align', 'center'), ('padding', '4px 8px'),
-                             ('font-variant-numeric', 'tabular-nums')]},
-              ])
-              .format(precision=0))
-
-
-latest = EVALUATIONS[-1]
-df_scores = build_score_df(latest)
-caption = f"Score Matrix · {latest['eval_date']} · v{latest['version']} — {latest['note']}"
-render_styled(df_scores, caption=caption)
-"""))
-
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(code(r"""
-# Cell 7 — Top-line ranking with badge.
-
-def build_ranking_df(snapshot):
-    rows = []
-    for code_id, owner, repo, label in REPOS:
-        scores = snapshot['scores'][code_id]
-        total = sum(scores.values())
-        rows.append({
-            'Repo':         f'{owner}/{repo}',
-            'Code':         code_id,
-            'Total':        total,
-            'Tier':         tier_for_total(total),
-            'D1 ⭐ (vel)':   scores['D1'],
-            'One-liner':    label,
-        })
-    df = (pd.DataFrame(rows)
-            .sort_values('Total', ascending=False)
-            .reset_index(drop=True))
-    df.index = df.index + 1
-    df.index.name = 'Rank'
-    return df
-
-
-ranking = build_ranking_df(latest)
-(ranking.style
-       .map(total_color, subset=['Total'])
-       .map(stage_color, subset=['D1 ⭐ (vel)'])
-       .set_caption(f"Overall Ranking · {latest['eval_date']}")
-       .set_table_styles([
-           {'selector': 'caption', 'props': [('caption-side', 'top'), ('font-weight', '600'),
-                                              ('font-size', '14px'), ('padding', '6px 0')]},
-           {'selector': 'th', 'props': [('padding', '4px 8px'), ('background-color', '#f5f5f5')]},
-           {'selector': 'td', 'props': [('padding', '4px 8px'), ('font-variant-numeric', 'tabular-nums')]},
-       ])
-       .format({'Total': '{:.0f}', 'D1 ⭐ (vel)': '{:.0f}'}))
-"""))
-
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(code(r"""
-# Cell 8 — Drift detection: snapshot SHAs vs current submodule HEAD.
-
-def drift_report(snapshot, current_shas=None):
-    if current_shas is None:
-        current_shas = CURRENT_SHAS
-    rows = []
-    for path, recorded_sha in snapshot['submodule_shas'].items():
-        cur = current_shas.get(path)
-        if cur is None:
-            status = '✗ missing'
-        elif cur == recorded_sha:
-            status = '✓ same'
-        else:
-            status = '⚠ drifted'
-        rows.append({
-            'Submodule':    path.replace('skills/', ''),
-            'Snapshot SHA': recorded_sha[:10],
-            'Current SHA':  (cur or '—')[:10],
-            'Status':       status,
-        })
-    return pd.DataFrame(rows)
-
-
-def style_drift(df):
-    def _row_bg(r):
-        if r['Status'].startswith('✓'): bg = '#d4edda'
-        elif r['Status'].startswith('⚠'): bg = '#fff3cd'
-        else: bg = '#f8d7da'
-        return [f'background-color:{bg};'] * len(r)
-
-    return (df.style
-              .apply(_row_bg, axis=1)
-              .set_caption(f"Submodule SHA drift vs. snapshot {latest['eval_date']}")
-              .set_table_styles([
-                  {'selector': 'caption', 'props': [('caption-side', 'top'), ('font-weight', '600'),
-                                                     ('font-size', '14px'), ('padding', '6px 0')]},
-                  {'selector': 'th', 'props': [('padding', '4px 8px'), ('background-color', '#f5f5f5')]},
-                  {'selector': 'td', 'props': [('padding', '4px 8px'), ('font-family', 'monospace')]},
-              ]))
-
-
-style_drift(drift_report(latest))
-"""))
-
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(code(r"""
-# Cell 9 — Raw metrics with per-column staged coloring (preserves audit trail).
-
-def build_raw_df(snapshot):
-    rows = []
-    for code_id, owner, repo, _ in REPOS:
-        m = snapshot.get('raw_metrics', {}).get(code_id, {})
-        rows.append({'Repo': f'{owner}/{repo}', **m})
-    return pd.DataFrame(rows).set_index('Repo')
-
-
-def style_raw(df):
-    styler = df.style
-    color_cols = ['stars', 'forks', 'watchers', 'contribs', 'skill_md',
-                  'avg_skill_bytes', 'stars_per_day', 'commits_per_day', 'platforms']
-    for col in color_cols:
-        if col in df.columns:
-            styler = styler.map(column_color(df[col].dropna().tolist()), subset=[col])
-    return (styler
-            .set_caption(f"Raw Metrics · snapshot {latest['eval_date']} (higher = greener)")
-            .set_table_styles([
-                {'selector': 'caption', 'props': [('caption-side', 'top'), ('font-weight', '600'),
-                                                    ('font-size', '14px'), ('padding', '6px 0')]},
-                {'selector': 'th', 'props': [('padding', '4px 8px'), ('background-color', '#f5f5f5')]},
-                {'selector': 'td', 'props': [('padding', '4px 8px'), ('font-variant-numeric', 'tabular-nums'),
-                                              ('text-align', 'right')]},
-            ])
-            .format(precision=1))
-
-
-style_raw(build_raw_df(latest))
-"""))
-
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(code(r"""
-# Cell 10 — Diff between the two latest snapshots (only renders if ≥2 exist).
-from IPython.display import display, HTML
-
-def diff_styled(d_new, d_old, caption=''):
-    delta = d_new[DIM_IDS + ['Total']] - d_old[DIM_IDS + ['Total']]
-    def _delta_color(v):
-        try: v = float(v)
-        except (TypeError, ValueError): return ''
-        if v >= 3:  return 'background-color:#1a9850;color:#fff;'
-        if v >= 1:  return 'background-color:#a6d96a;'
-        if v == 0:  return ''
-        if v >= -2: return 'background-color:#fdae61;'
-        return 'background-color:#d73027;color:#fff;'
-    return (delta.style
-                 .map(_delta_color)
-                 .format('{:+.0f}')
-                 .set_caption(caption)
-                 .set_table_styles([
-                     {'selector': 'caption', 'props': [('caption-side', 'top'),
-                                                        ('font-weight', '600'),
-                                                        ('padding', '6px 0')]},
-                 ]))
-
-
-if len(EVALUATIONS) >= 2:
-    df_new = build_score_df(EVALUATIONS[-1])
-    df_old = build_score_df(EVALUATIONS[-2])
-    caption = (f"Δ Scores · {EVALUATIONS[-2]['eval_date']} → {EVALUATIONS[-1]['eval_date']} "
-               f"(positive = improved)")
-    display(diff_styled(df_new, df_old, caption=caption))
-else:
-    display(HTML('<p style=\"color:#888;font-style:italic;\">'
-                 'Only one snapshot loaded — diff view unlocks at ≥2.</p>'))
-"""))
-
-# ─────────────────────────────────────────────────────────────────────────────
-cells.append(md(r"""
-## 📝 长期维护操作 / Adding a new snapshot
-
-每次需要重新评估时，往 `EVALUATIONS` 列表（cell 4）**追加**（不要修改）一条新 dict：
-
-```python
-EVALUATIONS.append({
-    'eval_date': datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds').replace('+00:00', 'Z'),
-    'version':   '1.1',
-    'note':      '<本次评估的变更说明，例如：更新到最新 submodule HEAD>',
-    'submodule_shas': {  # ← 从 `git submodule status` 复制
-        # ...
-    },
-    'raw_metrics': {  # ← 从 `gh repo view` + 本地 `find` 重新采集
-        # ...
-    },
-    'scores': {  # ← 用 rank-based 1-10 重新打分
-        # ...
-    },
-})
-```
-
-### 步骤
-
-1. **同步最新代码**：`git submodule update --remote`（如需引入最新 HEAD），或保持当前 SHA 不变。
-2. **采集原始指标**（每个 repo）：
-   ```bash
-   gh repo view <owner>/<repo> --json stargazerCount,forkCount,watchers,createdAt,pushedAt,description \
-     --jq '{stars: .stargazerCount, forks: .forkCount, watchers: .watchers.totalCount, created: .createdAt}'
-   ```
-   - 本地：`find skills/<dir> -name SKILL.md -not -path '*/.git/*' | wc -l`
-3. **重新打分**（rank-based 1-10）：方法论见 `EVALUATION.md` §7。
-4. **追加 snapshot** 并 re-run all cells；最新 snapshot 自动用于可视化。
-5. **Cell 10 自动渲染 Δ-diff**：新旧两份 snapshot 间每个维度的得分变化。
-
-### 注意
-
-- **不要修改历史 snapshot**（破坏审计追溯）；若发现错评，写新 snapshot + 在 `note` 里说明 supersedes 即可。
-- **submodule SHA 与 raw_metrics 必须同时记录**：方法论变了，靠 raw_metrics 重打分；submodule 更新了，靠 SHA 知道基准变了。
-- **染色阈值**（cell 5）可以全局调整；改完后历史 snapshot 的视觉表现也会变（不修改数据）。
-"""))
-
-# ─────────────────────────────────────────────────────────────────────────────
-nb = nbf.v4.new_notebook()
-nb.cells = cells
-nb.metadata = {
-    'kernelspec': {
-        'display_name': 'Python 3',
-        'language': 'python',
-        'name': 'python3',
-    },
-    'language_info': {
-        'name': 'python',
-        'version': '3.12',
-    },
+_TIER_COLOR = {
+    'S+': 'rgba(40,200,100,0.55)',
+    'S':  'rgba(120,210,80,0.45)',
+    'A':  'rgba(180,215,70,0.40)',
+    'B':  'rgba(220,220,60,0.40)',
+    'C':  'rgba(220,140,60,0.40)',
+    'D':  'rgba(220,60,60,0.40)',
 }
 
-OUT = 'scoring.ipynb'
-with open(OUT, 'w', encoding='utf-8') as f:
-    nbf.write(nb, f)
 
-print(f'Wrote {OUT} — {len(cells)} cells')
+def tier_badge(tier: str) -> str:
+    color = _TIER_COLOR.get(tier, 'rgba(200,200,200,0.4)')
+    return (f'<span style="background:{color};padding:2px 8px;border-radius:3px;'
+            f'font-weight:600;font-size:0.92em">{tier}</span>')
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# HTML BUILDING BLOCKS
+# ──────────────────────────────────────────────────────────────────────────────
+
+TD = 'padding:4px 10px'
+TH = 'padding:4px 10px;background:#f0f0f0'
+
+LEGEND = (
+    '<p style="color:#666;font-size:0.85em;margin:4px 0">'
+    'Color gradient: '
+    '<span style="background:rgba(220,60,60,0.35);padding:2px 8px;border-radius:3px">worst</span> → '
+    '<span style="background:rgba(220,220,60,0.35);padding:2px 8px;border-radius:3px">mid</span> → '
+    '<span style="background:rgba(40,200,100,0.35);padding:2px 8px;border-radius:3px">best</span>'
+    '&nbsp;·&nbsp;per-column normalized · column-best <b>bolded</b>'
+    '</p>'
+)
+
+
+def _fetch_current_shas() -> dict:
+    try:
+        out = subprocess.check_output(
+            ['git', 'submodule', 'status'], cwd=str(REPO_ROOT), text=True
+        )
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return {}
+    result = {}
+    for line in out.strip().splitlines():
+        parts = line.strip().split()
+        if len(parts) >= 2:
+            sha = parts[0].lstrip('-+U')
+            path = parts[1]
+            result[path] = sha
+    return result
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TABLE 1 · Overall Ranking
+# ──────────────────────────────────────────────────────────────────────────────
+
+def build_overall(snapshot: dict) -> str:
+    rows = []
+    for code, owner, repo, label in REPOS:
+        sc = snapshot['scores'][code]
+        m = snapshot['raw_metrics'][code]
+        total = sum(sc.values())
+        rows.append({
+            'code': code,
+            'repo': f'{owner}/{repo}',
+            'total': total,
+            'tier': tier_for_total(total),
+            'd1': sc['D1'],
+            'stars': m['stars'],
+            'stars_per_day': m['stars_per_day'],
+            'forks': m['forks'],
+            'contribs': m['contribs'],
+            'label': label,
+        })
+    rows.sort(key=lambda r: r['total'], reverse=True)
+
+    def _range(key):
+        vals = [r[key] for r in rows]
+        return min(vals), max(vals)
+
+    tot_lo, tot_hi = _range('total')
+    star_lo, star_hi = _range('stars')
+    spd_lo, spd_hi = _range('stars_per_day')
+    fork_lo, fork_hi = _range('forks')
+    con_lo, con_hi = _range('contribs')
+    best = {
+        'total': max(r['total'] for r in rows),
+        'd1':    max(r['d1'] for r in rows),
+        'stars': max(r['stars'] for r in rows),
+        'stars_per_day': max(r['stars_per_day'] for r in rows),
+        'forks': max(r['forks'] for r in rows),
+        'contribs': max(r['contribs'] for r in rows),
+    }
+
+    parts = [
+        f'<h3>🏆 Overall Ranking — {snapshot["eval_date"][:10]} (v{snapshot["version"]})</h3>',
+        f'<p style="color:#888;font-size:0.85em;margin:4px 0 8px 0">{snapshot["note"]}</p>',
+        LEGEND,
+        '<table style="border-collapse:collapse;font-size:0.92em">',
+        '<tr>'
+        f'<th style="{TH};text-align:right">#</th>'
+        f'<th style="{TH};text-align:left">Repo</th>'
+        f'<th style="{TH};text-align:center">Tier</th>'
+        f'<th style="{TH};text-align:right">Total /150 ↑</th>'
+        f'<th style="{TH};text-align:right">D1 ⭐ /10 ↑</th>'
+        f'<th style="{TH};text-align:right">Stars ↑</th>'
+        f'<th style="{TH};text-align:right">Stars/day ↑</th>'
+        f'<th style="{TH};text-align:right">Forks ↑</th>'
+        f'<th style="{TH};text-align:right">Contribs ↑</th>'
+        f'<th style="{TH};text-align:left">Description</th>'
+        '</tr>',
+    ]
+
+    def fmt_b(v, is_best, fmt='{:,}'):
+        s = fmt.format(v)
+        return f'<b>{s}</b>' if is_best else s
+
+    for i, r in enumerate(rows, 1):
+        parts.append(
+            f'<tr>'
+            f'<td style="{TD};text-align:right">{i}</td>'
+            f'<td style="{TD};text-align:left"><b>{r["repo"]}</b></td>'
+            f'<td style="{TD};text-align:center">{tier_badge(r["tier"])}</td>'
+            f'<td style="{bg(r["total"], tot_lo, tot_hi)}{TD};text-align:right">'
+            f'{fmt_b(r["total"], r["total"] == best["total"], "{}")}</td>'
+            f'<td style="{bg(r["d1"], 1, 10)}{TD};text-align:right">'
+            f'{fmt_b(r["d1"], r["d1"] == best["d1"], "{}")}</td>'
+            f'<td style="{bg(r["stars"], star_lo, star_hi)}{TD};text-align:right">'
+            f'{fmt_b(r["stars"], r["stars"] == best["stars"], "{:,}")}</td>'
+            f'<td style="{bg(r["stars_per_day"], spd_lo, spd_hi)}{TD};text-align:right">'
+            f'{fmt_b(r["stars_per_day"], r["stars_per_day"] == best["stars_per_day"], "{:,.0f}")}</td>'
+            f'<td style="{bg(r["forks"], fork_lo, fork_hi)}{TD};text-align:right">'
+            f'{fmt_b(r["forks"], r["forks"] == best["forks"], "{:,}")}</td>'
+            f'<td style="{bg(r["contribs"], con_lo, con_hi)}{TD};text-align:right">'
+            f'{fmt_b(r["contribs"], r["contribs"] == best["contribs"], "{:,}")}</td>'
+            f'<td style="{TD};text-align:left;color:#666;font-size:0.88em">{r["label"]}</td>'
+            f'</tr>'
+        )
+    parts.append('</table>')
+    return ''.join(parts)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TABLE 2 · Full Score Matrix
+# ──────────────────────────────────────────────────────────────────────────────
+
+def build_score_matrix(snapshot: dict) -> str:
+    rows = []
+    for code, owner, repo, label in REPOS:
+        sc = snapshot['scores'][code]
+        total = sum(sc.values())
+        rows.append({'code': code, 'repo': f'{owner}/{repo}', 'total': total,
+                     'tier': tier_for_total(total), 'scores': sc})
+    rows.sort(key=lambda r: r['total'], reverse=True)
+    best_per_dim = {did: max(r['scores'][did] for r in rows) for did in DIM_IDS}
+    best_total = max(r['total'] for r in rows)
+    tot_lo = min(r['total'] for r in rows)
+    tot_hi = best_total
+
+    th_cells = ['<th style="{}text-align:right">#</th>'.format(TH + ';'),
+                '<th style="{}text-align:left">Repo</th>'.format(TH + ';'),
+                '<th style="{}text-align:center">Tier</th>'.format(TH + ';')]
+    for did, label, descr in DIMENSIONS:
+        th_cells.append(
+            f'<th style="{TH};text-align:right" title="{descr}">{did}</th>'
+        )
+    th_cells.append(f'<th style="{TH};text-align:right">Total ↑</th>')
+
+    parts = [
+        f'<h3>📋 Full Score Matrix · 15 Dimensions × 12 Repos — {snapshot["eval_date"][:10]}</h3>',
+        '<p style="color:#666;font-size:0.85em;margin:4px 0">Each cell colored 1-10 within its dimension column. Column-best <b>bolded</b>. Hover header for definition.</p>',
+        LEGEND,
+        '<table style="border-collapse:collapse;font-size:0.88em">',
+        '<tr>' + ''.join(th_cells) + '</tr>',
+    ]
+    for i, r in enumerate(rows, 1):
+        line = [
+            f'<td style="{TD};text-align:right">{i}</td>',
+            f'<td style="{TD};text-align:left;white-space:nowrap"><b>{r["repo"]}</b></td>',
+            f'<td style="{TD};text-align:center">{tier_badge(r["tier"])}</td>',
+        ]
+        for did in DIM_IDS:
+            v = r['scores'][did]
+            cell = f'<b>{v}</b>' if v == best_per_dim[did] else str(v)
+            line.append(f'<td style="{bg(v, 1, 10)}{TD};text-align:right">{cell}</td>')
+        line.append(
+            f'<td style="{bg(r["total"], tot_lo, tot_hi)}{TD};text-align:right">'
+            f'{"<b>" + str(r["total"]) + "</b>" if r["total"] == best_total else r["total"]}'
+            f'</td>'
+        )
+        parts.append('<tr>' + ''.join(line) + '</tr>')
+    parts.append('</table>')
+
+    # Dimension legend below
+    parts.append('<details style="margin-top:12px"><summary style="cursor:pointer;color:#666;font-size:0.88em">📖 Dimension definitions</summary>')
+    parts.append('<table style="border-collapse:collapse;font-size:0.85em;margin-top:6px">')
+    parts.append(f'<tr><th style="{TH};text-align:left">ID</th><th style="{TH};text-align:left">Label</th><th style="{TH};text-align:left">Description</th></tr>')
+    for did, label, descr in DIMENSIONS:
+        parts.append(f'<tr><td style="{TD};text-align:left"><b>{did}</b></td><td style="{TD};text-align:left">{label}</td><td style="{TD};text-align:left;color:#666">{descr}</td></tr>')
+    parts.append('</table></details>')
+
+    return ''.join(parts)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TABLE 3 · Raw Metrics
+# ──────────────────────────────────────────────────────────────────────────────
+
+def build_raw_metrics(snapshot: dict) -> str:
+    rows = []
+    for code, owner, repo, _ in REPOS:
+        m = snapshot['raw_metrics'][code]
+        rows.append({'code': code, 'repo': f'{owner}/{repo}', **m})
+    # Sort by stars desc
+    rows.sort(key=lambda r: r['stars'], reverse=True)
+
+    cols = [
+        # (key, label, fmt, inverted)
+        ('stars',           'Stars ↑',           '{:,}',    False),
+        ('stars_per_day',   'Stars/day ↑',       '{:,.0f}', False),
+        ('forks',           'Forks ↑',           '{:,}',    False),
+        ('watchers',        'Watchers ↑',        '{:,}',    False),
+        ('contribs',        'Contribs ↑',        '{:,}',    False),
+        ('days_alive',      'Days alive',        '{}',      False),
+        ('last_push_days_ago', 'Last push (d ago) ↓', '{}', True),
+        ('commits_per_day', 'Commits/day ↑',     '{:,.2f}', False),
+        ('skill_md',        'SKILL.md count ↑',  '{:,}',    False),
+        ('avg_skill_bytes', 'Avg SKILL bytes ↑', '{:,}',    False),
+        ('platforms',       'Agent platforms ↑', '{}',      False),
+    ]
+
+    col_ranges = {}
+    col_best = {}
+    for k, _, _, inv in cols:
+        vals = [r[k] for r in rows]
+        col_ranges[k] = (min(vals), max(vals))
+        col_best[k] = min(vals) if inv else max(vals)
+
+    parts = [
+        f'<h3>📊 Raw Metrics Snapshot — {snapshot["eval_date"][:10]}</h3>',
+        '<p style="color:#666;font-size:0.85em;margin:4px 0">↑ higher is better · ↓ lower is better. Per-column normalized.</p>',
+        LEGEND,
+        '<table style="border-collapse:collapse;font-size:0.88em">',
+        '<tr><th style="{}text-align:right">#</th><th style="{}text-align:left">Repo</th>'.format(TH + ';', TH + ';')
+        + ''.join(f'<th style="{TH};text-align:right">{lbl}</th>' for _, lbl, _, _ in cols)
+        + '</tr>',
+    ]
+    for i, r in enumerate(rows, 1):
+        line = [
+            f'<td style="{TD};text-align:right">{i}</td>',
+            f'<td style="{TD};text-align:left;white-space:nowrap"><b>{r["repo"]}</b></td>',
+        ]
+        for k, _, fmt, inv in cols:
+            v = r[k]
+            lo, hi = col_ranges[k]
+            cell = fmt.format(v)
+            if v == col_best[k]:
+                cell = f'<b>{cell}</b>'
+            line.append(f'<td style="{bg(v, lo, hi, inverted=inv)}{TD};text-align:right">{cell}</td>')
+        parts.append('<tr>' + ''.join(line) + '</tr>')
+    parts.append('</table>')
+    return ''.join(parts)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TABLE 4 · Submodule Snapshot & Drift
+# ──────────────────────────────────────────────────────────────────────────────
+
+def build_drift_table(snapshot: dict, current_shas: dict) -> str:
+    rows = []
+    for path, recorded in snapshot['submodule_shas'].items():
+        cur = current_shas.get(path)
+        if cur is None:
+            status, status_color = '✗ missing', 'rgba(220,60,60,0.40)'
+        elif cur == recorded:
+            status, status_color = '✓ same',    'rgba(40,200,100,0.35)'
+        else:
+            status, status_color = '⚠ drifted', 'rgba(220,220,60,0.40)'
+        rows.append({
+            'path':     path.replace('skills/', ''),
+            'recorded': recorded,
+            'current':  cur or '—',
+            'status':   status,
+            'color':    status_color,
+        })
+    parts = [
+        f'<h3>🔗 Submodule Snapshot & Drift — {snapshot["eval_date"][:10]}</h3>',
+        f'<p style="color:#888;font-size:0.85em;margin:4px 0">'
+        f'Snapshot SHAs captured at evaluation time ({snapshot["eval_date"]}); '
+        f'current SHAs read at notebook build time ({_dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds")}).'
+        f'</p>',
+        '<table style="border-collapse:collapse;font-size:0.92em">',
+        f'<tr>'
+        f'<th style="{TH};text-align:left">Submodule</th>'
+        f'<th style="{TH};text-align:left">Snapshot SHA</th>'
+        f'<th style="{TH};text-align:left">Current SHA</th>'
+        f'<th style="{TH};text-align:center">Status</th>'
+        f'</tr>',
+    ]
+    for r in rows:
+        same = r['status'].startswith('✓')
+        rec_display = f'<code style="font-size:0.85em">{r["recorded"][:10]}</code>'
+        cur_display = f'<code style="font-size:0.85em">{r["current"][:10] if r["current"] != "—" else "—"}</code>'
+        if not same and r['current'] != '—':
+            cur_display = f'<b>{cur_display}</b>'
+        parts.append(
+            f'<tr>'
+            f'<td style="{TD};text-align:left">{r["path"]}</td>'
+            f'<td style="{TD};text-align:left">{rec_display}</td>'
+            f'<td style="{TD};text-align:left">{cur_display}</td>'
+            f'<td style="background:{r["color"]};{TD};text-align:center;font-weight:600">{r["status"]}</td>'
+            f'</tr>'
+        )
+    parts.append('</table>')
+    return ''.join(parts)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TABLE 5 · By Domain
+# ──────────────────────────────────────────────────────────────────────────────
+
+def build_domain_recs(snapshot: dict) -> str:
+    parts = [
+        f'<h3>🎯 Best Repo by Domain — {snapshot["eval_date"][:10]}</h3>',
+        '<p style="color:#666;font-size:0.85em;margin:4px 0">Tier badges from the snapshot above; descriptions are the discriminating signal for that domain.</p>',
+        '<table style="border-collapse:collapse;font-size:0.92em">',
+        f'<tr>'
+        f'<th style="{TH};text-align:right">#</th>'
+        f'<th style="{TH};text-align:left">Domain / Use case</th>'
+        f'<th style="{TH};text-align:left">Best repo</th>'
+        f'<th style="{TH};text-align:center">Tier</th>'
+        f'<th style="{TH};text-align:right">Total</th>'
+        f'<th style="{TH};text-align:left">Why</th>'
+        f'</tr>',
+    ]
+    for i, (domain, code, reason) in enumerate(DOMAIN_RECS, 1):
+        _, owner, repo, _ = REPO_BY_CODE[code]
+        total = sum(snapshot['scores'][code].values())
+        tier = tier_for_total(total)
+        parts.append(
+            f'<tr>'
+            f'<td style="{TD};text-align:right">{i}</td>'
+            f'<td style="{TD};text-align:left">{domain}</td>'
+            f'<td style="{TD};text-align:left;white-space:nowrap"><b>{owner}/{repo}</b></td>'
+            f'<td style="{TD};text-align:center">{tier_badge(tier)}</td>'
+            f'<td style="{TD};text-align:right;color:#666">{total}</td>'
+            f'<td style="{TD};text-align:left;color:#555;font-size:0.92em">{reason}</td>'
+            f'</tr>'
+        )
+    parts.append('</table>')
+    return ''.join(parts)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TABLE 6 · Δ-diff (if ≥2 snapshots)
+# ──────────────────────────────────────────────────────────────────────────────
+
+def build_diff(snap_new: dict, snap_old: dict) -> str:
+    parts = [
+        f'<h3>🔁 Score Δ — {snap_old["eval_date"][:10]} → {snap_new["eval_date"][:10]}</h3>',
+        '<p style="color:#666;font-size:0.85em;margin:4px 0">Per-dimension score change; positive (green) = improved.</p>',
+        '<table style="border-collapse:collapse;font-size:0.88em">',
+        '<tr>'
+        f'<th style="{TH};text-align:left">Repo</th>'
+        + ''.join(f'<th style="{TH};text-align:right">{did}</th>' for did in DIM_IDS)
+        + f'<th style="{TH};text-align:right">ΔTotal</th>'
+        '</tr>',
+    ]
+    for code, owner, repo, _ in REPOS:
+        new = snap_new['scores'].get(code, {})
+        old = snap_old['scores'].get(code, {})
+        deltas = {did: new.get(did, 0) - old.get(did, 0) for did in DIM_IDS}
+        dtot = sum(deltas.values())
+        line = [f'<td style="{TD};text-align:left;white-space:nowrap"><b>{owner}/{repo}</b></td>']
+        for did in DIM_IDS:
+            d = deltas[did]
+            color = rgba(d, -5, 5)
+            sign = '+' if d > 0 else ''
+            line.append(f'<td style="background-color:{color};{TD};text-align:right">{sign}{d}</td>' if color else f'<td style="{TD};text-align:right">·</td>')
+        c = rgba(dtot, -30, 30)
+        line.append(f'<td style="background-color:{c};{TD};text-align:right;font-weight:600">{("+" if dtot > 0 else "") + str(dtot)}</td>' if c else f'<td style="{TD};text-align:right;font-weight:600">·</td>')
+        parts.append('<tr>' + ''.join(line) + '</tr>')
+    parts.append('</table>')
+    return ''.join(parts)
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# ASSEMBLY
+# ──────────────────────────────────────────────────────────────────────────────
+
+def make_code_cell_with_html(title: str, html: str, exec_count: int) -> nbf.NotebookNode:
+    cell = nbf.v4.new_code_cell(source=f'# {title}')
+    cell.execution_count = exec_count
+    cell.outputs = [
+        nbf.v4.new_output(
+            output_type='execute_result',
+            execution_count=exec_count,
+            data={'text/html': html},
+            metadata={},
+        )
+    ]
+    return cell
+
+
+def main():
+    snapshot = EVALUATIONS[-1]
+    current_shas = _fetch_current_shas()
+
+    cells = []
+
+    # Cell 0 — intro markdown
+    cells.append(nbf.v4.new_markdown_cell(
+        '<!-- Pre-rendered HTML tables baked into outputs[].data["text/html"]. '
+        'GitHub renders directly; no kernel needed. To update, edit EVALUATIONS '
+        'in build_scoring_notebook.py and re-run that script. -->\n\n'
+        '# Skill Repo Scoring\n\n'
+        f'**Latest snapshot**: `{snapshot["eval_date"]}` · `v{snapshot["version"]}` — _{snapshot["note"]}_\n\n'
+        f'**Cohort**: 12 skill-collection repos as submodules. **Dimensions**: 15 (see §[`EVALUATION.md`](./EVALUATION.md)).\n\n'
+        '**Maintenance**: edit `EVALUATIONS` list in `build_scoring_notebook.py`, '
+        'append a new dict (never modify history), then `python3 build_scoring_notebook.py`.'
+    ))
+
+    # Cell 1 — Overall ranking
+    cells.append(make_code_cell_with_html('Overall Ranking', build_overall(snapshot), 1))
+
+    # Cell 2 — Full score matrix
+    cells.append(make_code_cell_with_html('Full Score Matrix (15 dims)', build_score_matrix(snapshot), 2))
+
+    # Cell 3 — Raw metrics
+    cells.append(make_code_cell_with_html('Raw Metrics Snapshot', build_raw_metrics(snapshot), 3))
+
+    # Cell 4 — Submodule drift
+    cells.append(make_code_cell_with_html('Submodule Snapshot & Drift', build_drift_table(snapshot, current_shas), 4))
+
+    # Cell 5 — Best by domain
+    cells.append(make_code_cell_with_html('Best Repo by Domain', build_domain_recs(snapshot), 5))
+
+    # Cell 6 — Diff (only if ≥2 snapshots)
+    if len(EVALUATIONS) >= 2:
+        cells.append(make_code_cell_with_html(
+            'Snapshot Δ-diff',
+            build_diff(EVALUATIONS[-1], EVALUATIONS[-2]),
+            6,
+        ))
+
+    # Cell N — closing markdown
+    cells.append(nbf.v4.new_markdown_cell(
+        '## 📝 Long-term maintenance / 长期维护\n\n'
+        'Each re-scoring run **appends** a new dict to `EVALUATIONS` in `build_scoring_notebook.py`. '
+        'A snapshot dict contains:\n\n'
+        '- `eval_date` — ISO-8601 UTC timestamp\n'
+        '- `version` — human-readable tag\n'
+        '- `submodule_shas` — `{path → SHA}` at scoring time (copy from `git submodule status`)\n'
+        '- `raw_metrics` — `{code → {metric → value}}` (gh API + local `find`)\n'
+        '- `scores` — `{code → {dim_id → 1-10 int}}` (rank-based)\n\n'
+        '**Never modify history.** Stale snapshots stay as audit trail. When ≥2 snapshots exist, '
+        'the Δ-diff section auto-renders.\n\n'
+        '**To add a new cohort member**: register it in `REPOS` list, add scores for it in every '
+        'snapshot (use `null` if not evaluated in older snapshots), then re-run the build script.'
+    ))
+
+    nb = nbf.v4.new_notebook()
+    nb.cells = cells
+    nb.metadata = {
+        'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
+        'language_info': {'name': 'python', 'version': '3.12'},
+    }
+
+    out_path = REPO_ROOT / 'scoring.ipynb'
+    with open(out_path, 'w', encoding='utf-8') as f:
+        nbf.write(nb, f)
+
+    total_html = sum(
+        len(''.join(o['data']['text/html']) if isinstance(o['data']['text/html'], list) else o['data']['text/html'])
+        for c in cells if c.cell_type == 'code'
+        for o in c.get('outputs', []) if 'data' in o and 'text/html' in o['data']
+    )
+    print(f'Wrote {out_path.name} — {len(cells)} cells, {total_html:,} bytes of pre-baked HTML')
+
+
+if __name__ == '__main__':
+    main()

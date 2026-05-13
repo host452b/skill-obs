@@ -1,5 +1,7 @@
 # Skill Repo 评测报告 / Skill Collection Evaluation
 
+> 🌐 **Language**: **🇨🇳 中文** · [🇬🇧 English](./EVALUATION.en.md)
+
 > 评测日期 / Date: **2026-05-13**  
 > 评测对象 / Cohort: 12 个 Agent Skills / Claude Skills / 类 Skills 仓库（作为本 repo 的 git submodule）  
 > 评分量表 / Scale: **1–10** (10 = best in cohort)  
