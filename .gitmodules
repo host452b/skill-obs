@@ -37,3 +37,9 @@
 [submodule "skills/vercel-labs__agent-skills"]
 	path = skills/vercel-labs__agent-skills
 	url = https://github.com/vercel-labs/agent-skills.git
+[submodule "skills/garrytan__gstack"]
+	path = skills/garrytan__gstack
+	url = https://github.com/garrytan/gstack.git
+[submodule "skills/msitarzewski__agency-agents"]
+	path = skills/msitarzewski__agency-agents
+	url = https://github.com/msitarzewski/agency-agents.git

@@ -8,9 +8,10 @@
 [![Eval baseline](https://img.shields.io/badge/eval-2026--05--13-blue)](./EVALUATION.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Task Guide](https://img.shields.io/badge/任务→repo-TASK__GUIDE-red)](./TASK_GUIDE.md)
-[![Cohort size](https://img.shields.io/badge/repos-13-green)](./.gitmodules)
-[![Dimensions](https://img.shields.io/badge/dimensions-15-purple)](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions)
-[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1-yellow)](./scoring.ipynb)
+[![Cohort size](https://img.shields.io/badge/repos-15-green)](./.gitmodules)
+[![Dimensions](https://img.shields.io/badge/dimensions-19-purple)](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions)
+[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2-yellow)](./scoring.ipynb)
+[![Social signals](https://img.shields.io/badge/Reddit_+_HN-30d_sampled-orange)](./scoring.ipynb)
 
 ---
 
@@ -53,14 +54,16 @@ skill-obs/
 ├── EVALUATION.md                      ← 完整评测报告：15 维度 × 12 repos
 ├── scoring.ipynb                      ← 可视化 notebook（绿→红分阶染色）
 ├── build_scoring_notebook.py          ← 从源码重新生成 notebook 的脚本
-├── .gitmodules                        ← 13 个 submodule 注册
+├── .gitmodules                        ← 15 个 submodule 注册
 └── skills/                            ← 各 submodule（shallow clone）
     ├── affaan-m__everything-claude-code/
     ├── anthropics__skills/
     ├── ComposioHQ__awesome-claude-skills/
     ├── coreyhaines31__marketingskills/
+    ├── garrytan__gstack/                       ← 🆕 v1.2
     ├── kepano__obsidian-skills/
     ├── mattpocock__skills/
+    ├── msitarzewski__agency-agents/            ← 🆕 v1.2
     ├── multica-ai__andrej-karpathy-skills/
     ├── nextlevelbuilder__ui-ux-pro-max-skill/
     ├── nexu-io__open-design/
@@ -70,25 +73,33 @@ skill-obs/
     └── vercel-labs__agent-skills/
 ```
 
-## 🏆 Top-line Findings (latest snapshot **v1.1** · 2026-05-13)
+## 🏆 Top-line Findings (latest snapshot **v1.2** · 2026-05-13 · max **190**)
 
-| Rank | Repo | Score / 150 | Tier | Δ vs v1.0 | 标签 |
-|---:|---|---:|:---:|---:|---|
-| 🥇 1 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | **129** | S | 0 | 大而全 — 事实标准 |
-| 🥈 2 | [`obra/superpowers`](https://github.com/obra/superpowers) | 115 | S | −1 | 原创方法论 — 思想最深 |
-| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 110 | S | 0 | 15 天上线就吃下设计赛道 |
-| 4= | `anthropics/skills` | 93 | A | −1 | 官方规范 |
-| 4= | `nextlevelbuilder/ui-ux-pro-max-skill` | 93 | A | −1 | UI/UX 产品化 |
-| 6 | `addyosmani/agent-skills` | 90 | A | 0 | 生产级通用 |
-| 7 | `coreyhaines31/marketingskills` | 85 | A | −1 | 营销垂直 |
-| 8 | `ComposioHQ/awesome-claude-skills` | 80 | B | 0 | 数量碾压（864 SKILL.md） |
-| 9 | `mattpocock/skills` | 76 | B | 0 | TS 工程师视角 |
-| **10** | **[`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills)** | **75** | **B** | 🆕 | **Vercel 官方 — D10 辅料密度 第一** |
-| 11 | `openai/skills` | 72 | B | −1 | Codex 配套 |
-| 12 | `multica-ai/andrej-karpathy-skills` | 69 | B | −1 | 单文件 drop-in |
-| 13 | `kepano/obsidian-skills` | 50 | C | 0 | Obsidian 垂直 |
+| Rank | Repo | Score / 190 | Tier | 标签 |
+|---:|---|---:|:---:|---|
+| 🥇 1 | **[`garrytan/gstack`](https://github.com/garrytan/gstack)** | **147** | S | 🆕 v1.2 · Garry Tan 实战 setup — 23 个角色 agent，平均 SKILL.md 52KB（cohort 最深）·  Reddit 热度爆炸 |
+| 🥈 2 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 145 | S | 大而全 — 事实标准 |
+| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 139 | S | 15 天上线就吃下设计赛道 |
+| 3= | **[`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents)** | 139 | S | 🆕 v1.2 · "AI agency" — 222 个个性化 agent 跨 18 个领域（**填补 game-dev 缺口**）|
+| 5 | [`obra/superpowers`](https://github.com/obra/superpowers) | 137 | S | 原创方法论 — 思想最深 |
+| 6 | `anthropics/skills` | 127 | A | 官方规范 |
+| 7 | `addyosmani/agent-skills` | 115 | A | 生产级通用 |
+| 8 | `mattpocock/skills` | 104 | B | TS 工程师视角 |
+| 9 | `openai/skills` | 101 | B | Codex 配套 |
+| 10 | `nextlevelbuilder/ui-ux-pro-max-skill` | 98 | B | UI/UX 产品化 |
+| 11 | `coreyhaines31/marketingskills` | 95 | B | 营销垂直 |
+| 12 | `ComposioHQ/awesome-claude-skills` | 93 | B | 数量碾压（864 SKILL.md）|
+| 13 | `vercel-labs/agent-skills` | 91 | B | Vercel 官方 — D10 辅料密度 第一 |
+| 14 | `multica-ai/andrej-karpathy-skills` | 73 | C | 单文件 drop-in |
+| 15 | `kepano/obsidian-skills` | 62 | D | Obsidian 垂直 |
 
-> **v1.0 → v1.1 变更**：新增 `vercel-labs/agent-skills`（13 repos cohort）；V 在 D10（supplementary material density）排第一（19.3 辅料/skill），把 OAI 从 10 → 9 顶下来，连带 5 个排名靠前的 repo 在 D10 维度各掉 1 分，6 个 repo 总分降 1。完整 Δ-diff 见 `scoring.ipynb` 第 7 cell。
+> **v1.1 → v1.2 主要变更**：
+> 1. 新增 **4 个 social dimensions**（D16-D19）：Reddit Heat / Reddit Sentiment / HN Heat / HN Sentiment（公共 API 采样最近 30 天）
+> 2. 新增 2 个 repos：`garrytan/gstack` + `msitarzewski/agency-agents` → **15-repo cohort**
+> 3. 总分上限：150 → **190**（19 dims × 10）
+> 4. **GS** 取代 AM 登顶（深度 + Reddit 热度）；**AA** 与 NX 并列第 3
+> 5. **AA 填补 game-dev 缺口**（20 个 game-development agents — 之前 cohort 完全无 game 覆盖）
+> 6. 完整 v1.1 → v1.2 Δ-diff 见 `scoring.ipynb` 第 7 cell。
 
 完整评分矩阵、按领域/角色推荐、方法论与 caveat 见 **[`EVALUATION.md`](./EVALUATION.md)**。
 
@@ -169,6 +180,8 @@ Re-run all cells，Cell 10 会自动渲染新旧 snapshot 的 Δ-diff。
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | 40,580 | 2026-02-15 | MIT |
 | [nexu-io/open-design](https://github.com/nexu-io/open-design) | 38,735 | 2026-04-28 | Apache-2.0 |
 | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | 30,825 | 2026-01-02 | MIT |
+| **[msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)** 🆕 | 96,620 | 2025-10-13 | MIT |
+| **[garrytan/gstack](https://github.com/garrytan/gstack)** 🆕 | 95,212 | 2026-03-11 | MIT |
 | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 28,215 | 2026-01-15 | MIT |
 | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | 26,494 | 2025-12-08 | — |
 | [openai/skills](https://github.com/openai/skills) | 18,982 | 2025-11-25 | — |

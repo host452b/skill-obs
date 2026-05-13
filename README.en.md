@@ -8,9 +8,10 @@
 [![Eval baseline](https://img.shields.io/badge/eval-2026--05--13-blue)](./EVALUATION.en.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Task Guide](https://img.shields.io/badge/task→repo-TASK__GUIDE-red)](./TASK_GUIDE.en.md)
-[![Cohort size](https://img.shields.io/badge/repos-13-green)](./.gitmodules)
-[![Dimensions](https://img.shields.io/badge/dimensions-15-purple)](./EVALUATION.en.md#2-15-evaluation-dimensions)
-[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1-yellow)](./scoring.ipynb)
+[![Cohort size](https://img.shields.io/badge/repos-15-green)](./.gitmodules)
+[![Dimensions](https://img.shields.io/badge/dimensions-19-purple)](./EVALUATION.en.md#2-15-evaluation-dimensions)
+[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2-yellow)](./scoring.ipynb)
+[![Social signals](https://img.shields.io/badge/Reddit_+_HN-30d_sampled-orange)](./scoring.ipynb)
 
 ---
 
@@ -72,28 +73,38 @@ skill-obs/
     ├── obra__superpowers/
     ├── openai__skills/
     ├── addyosmani__agent-skills/
-    └── vercel-labs__agent-skills/
+    ├── vercel-labs__agent-skills/
+    ├── garrytan__gstack/                       ← 🆕 v1.2
+    └── msitarzewski__agency-agents/            ← 🆕 v1.2
 ```
 
-## 🏆 Top-line Findings (latest snapshot **v1.1** · 2026-05-13)
+## 🏆 Top-line Findings (latest snapshot **v1.2** · 2026-05-13 · max **190**)
 
-| Rank | Repo | Score /150 | Tier | Δ vs v1.0 | Tagline |
-|---:|---|---:|:---:|---:|---|
-| 🥇 1 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | **129** | S | 0 | Comprehensive — de-facto standard |
-| 🥈 2 | [`obra/superpowers`](https://github.com/obra/superpowers) | 115 | S | −1 | Original methodology — deepest thinking |
-| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 110 | S | 0 | Ate the design lane in 15 days |
-| 4= | `anthropics/skills` | 93 | A | −1 | Official spec |
-| 4= | `nextlevelbuilder/ui-ux-pro-max-skill` | 93 | A | −1 | UI/UX product polish |
-| 6 | `addyosmani/agent-skills` | 90 | A | 0 | Production-grade engineering |
-| 7 | `coreyhaines31/marketingskills` | 85 | A | −1 | Marketing-specialized |
-| 8 | `ComposioHQ/awesome-claude-skills` | 80 | B | 0 | Volume champion (864 SKILL.md) |
-| 9 | `mattpocock/skills` | 76 | B | 0 | TS engineering lens |
-| **10** | **[`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills)** | **75** | **B** | 🆕 | **Vercel official — #1 on D10 supp. density** |
-| 11 | `openai/skills` | 72 | B | −1 | Codex companion |
-| 12 | `multica-ai/andrej-karpathy-skills` | 69 | B | −1 | Single-file drop-in |
-| 13 | `kepano/obsidian-skills` | 50 | C | 0 | Obsidian-specialized |
+| Rank | Repo | Score /190 | Tier | Tagline |
+|---:|---|---:|:---:|---|
+| 🥇 1 | **[`garrytan/gstack`](https://github.com/garrytan/gstack)** | **147** | S | 🆕 v1.2 · Garry Tan's actual setup — 23 role agents, avg SKILL.md 52KB (cohort deepest); Reddit heat champion |
+| 🥈 2 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 145 | S | Comprehensive — de-facto standard |
+| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 139 | S | Ate the design lane in 15 days |
+| 3= | **[`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents)** | 139 | S | 🆕 v1.2 · "AI agency" — 222 personality-driven agents across 18 domains (**fills the game-dev gap**) |
+| 5 | [`obra/superpowers`](https://github.com/obra/superpowers) | 137 | S | Original methodology — deepest thinking |
+| 6 | `anthropics/skills` | 127 | A | Official spec |
+| 7 | `addyosmani/agent-skills` | 115 | A | Production-grade engineering |
+| 8 | `mattpocock/skills` | 104 | B | TS engineering lens |
+| 9 | `openai/skills` | 101 | B | Codex companion |
+| 10 | `nextlevelbuilder/ui-ux-pro-max-skill` | 98 | B | UI/UX product polish |
+| 11 | `coreyhaines31/marketingskills` | 95 | B | Marketing-specialized |
+| 12 | `ComposioHQ/awesome-claude-skills` | 93 | B | Volume champion (864 SKILL.md) |
+| 13 | `vercel-labs/agent-skills` | 91 | B | Vercel official — #1 on D10 supp. density |
+| 14 | `multica-ai/andrej-karpathy-skills` | 73 | C | Single-file drop-in |
+| 15 | `kepano/obsidian-skills` | 62 | D | Obsidian-specialized |
 
-> **v1.0 → v1.1 change**: added `vercel-labs/agent-skills` (13-repo cohort). V is #1 on D10 (supplementary material density: 19.3 supp. docs per skill), displacing OAI from 10 → 9 and dragging 5 other incumbents down by 1 on D10. Six repos lose 1 total point. Full Δ-diff in `scoring.ipynb` cell 7.
+> **v1.1 → v1.2 major changes**:
+> 1. Added **4 new social dimensions** D16-D19: Reddit Heat / Reddit Sentiment / HN Heat / HN Sentiment (sampled from public APIs over the last 30 days)
+> 2. Added 2 new repos: `garrytan/gstack` + `msitarzewski/agency-agents` → **15-repo cohort**
+> 3. Max total: 150 → **190** (19 dims × 10)
+> 4. **GS** dethrones AM (deepest SKILL.md + Reddit heat champion); **AA** ties NX at #3
+> 5. **AA fills the game-dev gap** with 20 game-development agents (cohort previously had no game coverage)
+> 6. Full v1.1 → v1.2 Δ-diff in `scoring.ipynb` cell 7.
 
 Full score matrix, by-domain recommendations, methodology, and caveats: **[`EVALUATION.en.md`](./EVALUATION.en.md)**.
 
@@ -173,6 +184,8 @@ Then re-run: `python3 build_scoring_notebook.py`. The notebook regenerates with 
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | 40,580 | 2026-02-15 | MIT |
 | [nexu-io/open-design](https://github.com/nexu-io/open-design) | 38,735 | 2026-04-28 | Apache-2.0 |
 | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | 30,825 | 2026-01-02 | MIT |
+| **[msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)** 🆕 | 96,620 | 2025-10-13 | MIT |
+| **[garrytan/gstack](https://github.com/garrytan/gstack)** 🆕 | 95,212 | 2026-03-11 | MIT |
 | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 28,215 | 2026-01-15 | MIT |
 | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | 26,494 | 2025-12-08 | — |
 | [openai/skills](https://github.com/openai/skills) | 18,982 | 2025-11-25 | — |

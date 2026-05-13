@@ -45,8 +45,13 @@ DIMENSIONS = [
     ('D13', 'Multi-Agent Portability',   '# agent platforms supported'),
     ('D14', 'Domain Breadth',            'general vs niche'),
     ('D15', 'Originality / Authority',   'first-mover, official vs derivative'),
+    ('D16', 'Reddit Heat (30d)',         'posts + comments/10 in last 30 days'),
+    ('D17', 'Reddit Sentiment (30d)',    'avg upvote score per post (last 30d)'),
+    ('D18', 'HN Heat (30d)',             'stories*10 + comments in last 30 days'),
+    ('D19', 'HN Sentiment (30d)',        'avg points per story (last 30d)'),
 ]
 DIM_IDS = [d[0] for d in DIMENSIONS]
+MAX_TOTAL = len(DIMENSIONS) * 10  # 190
 
 # Repo registry: code → (owner, repo, oneliner)
 REPOS = [
@@ -63,6 +68,8 @@ REPOS = [
     ('MA',  'multica-ai',       'andrej-karpathy-skills',   'Karpathy-derived CLAUDE.md'),
     ('K',   'kepano',           'obsidian-skills',          'Obsidian-native'),
     ('V',   'vercel-labs',      'agent-skills',             'Vercel deploy + React/Next.js skills'),
+    ('GS',  'garrytan',         'gstack',                   'Garry Tan exact Claude Code setup (23 role agents)'),
+    ('AA',  'msitarzewski',     'agency-agents',            'AI agency — 222 personality-driven agents across 18 domains'),
 ]
 REPO_BY_CODE = {c: (c, o, r, l) for c, o, r, l in REPOS}
 
@@ -166,6 +173,63 @@ EVALUATIONS = [
             'V':   {'D1': 2, 'D2': 2, 'D3': 3, 'D4': 2, 'D5': 7, 'D6': 6, 'D7': 4, 'D8': 2, 'D9': 5, 'D10':10, 'D11': 8, 'D12': 6, 'D13': 5, 'D14': 4, 'D15': 9},  # NEW (total = 75 → B)
         },
     },
+    {
+        'eval_date': '2026-05-13T17:30:00Z',
+        'version': '1.2',
+        'note': 'Added garrytan/gstack + msitarzewski/agency-agents (15-repo cohort); added 4 new dimensions D16-D19 (Reddit Heat/Sentiment + HN Heat/Sentiment, sampled via public APIs last 30 days). Max total now 190 (19 dims × 10). GS displaces NL on D9 (avg SKILL.md 52,730B = cohort top); AA fills the game-dev coverage gap with 20 game-development agents. GS/AA both top Reddit signals (avg scores 2,769 / 2,897) on launch wave. NOTE: AA uses `.md` per role rather than SKILL.md — treated as the same volume metric.',
+        'submodule_shas': {
+            'skills/affaan-m__everything-claude-code':      'd4728a0d801f1ebbc2384547009df17cbf16bfd1',
+            'skills/obra__superpowers':                     'f2cbfbefebbfef77321e4c9abc9e949826bea9d7',
+            'skills/nexu-io__open-design':                  '6341b2677aa7075b8027e3647310d61060b63e1b',
+            'skills/anthropics__skills':                    'f458cee31a7577a47ba0c9a101976fa599385174',
+            'skills/nextlevelbuilder__ui-ux-pro-max-skill': 'b7e3af80f6e331f6fb456667b82b12cade7c9d35',
+            'skills/addyosmani__agent-skills':              '3ff4b518b3cd3077ca27cf883aa21d21faf53802',
+            'skills/coreyhaines31__marketingskills':        '906c2fb28e471c5b1d149d4159ec5ddb40b7c364',
+            'skills/ComposioHQ__awesome-claude-skills':     'f2b5e29bc315f04c8e09591ba275f4c4f7d4b8fe',
+            'skills/mattpocock__skills':                    'f304057d61d3df3c9fd992ac2b6e3833cb9325fb',
+            'skills/openai__skills':                        'c25113bf4c64c8dba6bfe61acf06051d79aa43f6',
+            'skills/multica-ai__andrej-karpathy-skills':    '2c606141936f1eeef17fa3043a72095b4765b9c2',
+            'skills/kepano__obsidian-skills':               'ac9398734fe719565809f7a6048b05c36b1ca38f',
+            'skills/vercel-labs__agent-skills':             'b9c8ee0643d87d3c5a953d1e22382ff2ead39229',
+            'skills/garrytan__gstack':                      'dc6252d1df7f1f650ea6e9b2bba7d08fab5de902',
+            'skills/msitarzewski__agency-agents':           '783f6a72bfd7f3135700ac273c619d92821b419a',
+        },
+        'raw_metrics': {
+            'AM':  {'stars': 180838, 'forks': 27876, 'watchers': 899, 'contribs': 183, 'skill_md': 572, 'avg_skill_bytes': 8847,  'days_alive': 115, 'stars_per_day': 1572.5, 'commits_per_day': 14.82, 'platforms': 7, 'last_push_days_ago': 0, 'reddit_posts': 8,   'reddit_comments': 96,    'reddit_avg_score': 126.5,  'hn_stories': 0, 'hn_comments': 0,   'hn_avg_points': 0.0},
+            'O':   {'stars': 188498, 'forks': 16759, 'watchers': 753, 'contribs': 33,  'skill_md': 14,  'avg_skill_bytes': 8168,  'days_alive': 216, 'stars_per_day': 872.7,  'commits_per_day': 2.04,  'platforms': 6, 'last_push_days_ago': 0, 'reddit_posts': 40,  'reddit_comments': 243,   'reddit_avg_score':  31.4,  'hn_stories': 1, 'hn_comments': 0,   'hn_avg_points': 3.0},
+            'NX':  {'stars': 38735,  'forks': 4403,  'watchers': 142, 'contribs': 186, 'skill_md': 218, 'avg_skill_bytes': 3438,  'days_alive': 15,  'stars_per_day': 2582.3, 'commits_per_day': 42.5,  'platforms': 9, 'last_push_days_ago': 0, 'reddit_posts': 8,   'reddit_comments': 103,   'reddit_avg_score':  63.2,  'hn_stories': 1, 'hn_comments': 92,  'hn_avg_points': 230.0},
+            'A':   {'stars': 133251, 'forks': 15715, 'watchers': 865, 'contribs': 13,  'skill_md': 18,  'avg_skill_bytes': 10995, 'days_alive': 233, 'stars_per_day': 571.9,  'commits_per_day': 0.15,  'platforms': 1, 'last_push_days_ago': 4, 'reddit_posts': 169, 'reddit_comments': 6451,  'reddit_avg_score': 151.7,  'hn_stories': 8, 'hn_comments': 9,   'hn_avg_points': 5.0},
+            'NL':  {'stars': 77723,  'forks': 7977,  'watchers': 381, 'contribs': 31,  'skill_md': 7,   'avg_skill_bytes': 12272, 'days_alive': 164, 'stars_per_day': 474.0,  'commits_per_day': 0.82,  'platforms': 8, 'last_push_days_ago': 40,'reddit_posts': 2,   'reddit_comments': 1,     'reddit_avg_score':   1.5,  'hn_stories': 0, 'hn_comments': 0,   'hn_avg_points': 0.0},
+            'AD':  {'stars': 40580,  'forks': 4472,  'watchers': 255, 'contribs': 23,  'skill_md': 22,  'avg_skill_bytes': 10703, 'days_alive': 87,  'stars_per_day': 466.4,  'commits_per_day': 2.0,   'platforms': 7, 'last_push_days_ago': 3, 'reddit_posts': 6,   'reddit_comments': 54,    'reddit_avg_score':  22.2,  'hn_stories': 1, 'hn_comments': 212, 'hn_avg_points': 375.0},
+            'CH':  {'stars': 28215,  'forks': 4550,  'watchers': 288, 'contribs': 16,  'skill_md': 41,  'avg_skill_bytes': 11443, 'days_alive': 118, 'stars_per_day': 239.1,  'commits_per_day': 2.21,  'platforms': 5, 'last_push_days_ago': 7, 'reddit_posts': 5,   'reddit_comments': 97,    'reddit_avg_score':  38.2,  'hn_stories': 0, 'hn_comments': 0,   'hn_avg_points': 0.0},
+            'C':   {'stars': 59518,  'forks': 6462,  'watchers': 399, 'contribs': 26,  'skill_md': 864, 'avg_skill_bytes': 3444,  'days_alive': 208, 'stars_per_day': 286.1,  'commits_per_day': 0.34,  'platforms': 7, 'last_push_days_ago': 6, 'reddit_posts': 5,   'reddit_comments': 98,    'reddit_avg_score':  87.8,  'hn_stories': 0, 'hn_comments': 0,   'hn_avg_points': 0.0},
+            'M':   {'stars': 77173,  'forks': 6656,  'watchers': 532, 'contribs': 2,   'skill_md': 28,  'avg_skill_bytes': 3321,  'days_alive': 99,  'stars_per_day': 779.5,  'commits_per_day': 0.78,  'platforms': 2, 'last_push_days_ago': 1, 'reddit_posts': 14,  'reddit_comments': 303,   'reddit_avg_score':  92.9,  'hn_stories': 1, 'hn_comments': 0,   'hn_avg_points': 5.0},
+            'OAI': {'stars': 18982,  'forks': 1259,  'watchers': 110, 'contribs': 34,  'skill_md': 43,  'avg_skill_bytes': 9435,  'days_alive': 169, 'stars_per_day': 112.3,  'commits_per_day': 0.64,  'platforms': 1, 'last_push_days_ago': 1, 'reddit_posts': 171, 'reddit_comments': 3358,  'reddit_avg_score':  54.9,  'hn_stories': 7, 'hn_comments': 16,  'hn_avg_points': 8.7},
+            'MA':  {'stars': 127547, 'forks': 12958, 'watchers': 671, 'contribs': 7,   'skill_md': 1,   'avg_skill_bytes': 2518,  'days_alive': 106, 'stars_per_day': 1203.3, 'commits_per_day': 0.26,  'platforms': 2, 'last_push_days_ago': 23,'reddit_posts': 0,   'reddit_comments': 0,     'reddit_avg_score':   0.0,  'hn_stories': 0, 'hn_comments': 0,   'hn_avg_points': 0.0},
+            'K':   {'stars': 30825,  'forks': 2100,  'watchers': 185, 'contribs': 13,  'skill_md': 5,   'avg_skill_bytes': 6040,  'days_alive': 131, 'stars_per_day': 235.3,  'commits_per_day': 0.30,  'platforms': 3, 'last_push_days_ago': 6, 'reddit_posts': 2,   'reddit_comments': 19,    'reddit_avg_score':  65.0,  'hn_stories': 0, 'hn_comments': 0,   'hn_avg_points': 0.0},
+            'V':   {'stars': 26494,  'forks': 2416,  'watchers': 114, 'contribs': 21,  'skill_md': 7,   'avg_skill_bytes': 7224,  'days_alive': 156, 'stars_per_day': 169.8,  'commits_per_day': 1.27,  'platforms': 4, 'last_push_days_ago': 6, 'reddit_posts': 25,  'reddit_comments': 425,   'reddit_avg_score':  63.8,  'hn_stories': 0, 'hn_comments': 0,   'hn_avg_points': 0.0},
+            'GS':  {'stars': 95212,  'forks': 14113, 'watchers': 575, 'contribs': 10,  'skill_md': 51,  'avg_skill_bytes': 52730, 'days_alive': 63,  'stars_per_day': 1511.3, 'commits_per_day': 4.33,  'platforms': 8, 'last_push_days_ago': 1, 'reddit_posts': 111, 'reddit_comments': 32442, 'reddit_avg_score': 2769.0, 'hn_stories': 4, 'hn_comments': 0,   'hn_avg_points': 2.2},
+            'AA':  {'stars': 96620,  'forks': 16028, 'watchers': 771, 'contribs': 72,  'skill_md': 222, 'avg_skill_bytes': 12293, 'days_alive': 212, 'stars_per_day': 455.8,  'commits_per_day': 1.37,  'platforms': 9, 'last_push_days_ago': 31,'reddit_posts': 104, 'reddit_comments': 29053, 'reddit_avg_score': 2897.4, 'hn_stories': 2, 'hn_comments': 3,   'hn_avg_points': 1.5},
+        },
+        'scores': {
+            #     D1   D2   D3   D4   D5   D6   D7   D8   D9   D10  D11  D12  D13  D14  D15  D16  D17  D18  D19  Total
+            'AM':  {'D1': 9, 'D2': 9, 'D3':10, 'D4':10, 'D5':10, 'D6': 9, 'D7': 9, 'D8': 9, 'D9': 6, 'D10': 5, 'D11':10, 'D12':10, 'D13': 8, 'D14':10, 'D15': 5, 'D16': 5, 'D17': 9, 'D18': 1, 'D19': 1},  # 145
+            'O':   {'D1': 8, 'D2':10, 'D3': 9, 'D4': 8, 'D5':10, 'D6': 7, 'D7': 7, 'D8': 3, 'D9': 5, 'D10': 6, 'D11': 8, 'D12': 9, 'D13': 7, 'D14': 9, 'D15': 9, 'D16': 7, 'D17': 3, 'D18': 6, 'D19': 6},  # 137
+            'NX':  {'D1':10, 'D2': 4, 'D3': 3, 'D4': 2, 'D5':10, 'D6':10, 'D7':10, 'D8': 8, 'D9': 3, 'D10': 4, 'D11':10, 'D12':10, 'D13':10, 'D14': 8, 'D15': 8, 'D16': 6, 'D17': 5, 'D18': 9, 'D19': 9},  # 139
+            'A':   {'D1': 6, 'D2': 9, 'D3': 8, 'D4': 9, 'D5': 8, 'D6': 1, 'D7': 3, 'D8': 3, 'D9': 9, 'D10': 6, 'D11': 6, 'D12': 6, 'D13': 1, 'D14': 8, 'D15':10, 'D16': 9, 'D17': 9, 'D18': 9, 'D19': 7},  # 127
+            'NL':  {'D1': 5, 'D2': 7, 'D3': 6, 'D4': 5, 'D5': 2, 'D6': 6, 'D7': 6, 'D8': 2, 'D9': 9, 'D10': 8, 'D11': 9, 'D12': 8, 'D13': 9, 'D14': 4, 'D15': 6, 'D16': 2, 'D17': 2, 'D18': 1, 'D19': 1},  # 98 (D9 10→9 due to GS)
+            'AD':  {'D1': 5, 'D2': 4, 'D3': 4, 'D4': 3, 'D5': 8, 'D6': 7, 'D7': 4, 'D8': 4, 'D9': 8, 'D10': 3, 'D11': 9, 'D12': 8, 'D13': 8, 'D14': 8, 'D15': 7, 'D16': 3, 'D17': 2, 'D18':10, 'D19':10},  # 115
+            'CH':  {'D1': 3, 'D2': 2, 'D3': 4, 'D4': 4, 'D5': 6, 'D6': 8, 'D7': 4, 'D8': 6, 'D9': 9, 'D10': 6, 'D11': 8, 'D12': 9, 'D13': 6, 'D14': 4, 'D15': 6, 'D16': 4, 'D17': 4, 'D18': 1, 'D19': 1},  # 95
+            'C':   {'D1': 4, 'D2': 5, 'D3': 5, 'D4': 5, 'D5': 7, 'D6': 3, 'D7': 5, 'D8':10, 'D9': 3, 'D10': 1, 'D11': 8, 'D12': 4, 'D13': 8, 'D14': 9, 'D15': 3, 'D16': 4, 'D17': 7, 'D18': 1, 'D19': 1},  # 93
+            'M':   {'D1': 7, 'D2': 6, 'D3': 5, 'D4': 6, 'D5': 9, 'D6': 5, 'D7': 1, 'D8': 5, 'D9': 2, 'D10': 2, 'D11': 7, 'D12': 6, 'D13': 2, 'D14': 6, 'D15': 7, 'D16': 7, 'D17': 8, 'D18': 6, 'D19': 7},  # 104
+            'OAI': {'D1': 1, 'D2': 1, 'D3': 1, 'D4': 1, 'D5': 9, 'D6': 4, 'D7': 8, 'D8': 7, 'D9': 7, 'D10': 9, 'D11': 3, 'D12': 3, 'D13': 1, 'D14': 7, 'D15':10, 'D16': 9, 'D17': 4, 'D18': 8, 'D19': 8},  # 101
+            'MA':  {'D1': 9, 'D2': 8, 'D3': 7, 'D4': 7, 'D5': 4, 'D6': 2, 'D7': 2, 'D8': 1, 'D9': 1, 'D10': 7, 'D11': 7, 'D12': 3, 'D13': 2, 'D14': 1, 'D15': 8, 'D16': 1, 'D17': 1, 'D18': 1, 'D19': 1},  # 73
+            'K':   {'D1': 2, 'D2': 3, 'D3': 2, 'D4': 2, 'D5': 7, 'D6': 3, 'D7': 3, 'D8': 1, 'D9': 4, 'D10': 2, 'D11': 4, 'D12': 3, 'D13': 4, 'D14': 3, 'D15': 7, 'D16': 3, 'D17': 7, 'D18': 1, 'D19': 1},  # 62
+            'V':   {'D1': 2, 'D2': 2, 'D3': 3, 'D4': 2, 'D5': 7, 'D6': 6, 'D7': 4, 'D8': 2, 'D9': 5, 'D10':10, 'D11': 8, 'D12': 6, 'D13': 5, 'D14': 4, 'D15': 9, 'D16': 8, 'D17': 6, 'D18': 1, 'D19': 1},  # 91
+            'GS':  {'D1': 9, 'D2': 7, 'D3': 8, 'D4': 7, 'D5': 9, 'D6': 8, 'D7': 3, 'D8': 7, 'D9':10, 'D10': 3, 'D11': 9, 'D12': 9, 'D13': 9, 'D14': 9, 'D15': 8, 'D16':10, 'D17':10, 'D18': 7, 'D19': 5},  # 147 (new #1)
+            'AA':  {'D1': 5, 'D2': 7, 'D3': 8, 'D4': 8, 'D5': 3, 'D6': 6, 'D7': 8, 'D8': 8, 'D9': 9, 'D10': 1, 'D11':10, 'D12': 9, 'D13':10, 'D14':10, 'D15': 7, 'D16':10, 'D17':10, 'D18': 6, 'D19': 4},  # 139 (tied #3 with NX)
+        },
+    },
     # ── Append new snapshots here ─────────────────────────────────────────────
 ]
 
@@ -184,6 +248,9 @@ DOMAIN_RECS = [
     ('零负担 CLAUDE.md / Drop-in single-file',                'MA',  'Single CLAUDE.md drop-in; Karpathy LLM-coding anti-patterns'),
     ('浏览 / 发现 skill / Discovery / browse',                'C',   '864 SKILL.md index; biggest awesome-list'),
     ('Vercel / Next.js / React 生产工程 / Vercel-native web',  'V',   'Official Vercel; 40+ React perf rules from Vercel engineering; D10=10 supplementary density'),
+    ('YC / 创业公司角色分工 setup / Opinionated startup workflow', 'GS',  'Garry Tan exact Claude Code setup; 23 role-specialized agents (CEO/Designer/Eng-Mgr/Release/Doc/QA); deepest avg SKILL.md (52KB); top Reddit social signal'),
+    ('Game 开发 / Game development',                              'AA',  '20 game-development agents — fills cohort game gap (the only repo with substantial game coverage)'),
+    ('个性化 multi-role 创意 agency / Personality-driven agency',  'AA',  '222 agents across 18 domains (engineering/marketing/design/finance/spatial-computing/...); each agent has personality + emoji + vibe; ties NX on D13 (9 platforms)'),
 ]
 
 
@@ -619,7 +686,7 @@ def build_diff(snap_new: dict, snap_old: dict) -> str:
             line.append(f'<td style="background-color:rgba(120,160,220,0.30);{TD};text-align:right;font-weight:600">{dtot}*</td>')
             parts.append('<tr>' + ''.join(line) + '</tr>')
             continue
-        deltas = {did: new[did] - old[did] for did in DIM_IDS}
+        deltas = {did: new.get(did, 0) - old.get(did, 0) for did in DIM_IDS}
         dtot = sum(deltas.values())
         line = [f'<td style="{TD};text-align:left;white-space:nowrap"><b>{owner}/{repo}</b></td>']
         for did in DIM_IDS:

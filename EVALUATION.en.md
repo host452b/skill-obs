@@ -3,9 +3,10 @@
 > 🌐 **Language**: [🇨🇳 中文](./EVALUATION.md) · **🇬🇧 English**
 
 > Evaluation date: **2026-05-13**
-> Current snapshot: **v1.1** — 13-repo cohort (v1.0 is the 12-repo baseline, retained in `scoring.ipynb` history)
+> Current snapshot: **v1.2** — **15-repo cohort × 19 dims** (v1.0 / v1.1 retained in `scoring.ipynb` history)
 > Scoring scale: **1–10** (10 = best in cohort)
-> Max total: **150** (15 dims × 10)
+> Max total: **190** (19 dims × 10)
+> ⚠ Note: §3/§4/§5 tables in this markdown still show v1.1 baseline for context. Full v1.2 data (including GS / AA / D16-D19) lives in `scoring.ipynb`. §11 below gives the v1.2 ranking + D16-D19 sampling methodology.
 
 ## 1. Cohort
 
@@ -364,3 +365,57 @@ eval req   validator  CHANGELOG    PR attest  ~no gate
 ---
 
 _All raw queries are reproducible via `gh repo view --json` + local `find`; submodules are shallow-cloned at `skills/<owner>__<repo>/`. Reproduction recipe: see `.gitmodules` and rank-based equal-weighted methodology in §7. §10 philosophy archaeology is based on sampled docs from all 13 repos._
+
+## 11. v1.2 Snapshot — D16-D19 (social signals) + GS + AA
+
+### 11.1 New dimensions
+
+| Dim | Name | Measurement | Source |
+|---|---|---|---|
+| **D16** | **Reddit Heat (30d)** | `posts + comments/10` last 30 days | Reddit public search.json API (`t=month`) |
+| **D17** | **Reddit Sentiment (30d)** | Avg upvote score per post (last 30d) | Same as above |
+| **D18** | **HN Heat (30d)** | `stories*10 + comments` last 30 days | HN Algolia Search API (`numericFilters=created_at_i>UNIX_30D_AGO`) |
+| **D19** | **HN Sentiment (30d)** | Avg points per story | Same as above |
+
+### 11.2 Sampling methodology
+
+- **Queries**: 2 queries per repo: `"<owner> <repo>"` and `"github.com/<owner>/<repo>"`, dedup by ID then union.
+- **Window**: 30 days back from sample time (2026-05-13T09:08 UTC).
+- **Tool**: `sample_social.py` (in repo root), stdlib `urllib.request` only, no external deps; rate-limit politeness: Reddit 1.5s between calls, HN 0.6s, 2s between repos.
+- **User-Agent**: `skill-obs/1.0`.
+
+### 11.3 Full v1.2 ranking (max 190)
+
+| Rank | Repo | Score | Tier |
+|---:|---|---:|:---:|
+| 🥇 1 | **`garrytan/gstack`** 🆕 | **147** | S |
+| 🥈 2 | `affaan-m/everything-claude-code` | 145 | S |
+| 🥉 3 | `nexu-io/open-design` | 139 | S |
+| 3= | **`msitarzewski/agency-agents`** 🆕 | 139 | S |
+| 5 | `obra/superpowers` | 137 | S |
+| 6 | `anthropics/skills` | 127 | A |
+| 7 | `addyosmani/agent-skills` | 115 | A |
+| 8 | `mattpocock/skills` | 104 | B |
+| 9 | `openai/skills` | 101 | B |
+| 10 | `nextlevelbuilder/ui-ux-pro-max-skill` | 98 | B |
+| 11 | `coreyhaines31/marketingskills` | 95 | B |
+| 12 | `ComposioHQ/awesome-claude-skills` | 93 | B |
+| 13 | `vercel-labs/agent-skills` | 91 | B |
+| 14 | `multica-ai/andrej-karpathy-skills` | 73 | C |
+| 15 | `kepano/obsidian-skills` | 62 | D |
+
+### 11.4 Caveats
+
+1. **Query-string contamination**: queries like "anthropics skills" match both this repo *and* Anthropic's broader "Skills" feature discussion. **D16/D17 numbers for A/OAI include spill-over from official-feature chatter, not pure repo discussion**.
+2. **GS / AA top Reddit avg_score 2769 / 2897 include launch-wave peaks**: launch buzz inflates upvotes — analogous to NX's early D1 velocity bias. Steady-state heat 6 months out may be much lower.
+3. **HN signal is sparse**: only 7/15 repos have ≥1 HN story in 30 days. AD's 1 story got 212 comments (a viral story) — HN D18/D19 are easily dominated by single viral hits.
+4. **No bot / cross-post deduping**: Reddit results include "garry tan claude code" matches that may include the author's own self-promo. Statistically this represents *propagation volume*, not strictly *organic discussion vs marketing*.
+5. **D16-D19 scoring uses rank-based 1-10**: same methodology as D1-D15; 4 new dimensions integrated without re-ranking existing dim spreads.
+
+### 11.5 Cascading effects from adding GS + AA
+
+- **GS** (avg SKILL.md 52,730 bytes) significantly tops v1.1's D9 leader NL (12,272 bytes), pushing NL from 10 → 9.
+- **AA** has 222 agents (`.md` rather than `SKILL.md`) — for methodology consistency we count `*.md` as the skill-volume metric — plus 9 platforms (tied with NX) + 18 domain directories (including game-dev).
+- Both new repos take **D16/D17 top spots** (Reddit avg score 2769 / 2897 vs third-place A at 151.7) — they significantly widen the social-dim spread.
+
+> For the full 19-dim × 15-repo colored matrix: open `scoring.ipynb` (renders directly on GitHub, no execution needed).

@@ -3,9 +3,10 @@
 > 🌐 **Language**: **🇨🇳 中文** · [🇬🇧 English](./EVALUATION.en.md)
 
 > 评测日期 / Date: **2026-05-13**  
-> 当前 Snapshot / Current: **v1.1** — 13-repo cohort（v1.0 为 12-repo baseline，见 `scoring.ipynb` 历史）  
+> 当前 Snapshot / Current: **v1.2** — **15-repo cohort × 19 dims**（v1.0 / v1.1 历史在 `scoring.ipynb`）  
 > 评分量表 / Scale: **1–10** (10 = best in cohort)  
-> 总分上限 / Max total: **150** (15 dims × 10)
+> 总分上限 / Max total: **190** (19 dims × 10)  
+> ⚠ 注意：本 markdown 中 §3/§4/§5 表格仍展示 v1.1 baseline 数据用于上下文。v1.2 完整数据（含 GS / AA / D16-D19）请看 `scoring.ipynb`。本节 §11 给出 v1.2 排行 + D16-D19 采样方法学。
 
 ## 1. 入选仓库 / Cohort
 
@@ -363,3 +364,57 @@ eval req   validator  CHANGELOG    PR attest  ~no gate
 ---
 
 _所有原始查询通过 `gh repo view --json` + 本地 `find` 完成；submodules 已 shallow 克隆至 `skills/<owner>__<repo>/`。复现脚本：见本仓库根目录 `.gitmodules` + 评分采用 rank-based 等权方法（见 §7）。§10 哲学考据基于 13 个 repo 的实际文档抽样。_
+
+## 11. v1.2 Snapshot — 新增 D16-D19（social signals）+ GS + AA
+
+### 11.1 新增维度
+
+| Dim | 名字 | 测量 | 数据源 |
+|---|---|---|---|
+| **D16** | **Reddit Heat (30d)** | `posts + comments/10` 最近 30 天 | Reddit 公共 search.json API（`t=month`）|
+| **D17** | **Reddit Sentiment (30d)** | 每帖平均 upvote score（最近 30 天）| 同上 |
+| **D18** | **HN Heat (30d)** | `stories*10 + comments` 最近 30 天 | HN Algolia Search API（`numericFilters=created_at_i>UNIX_30D_AGO`）|
+| **D19** | **HN Sentiment (30d)** | 每 story 平均 points | 同上 |
+
+### 11.2 采样方法学 / Sampling methodology
+
+- **查询策略**：每个 repo 用 2 个 query：`"<owner> <repo>"` 和 `"github.com/<owner>/<repo>"`，按 ID 去重后合并。
+- **窗口**：自采样时刻 (2026-05-13T09:08 UTC) 向前 30 天。
+- **采样工具**：`sample_social.py`（提交在 repo 根目录），用 stdlib `urllib.request`，无外部依赖；rate-limit politeness：Reddit 1.5s 间隔，HN 0.6s 间隔，每 repo 间 2s。
+- **User-Agent**：`skill-obs/1.0`。
+
+### 11.3 v1.2 完整排行（max 190）
+
+| Rank | Repo | Score | Tier |
+|---:|---|---:|:---:|
+| 🥇 1 | **`garrytan/gstack`** 🆕 | **147** | S |
+| 🥈 2 | `affaan-m/everything-claude-code` | 145 | S |
+| 🥉 3 | `nexu-io/open-design` | 139 | S |
+| 3= | **`msitarzewski/agency-agents`** 🆕 | 139 | S |
+| 5 | `obra/superpowers` | 137 | S |
+| 6 | `anthropics/skills` | 127 | A |
+| 7 | `addyosmani/agent-skills` | 115 | A |
+| 8 | `mattpocock/skills` | 104 | B |
+| 9 | `openai/skills` | 101 | B |
+| 10 | `nextlevelbuilder/ui-ux-pro-max-skill` | 98 | B |
+| 11 | `coreyhaines31/marketingskills` | 95 | B |
+| 12 | `ComposioHQ/awesome-claude-skills` | 93 | B |
+| 13 | `vercel-labs/agent-skills` | 91 | B |
+| 14 | `multica-ai/andrej-karpathy-skills` | 73 | C |
+| 15 | `kepano/obsidian-skills` | 62 | D |
+
+### 11.4 关键 caveat / Caveats
+
+1. **查询字符串污染**：query "anthropics skills" 会同时匹配该 repo 和 Anthropic 关于 "Skills" 功能的广义讨论。**D16/D17 的 A/OAI 数值含官方功能讨论的 spill-over，并非纯 repo 讨论**。
+2. **GS / AA top Reddit avg_score 2769 / 2897 含发布期峰值**：launch wave 带来高 upvote，类似 NX D1 的早期峰值偏置。半年后真实热度可能稳态低很多。
+3. **HN signal 稀疏**：14 个 repo 在 30 天内有 ≥1 HN story，其余 7 个为 0。AD 的 1 story 拿了 212 评论（一个 viral story）— HN D18/D19 容易被单次 viral 主导。
+4. **bot / 重复内容**：Reddit 没有去 bot/cross-post 处理，"garry tan claude code" 这种 query 会匹配 user "garrytan" 的 self-promo 帖子。统计意义上代表"传播量"，不严格区分"自发讨论 vs 营销"。
+5. **D16-D19 评分采用 rank-based 1-10**：与 D1-D15 相同方法，新增 4 维度但保持 cohort 内相对排名一致。
+
+### 11.5 GS + AA 加入引发的连锁
+
+- **GS** (avg SKILL.md 52,730 bytes) 显著超过 v1.1 D9 头部 NL (12,272 bytes)，把 NL 从 10 顶到 9。
+- **AA** 的 222 agents (`.md` 而非 `SKILL.md`)（**注**：方法学上以 *.md 数量作为 skill volume 度量）+ 9 platforms (与 NX 并列顶部) + 18 个领域目录（含 game-dev）。
+- 两个新 repo 都是 **D16/D17 顶部**（Reddit avg score 2769 / 2897 vs 第三名 A 的 151.7）— 显著拉开 social 维度的 spread。
+
+> 想看完整 19-dim × 15-repo 染色矩阵：打开 `scoring.ipynb`（GitHub 直接渲染，无需执行）。

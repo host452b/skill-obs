@@ -1,0 +1,370 @@
+{
+  "sampled_at": "2026-05-13T09:08:45+00:00",
+  "window_unix_from": 1776071325,
+  "per_repo": {
+    "AM": {
+      "reddit": {
+        "queries": [
+          "affaan-m everything-claude-code",
+          "github.com/affaan-m/everything-claude-code"
+        ],
+        "post_count": 8,
+        "total_comments": 96,
+        "total_score": 1012,
+        "avg_score": 126.5,
+        "top_score": 990
+      },
+      "hn": {
+        "queries": [
+          "affaan-m everything-claude-code",
+          "github.com/affaan-m/everything-claude-code"
+        ],
+        "story_count": 0,
+        "total_comments": 0,
+        "total_points": 0,
+        "avg_points": 0.0,
+        "top_points": 0
+      }
+    },
+    "O": {
+      "reddit": {
+        "queries": [
+          "obra superpowers",
+          "github.com/obra/superpowers"
+        ],
+        "post_count": 40,
+        "total_comments": 243,
+        "total_score": 1255,
+        "avg_score": 31.4,
+        "top_score": 981
+      },
+      "hn": {
+        "queries": [
+          "obra superpowers",
+          "github.com/obra/superpowers"
+        ],
+        "story_count": 1,
+        "total_comments": 0,
+        "total_points": 3,
+        "avg_points": 3.0,
+        "top_points": 3
+      }
+    },
+    "NX": {
+      "reddit": {
+        "queries": [
+          "nexu-io open-design",
+          "github.com/nexu-io/open-design"
+        ],
+        "post_count": 8,
+        "total_comments": 103,
+        "total_score": 506,
+        "avg_score": 63.2,
+        "top_score": 318
+      },
+      "hn": {
+        "queries": [
+          "nexu-io open-design",
+          "github.com/nexu-io/open-design"
+        ],
+        "story_count": 1,
+        "total_comments": 92,
+        "total_points": 230,
+        "avg_points": 230.0,
+        "top_points": 230
+      }
+    },
+    "A": {
+      "reddit": {
+        "queries": [
+          "anthropics skills",
+          "github.com/anthropics/skills"
+        ],
+        "post_count": 169,
+        "total_comments": 6451,
+        "total_score": 25641,
+        "avg_score": 151.7,
+        "top_score": 1935
+      },
+      "hn": {
+        "queries": [
+          "anthropics skills",
+          "github.com/anthropics/skills"
+        ],
+        "story_count": 8,
+        "total_comments": 9,
+        "total_points": 40,
+        "avg_points": 5.0,
+        "top_points": 18
+      }
+    },
+    "NL": {
+      "reddit": {
+        "queries": [
+          "nextlevelbuilder ui-ux-pro-max-skill",
+          "github.com/nextlevelbuilder/ui-ux-pro-max-skill"
+        ],
+        "post_count": 2,
+        "total_comments": 1,
+        "total_score": 3,
+        "avg_score": 1.5,
+        "top_score": 2
+      },
+      "hn": {
+        "queries": [
+          "nextlevelbuilder ui-ux-pro-max-skill",
+          "github.com/nextlevelbuilder/ui-ux-pro-max-skill"
+        ],
+        "story_count": 0,
+        "total_comments": 0,
+        "total_points": 0,
+        "avg_points": 0.0,
+        "top_points": 0
+      }
+    },
+    "AD": {
+      "reddit": {
+        "queries": [
+          "addyosmani agent-skills",
+          "github.com/addyosmani/agent-skills"
+        ],
+        "post_count": 6,
+        "total_comments": 54,
+        "total_score": 133,
+        "avg_score": 22.2,
+        "top_score": 104
+      },
+      "hn": {
+        "queries": [
+          "addyosmani agent-skills",
+          "github.com/addyosmani/agent-skills"
+        ],
+        "story_count": 1,
+        "total_comments": 212,
+        "total_points": 375,
+        "avg_points": 375.0,
+        "top_points": 375
+      }
+    },
+    "CH": {
+      "reddit": {
+        "queries": [
+          "coreyhaines31 marketingskills",
+          "github.com/coreyhaines31/marketingskills"
+        ],
+        "post_count": 5,
+        "total_comments": 97,
+        "total_score": 191,
+        "avg_score": 38.2,
+        "top_score": 154
+      },
+      "hn": {
+        "queries": [
+          "coreyhaines31 marketingskills",
+          "github.com/coreyhaines31/marketingskills"
+        ],
+        "story_count": 0,
+        "total_comments": 0,
+        "total_points": 0,
+        "avg_points": 0.0,
+        "top_points": 0
+      }
+    },
+    "C": {
+      "reddit": {
+        "queries": [
+          "ComposioHQ awesome-claude-skills",
+          "github.com/ComposioHQ/awesome-claude-skills"
+        ],
+        "post_count": 5,
+        "total_comments": 98,
+        "total_score": 439,
+        "avg_score": 87.8,
+        "top_score": 268
+      },
+      "hn": {
+        "queries": [
+          "ComposioHQ awesome-claude-skills",
+          "github.com/ComposioHQ/awesome-claude-skills"
+        ],
+        "story_count": 0,
+        "total_comments": 0,
+        "total_points": 0,
+        "avg_points": 0.0,
+        "top_points": 0
+      }
+    },
+    "M": {
+      "reddit": {
+        "queries": [
+          "mattpocock skills",
+          "github.com/mattpocock/skills"
+        ],
+        "post_count": 14,
+        "total_comments": 303,
+        "total_score": 1301,
+        "avg_score": 92.9,
+        "top_score": 1118
+      },
+      "hn": {
+        "queries": [
+          "mattpocock skills",
+          "github.com/mattpocock/skills"
+        ],
+        "story_count": 1,
+        "total_comments": 0,
+        "total_points": 5,
+        "avg_points": 5.0,
+        "top_points": 5
+      }
+    },
+    "OAI": {
+      "reddit": {
+        "queries": [
+          "openai skills",
+          "github.com/openai/skills"
+        ],
+        "post_count": 171,
+        "total_comments": 3358,
+        "total_score": 9385,
+        "avg_score": 54.9,
+        "top_score": 615
+      },
+      "hn": {
+        "queries": [
+          "openai skills",
+          "github.com/openai/skills"
+        ],
+        "story_count": 7,
+        "total_comments": 16,
+        "total_points": 61,
+        "avg_points": 8.7,
+        "top_points": 18
+      }
+    },
+    "MA": {
+      "reddit": {
+        "queries": [
+          "multica-ai andrej-karpathy-skills",
+          "github.com/multica-ai/andrej-karpathy-skills"
+        ],
+        "post_count": 0,
+        "total_comments": 0,
+        "total_score": 0,
+        "avg_score": 0.0,
+        "top_score": 0
+      },
+      "hn": {
+        "queries": [
+          "multica-ai andrej-karpathy-skills",
+          "github.com/multica-ai/andrej-karpathy-skills"
+        ],
+        "story_count": 0,
+        "total_comments": 0,
+        "total_points": 0,
+        "avg_points": 0.0,
+        "top_points": 0
+      }
+    },
+    "K": {
+      "reddit": {
+        "queries": [
+          "kepano obsidian-skills",
+          "github.com/kepano/obsidian-skills"
+        ],
+        "post_count": 2,
+        "total_comments": 19,
+        "total_score": 130,
+        "avg_score": 65.0,
+        "top_score": 106
+      },
+      "hn": {
+        "queries": [
+          "kepano obsidian-skills",
+          "github.com/kepano/obsidian-skills"
+        ],
+        "story_count": 0,
+        "total_comments": 0,
+        "total_points": 0,
+        "avg_points": 0.0,
+        "top_points": 0
+      }
+    },
+    "V": {
+      "reddit": {
+        "queries": [
+          "vercel-labs agent-skills",
+          "github.com/vercel-labs/agent-skills"
+        ],
+        "post_count": 25,
+        "total_comments": 425,
+        "total_score": 1594,
+        "avg_score": 63.8,
+        "top_score": 563
+      },
+      "hn": {
+        "queries": [
+          "vercel-labs agent-skills",
+          "github.com/vercel-labs/agent-skills"
+        ],
+        "story_count": 0,
+        "total_comments": 0,
+        "total_points": 0,
+        "avg_points": 0.0,
+        "top_points": 0
+      }
+    },
+    "GS": {
+      "reddit": {
+        "queries": [
+          "garrytan gstack",
+          "github.com/garrytan/gstack",
+          "garry tan claude code"
+        ],
+        "post_count": 111,
+        "total_comments": 32442,
+        "total_score": 307364,
+        "avg_score": 2769.0,
+        "top_score": 35910
+      },
+      "hn": {
+        "queries": [
+          "garrytan gstack",
+          "github.com/garrytan/gstack",
+          "garry tan claude code"
+        ],
+        "story_count": 4,
+        "total_comments": 0,
+        "total_points": 9,
+        "avg_points": 2.2,
+        "top_points": 3
+      }
+    },
+    "AA": {
+      "reddit": {
+        "queries": [
+          "msitarzewski agency-agents",
+          "github.com/msitarzewski/agency-agents",
+          "agency agents claude"
+        ],
+        "post_count": 104,
+        "total_comments": 29053,
+        "total_score": 301333,
+        "avg_score": 2897.4,
+        "top_score": 35908
+      },
+      "hn": {
+        "queries": [
+          "msitarzewski agency-agents",
+          "github.com/msitarzewski/agency-agents",
+          "agency agents claude"
+        ],
+        "story_count": 2,
+        "total_comments": 3,
+        "total_points": 3,
+        "avg_points": 1.5,
+        "top_points": 2
+      }
+    }
+  }
+}
