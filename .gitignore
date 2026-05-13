@@ -1,0 +1,11 @@
+# Derived artifacts — regenerate with `jupyter nbconvert`
+scoring.html
+*.html
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+.DS_Store
