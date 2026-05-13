@@ -8,6 +8,7 @@
 [![Eval baseline](https://img.shields.io/badge/eval-2026--05--13-blue)](./EVALUATION.en.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Task Guide](https://img.shields.io/badge/task→repo-TASK__GUIDE-red)](./TASK_GUIDE.en.md)
+[![5-Model Summary](https://img.shields.io/badge/5_AI_model_xref-agent__summary-blueviolet)](./agent_summary.en.md)
 [![Cohort size](https://img.shields.io/badge/repos-15-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-21-purple)](./EVALUATION.en.md#2-15-evaluation-dimensions)
 [![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2_·_v1.3-yellow)](./scoring.ipynb)
@@ -112,6 +113,8 @@ skill-obs/
 Full score matrix, by-domain recommendations, methodology, and caveats: **[`EVALUATION.en.md`](./EVALUATION.en.md)**.
 
 A task-first decision matrix (which repo for which AI-agent task?) — see **[`TASK_GUIDE.en.md`](./TASK_GUIDE.en.md)** (AM × O × NX overlap/orthogonality/complementarity deep-dive + ~50 task lookup + recommended stacks + coverage gaps).
+
+**Cross-comparison summary of how 5 AI models (Claude / ChatGPT / Gemini / Grok / Perplexity) independently evaluated the cohort** — see **[`agent_summary.en.md`](./agent_summary.en.md)** — covers strong consensus picks (4 must-have / 3 avoid), main disagreements, the minimum viable stack, and a comparison with our internal v1.3 scoring.
 
 ## 📐 21 Evaluation Dimensions
 

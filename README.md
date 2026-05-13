@@ -8,6 +8,7 @@
 [![Eval baseline](https://img.shields.io/badge/eval-2026--05--13-blue)](./EVALUATION.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Task Guide](https://img.shields.io/badge/任务→repo-TASK__GUIDE-red)](./TASK_GUIDE.md)
+[![5-Model Summary](https://img.shields.io/badge/5_AI_模型对比-agent__summary-blueviolet)](./agent_summary.md)
 [![Cohort size](https://img.shields.io/badge/repos-15-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-21-purple)](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions)
 [![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2_·_v1.3-yellow)](./scoring.ipynb)
@@ -107,6 +108,8 @@ skill-obs/
 完整评分矩阵、按领域/角色推荐、方法论与 caveat 见 **[`EVALUATION.md`](./EVALUATION.md)**。
 
 按 **具体任务 → 该装哪个 repo** 的功能正交决策手册见 **[`TASK_GUIDE.md`](./TASK_GUIDE.md)**（含 AM × O × NX overlap/正交/互补深度对比 + ~50 个任务 lookup + 推荐 stacks + 覆盖缺口）。
+
+**5 个 AI 模型（Claude / ChatGPT / Gemini / Grok / Perplexity）独立评估的横向总结** 见 **[`agent_summary.md`](./agent_summary.md)** — 含强共识层（4 个必装 / 3 个避坑）、主要分歧、最小可用组合，以及与本仓库 v1.3 评分的对比。
 
 ## 📐 21 个评测维度 / 21 Dimensions
 
