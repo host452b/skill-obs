@@ -143,7 +143,7 @@ _本总结收录自外部 5 个 LLM 的横向对比；具体评分方法学见 [
 
 > 不同于 §1-§6 的"5 模型横向交集"，本节是**另一个独立 LLM**从"实战价值"出发的详细分类 + 排名。
 > 提供：分类学（系统型 / 官方标准型 / 垂直增强型 / 清单型）+ 5 步评价法 + 详细分档表 + 最终排名。
-> 注：原文含若干外链 citation 看起来是 AI 生成的伪引用，**已照原文保留**；不构成 ground truth 参考。
+> 注：原文含若干外链 citation 经判断为 AI 生成的伪引用（target 与论点无对应），**已移除**以避免误导。
 
 按**实战价值**而不是单纯星数看，这 15 个 skills set 里，真正有长期复用价值的主要分成 **4 类**：系统型、官方标准型、垂直增强型、清单型。
 
@@ -179,16 +179,12 @@ _本总结收录自外部 5 个 LLM 的横向对比；具体评分方法学见 [
 
 ### 7.3 重点评价
 
-1. **`gstack`**：如果你要的是"AI 软件工厂"，它最像完整产品而不是 skill 样例；仓库把自己定义成 23 个 specialist 加 8 个 power tools，并把流程组织成从思考、规划、构建、评审、测试到交付的完整链路。[^nngroup]
+1. **`gstack`**：如果你要的是"AI 软件工厂"，它最像完整产品而不是 skill 样例；仓库把自己定义成 23 个 specialist 加 8 个 power tools，并把流程组织成从思考、规划、构建、评审、测试到交付的完整链路。
 2. `gstack` 的问题也正因为它太完整：强依赖作者的方法论、命令体系和工作节奏，小团队上手会快，大团队统一采用会有治理成本。
-3. **`anthropics/skills`**：这是最适合拿来当"官方基线"的仓库；它明确是 Claude skills 的公开实现和示例库，包含 spec、template、不同类别的示例技能，还特别说明很多内容主要用于演示和教育。[^reddit]
+3. **`anthropics/skills`**：这是最适合拿来当"官方基线"的仓库；它明确是 Claude skills 的公开实现和示例库，包含 spec、template、不同类别的示例技能，还特别说明很多内容主要用于演示和教育。
 4. `anthropics/skills` 的缺点是：它更像"标准参考 + 样例仓库"，不是帮你直接跑完整研发流程的操作系统。
-5. **`openai/skills`**：价值在于官方抽象清晰，定位是 Codex 的 skills catalog，并把 skills 定义成可发现、可组合的自包含文件夹。[^github1]
+5. **`openai/skills`**：价值在于官方抽象清晰，定位是 Codex 的 skills catalog，并把 skills 定义成可发现、可组合的自包含文件夹。
 6. `openai/skills` 的缺点是生态信号和 Claude 兼容心智都不如 Anthropic 这边强，所以更适合借鉴结构，不适合直接拿来当 Claude 主框架。
-
-[^nngroup]: 原文引用 https://www.nngroup.com/articles/why-repositories-fail/ — 该链接看起来与 gstack 评价无明显对应关系，疑为 LLM 生成的伪引用。
-[^reddit]: 原文引用 reddit.com/r/programming — 同上，伪引用可能性高。
-[^github1]: 原文引用 github.com/openai/skills/pulls — 链接本身有效但与上下文论点关联弱。
 
 ### 7.4 推荐选择
 

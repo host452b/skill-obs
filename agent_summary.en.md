@@ -144,7 +144,7 @@ _This summary aggregates from 5 external LLM evaluations; for our scoring method
 
 > Unlike §1-§6 (the 5-model horizontal intersection), this section is **another independent LLM's** detailed taxonomy + ranking through the "operational value" lens.
 > Provides: taxonomy (systemic / official-standard / vertical-augment / catalog) + 5-step evaluation + per-repo table + final ranking.
-> Note: the original text includes a few external citations that look like LLM-generated hallucinations; **preserved verbatim** — not ground-truth references.
+> Note: the original text included external citations judged to be LLM-hallucinated (targets had no relation to the argument); **removed** to avoid misleading readers.
 
 Looking through the **operational value** lens (not star count alone), of these 15 skill sets the truly long-term-reusable ones fall into **4 categories**: systemic, official-standard, vertical-augment, and catalog.
 
@@ -180,16 +180,12 @@ Looking through the **operational value** lens (not star count alone), of these 
 
 ### 7.3 Key evaluations
 
-1. **`gstack`**: if you want an "AI software factory", it looks more like a complete product than a skill example; the repo positions itself as 23 specialists + 8 power tools, organized as a full pipeline from thinking → planning → building → review → testing → delivery.[^nngroup-en]
+1. **`gstack`**: if you want an "AI software factory", it looks more like a complete product than a skill example; the repo positions itself as 23 specialists + 8 power tools, organized as a full pipeline from thinking → planning → building → review → testing → delivery.
 2. `gstack`'s problem is exactly its completeness: strongly tied to the author's methodology, command system, and rhythm. Small teams ramp up fast; big teams will face governance cost to standardize.
-3. **`anthropics/skills`**: most suitable as an "official baseline"; explicitly the Claude-skills public reference + sample library — includes spec, template, examples across categories, plus an explicit note that much content is for demonstration/education.[^reddit-en]
+3. **`anthropics/skills`**: most suitable as an "official baseline"; explicitly the Claude-skills public reference + sample library — includes spec, template, examples across categories, plus an explicit note that much content is for demonstration/education.
 4. `anthropics/skills` downside: more "standard reference + sample repo" than an OS for running a complete R&D process.
-5. **`openai/skills`**: value lies in clear official abstraction; positioned as the Codex skills catalog, with skills defined as discoverable, composable, self-contained folders.[^github-en]
+5. **`openai/skills`**: value lies in clear official abstraction; positioned as the Codex skills catalog, with skills defined as discoverable, composable, self-contained folders.
 6. `openai/skills` downside: ecosystem signals and Claude-compatibility mindshare are both weaker than Anthropic's side, so good for structural reference, not for primary framework on Claude.
-
-[^nngroup-en]: Original cites https://www.nngroup.com/articles/why-repositories-fail/ — link's actual content has no apparent relation to gstack evaluation; suspected LLM-hallucinated citation.
-[^reddit-en]: Original cites reddit.com/r/programming — same as above, likely hallucinated.
-[^github-en]: Original cites github.com/openai/skills/pulls — link is valid but loosely tied to the argument.
 
 ### 7.4 Recommended selection
 
