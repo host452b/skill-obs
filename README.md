@@ -7,6 +7,7 @@
 
 [![Eval baseline](https://img.shields.io/badge/eval-2026--05--13-blue)](./EVALUATION.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
+[![Task Guide](https://img.shields.io/badge/任务→repo-TASK__GUIDE-red)](./TASK_GUIDE.md)
 [![Cohort size](https://img.shields.io/badge/repos-13-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-15-purple)](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions)
 [![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1-yellow)](./scoring.ipynb)
@@ -90,6 +91,8 @@ skill-obs/
 > **v1.0 → v1.1 变更**：新增 `vercel-labs/agent-skills`（13 repos cohort）；V 在 D10（supplementary material density）排第一（19.3 辅料/skill），把 OAI 从 10 → 9 顶下来，连带 5 个排名靠前的 repo 在 D10 维度各掉 1 分，6 个 repo 总分降 1。完整 Δ-diff 见 `scoring.ipynb` 第 7 cell。
 
 完整评分矩阵、按领域/角色推荐、方法论与 caveat 见 **[`EVALUATION.md`](./EVALUATION.md)**。
+
+按 **具体任务 → 该装哪个 repo** 的功能正交决策手册见 **[`TASK_GUIDE.md`](./TASK_GUIDE.md)**（含 AM × O × NX overlap/正交/互补深度对比 + ~50 个任务 lookup + 推荐 stacks + 覆盖缺口）。
 
 ## 📐 15 个评测维度 / 15 Dimensions
 

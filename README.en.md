@@ -7,6 +7,7 @@
 
 [![Eval baseline](https://img.shields.io/badge/eval-2026--05--13-blue)](./EVALUATION.en.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
+[![Task Guide](https://img.shields.io/badge/task→repo-TASK__GUIDE-red)](./TASK_GUIDE.en.md)
 [![Cohort size](https://img.shields.io/badge/repos-13-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-15-purple)](./EVALUATION.en.md#2-15-evaluation-dimensions)
 [![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1-yellow)](./scoring.ipynb)
@@ -95,6 +96,8 @@ skill-obs/
 > **v1.0 → v1.1 change**: added `vercel-labs/agent-skills` (13-repo cohort). V is #1 on D10 (supplementary material density: 19.3 supp. docs per skill), displacing OAI from 10 → 9 and dragging 5 other incumbents down by 1 on D10. Six repos lose 1 total point. Full Δ-diff in `scoring.ipynb` cell 7.
 
 Full score matrix, by-domain recommendations, methodology, and caveats: **[`EVALUATION.en.md`](./EVALUATION.en.md)**.
+
+A task-first decision matrix (which repo for which AI-agent task?) — see **[`TASK_GUIDE.en.md`](./TASK_GUIDE.en.md)** (AM × O × NX overlap/orthogonality/complementarity deep-dive + ~50 task lookup + recommended stacks + coverage gaps).
 
 ## 📐 15 Evaluation Dimensions
 
