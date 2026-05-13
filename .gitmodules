@@ -1,0 +1,36 @@
+[submodule "skills/multica-ai__andrej-karpathy-skills"]
+	path = skills/multica-ai__andrej-karpathy-skills
+	url = https://github.com/multica-ai/andrej-karpathy-skills.git
+[submodule "skills/mattpocock__skills"]
+	path = skills/mattpocock__skills
+	url = https://github.com/mattpocock/skills.git
+[submodule "skills/addyosmani__agent-skills"]
+	path = skills/addyosmani__agent-skills
+	url = https://github.com/addyosmani/agent-skills.git
+[submodule "skills/anthropics__skills"]
+	path = skills/anthropics__skills
+	url = https://github.com/anthropics/skills.git
+[submodule "skills/openai__skills"]
+	path = skills/openai__skills
+	url = https://github.com/openai/skills.git
+[submodule "skills/obra__superpowers"]
+	path = skills/obra__superpowers
+	url = https://github.com/obra/superpowers.git
+[submodule "skills/kepano__obsidian-skills"]
+	path = skills/kepano__obsidian-skills
+	url = https://github.com/kepano/obsidian-skills.git
+[submodule "skills/coreyhaines31__marketingskills"]
+	path = skills/coreyhaines31__marketingskills
+	url = https://github.com/coreyhaines31/marketingskills.git
+[submodule "skills/ComposioHQ__awesome-claude-skills"]
+	path = skills/ComposioHQ__awesome-claude-skills
+	url = https://github.com/ComposioHQ/awesome-claude-skills.git
+[submodule "skills/nextlevelbuilder__ui-ux-pro-max-skill"]
+	path = skills/nextlevelbuilder__ui-ux-pro-max-skill
+	url = https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git
+[submodule "skills/affaan-m__everything-claude-code"]
+	path = skills/affaan-m__everything-claude-code
+	url = https://github.com/affaan-m/everything-claude-code.git
+[submodule "skills/nexu-io__open-design"]
+	path = skills/nexu-io__open-design
+	url = https://github.com/nexu-io/open-design.git
