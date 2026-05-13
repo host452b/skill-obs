@@ -184,6 +184,45 @@
 - **追"广撒网 / 一站式索引"**：`ComposioHQ/awesome-claude-skills`
 - **追"官方 Codex 配套"**：`openai/skills`
 
+## 9. 按领域 / 按角色 推荐 / By Domain & By Persona
+
+### 9.1 按领域 · 用例 / Use case
+
+| # | 领域 / 使用场景 | 最合适 repo | 关键理由（引用维度） |
+|---:|---|---|---|
+| 1 | **学 SKILL.md 官方规范**（自建 skill） | [`anthropics/skills`](https://github.com/anthropics/skills) | 唯一官方权威；frontmatter 标准定义者；D15(原创性)=10 |
+| 2 | **OpenAI Codex 用户** | [`openai/skills`](https://github.com/openai/skills) | 官方 Codex 配套；D10(辅料密度)=10 — 每个 skill 11+ 份支撑文档 |
+| 3 | **大而全的 agent 工程框架** | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 总分 #1 (129)；commands + hooks + plugins + install 脚本一站齐 |
+| 4 | **方法论 / 元技能**（TDD、debugging、planning、brainstorming） | [`obra/superpowers`](https://github.com/obra/superpowers) | 原创"超能力"框架；D15=9；思想深度最强 |
+| 5 | **生产级软件工程**（通用） | [`addyosmani/agent-skills`](https://github.com/addyosmani/agent-skills) | 作者背书 + 结构清晰；D14(领域宽度)=8 |
+| 6 | **TypeScript / 个人工程师效率** | [`mattpocock/skills`](https://github.com/mattpocock/skills) | Matt Pocock 的 TS-first 视角；"Skills for Real Engineers" 自带筛选 |
+| 7 | **UI / UX 组件级设计** | [`nextlevelbuilder/ui-ux-pro-max-skill`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | D9(skill 深度)=10；色板/字体/产品类型最详细 |
+| 8 | **设计系统 + 多平台创意输出**（slides/HTML/PDF/视频） | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 19 skills + 71 design systems；D13(多平台兼容)=10（9 个 agent） |
+| 9 | **营销 / CRO / SEO / Growth** | [`coreyhaines31/marketingskills`](https://github.com/coreyhaines31/marketingskills) | 唯一专攻营销；附 `validate-skills.sh`，工程化最严谨 |
+| 10 | **Obsidian / Markdown 知识管理** | [`kepano/obsidian-skills`](https://github.com/kepano/obsidian-skills) | Obsidian creator (kepano) 亲自维护；唯一覆盖 Canvas / Bases / JSON Canvas |
+| 11 | **零负担 CLAUDE.md 快速接入** | [`multica-ai/andrej-karpathy-skills`](https://github.com/multica-ai/andrej-karpathy-skills) | 单文件 drop-in；Karpathy 提炼的 LLM coding 反模式 |
+| 12 | **浏览 / 发现 skill 生态** | [`ComposioHQ/awesome-claude-skills`](https://github.com/ComposioHQ/awesome-claude-skills) | 864 个 SKILL.md 索引；最大 awesome-list |
+
+### 9.2 横切需求 / Cross-cutting
+
+| 需求 | 推荐 |
+|---|---|
+| 最广 agent 平台兼容（9 个：Claude/Codex/Cursor/Gemini/Copilot/OpenCode/Qwen/Windsurf/Kimi） | `nexu-io/open-design` |
+| 规范 + 实战范例配套 | `anthropics/skills`（规范）+ `obra/superpowers`（范例） |
+| 中文 / 多语 i18n 友好 | `nexu-io/open-design`（中/日/葡/德/法 CONTRIBUTING）+ `multica-ai`（含 README.zh） |
+| 个人 + 团队两端通吃 | `affaan-m/everything-claude-code`（含 hooks + commitlint + ESLint，团队可直接接） |
+
+### 9.3 按角色 / By persona
+
+| 角色 / Role | 推荐组合 |
+|---|---|
+| 后端 / DevOps 工程师 | `obra/superpowers`（方法论）+ `addyosmani/agent-skills`（工程实践） |
+| 前端 / 设计师 | `nextlevelbuilder/ui-ux-pro-max-skill`（组件级）+ `nexu-io/open-design`（设计系统） |
+| 营销 / 增长 | `coreyhaines31/marketingskills` |
+| 研究 / 知识工作者 | `kepano/obsidian-skills` + `anthropics/skills`（doc-coauthoring 等官方 skill） |
+| AI 工具 / Skill 构建者 | `anthropics/skills`（规范）+ `affaan-m/everything-claude-code`（参考实现） |
+| 试水（5 分钟内引入） | `multica-ai/andrej-karpathy-skills`（单文件 drop-in） |
+
 ---
 
 _所有原始查询通过 `gh repo view --json` + 本地 `find` 完成；submodules 已 shallow 克隆至 `skills/<owner>__<repo>/`。复现脚本：见本仓库根目录 `.gitmodules` + 评分采用 rank-based 等权方法（见 §7）。_
