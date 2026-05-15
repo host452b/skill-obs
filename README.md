@@ -9,9 +9,9 @@
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Task Guide](https://img.shields.io/badge/任务→repo-TASK__GUIDE-red)](./TASK_GUIDE.md)
 [![5-Model Summary](https://img.shields.io/badge/5_AI_模型对比-agent__summary-blueviolet)](./agent_summary.md)
-[![Cohort size](https://img.shields.io/badge/repos-15-green)](./.gitmodules)
+[![Cohort size](https://img.shields.io/badge/repos-16-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-21-purple)](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions)
-[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2_·_v1.3-yellow)](./scoring.ipynb)
+[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2_·_v1.3_·_v1.4-yellow)](./scoring.ipynb)
 [![Social signals](https://img.shields.io/badge/Reddit_+_HN-30d_sampled-orange)](./scoring.ipynb)
 [![Quality signals](https://img.shields.io/badge/D20_Decomp_+_D21_Lessons-v1.3-pink)](./EVALUATION.md)
 
@@ -56,13 +56,14 @@ skill-obs/
 ├── EVALUATION.md                      ← 完整评测报告：15 维度 × 12 repos
 ├── scoring.ipynb                      ← 可视化 notebook（绿→红分阶染色）
 ├── build_scoring_notebook.py          ← 从源码重新生成 notebook 的脚本
-├── .gitmodules                        ← 15 个 submodule 注册
+├── .gitmodules                        ← 16 个 submodule 注册
 └── skills/                            ← 各 submodule（shallow clone）
     ├── affaan-m__everything-claude-code/
     ├── anthropics__skills/
     ├── ComposioHQ__awesome-claude-skills/
     ├── coreyhaines31__marketingskills/
     ├── garrytan__gstack/                       ← 🆕 v1.2
+    ├── juliusbrussee__caveman/                 ← 🆕 v1.4 (token-efficient)
     ├── kepano__obsidian-skills/
     ├── mattpocock__skills/
     ├── msitarzewski__agency-agents/            ← 🆕 v1.2
@@ -75,35 +76,34 @@ skill-obs/
     └── vercel-labs__agent-skills/
 ```
 
-## 🏆 Top-line Findings (latest snapshot **v1.3** · 2026-05-13 · max **210**)
+## 🏆 Top-line Findings (latest snapshot **v1.4** · 2026-05-13 · max **210**)
 
 | Rank | Repo | Score / 210 | Tier | 标签 |
 |---:|---|---:|:---:|---|
-| 🥇 1 | **[`garrytan/gstack`](https://github.com/garrytan/gstack)** | **156** | S | Garry Tan 实战 setup — D9=10 (52KB 最深) + D21=8 (lessons 丰富)；D20=1 是代价 |
+| 🥇 1 | [`garrytan/gstack`](https://github.com/garrytan/gstack) | **156** | S | Garry Tan 实战 setup — D9=10 (52KB 最深) + D21=8 |
 | 🥈 2 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 154 | S | 大而全 — 事实标准 |
-| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 152 | S | 设计赛道 + D20=9 (3.4KB 良好分解) |
-| 4 | [`obra/superpowers`](https://github.com/obra/superpowers) | 150 | S | 原创方法论 — D21=7 (anti-pattern 丰富) |
-| 5 | **[`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents)** | 146 | S | "AI agency" — 222 个 agent 跨 18 领域 |
-| 6 | `anthropics/skills` | 136 | A | 官方规范 |
-| 7 | `addyosmani/agent-skills` | 128 | A | 生产级 — D21=9 (强 Red Flags 段) |
-| 8 | `mattpocock/skills` | 114 | B | TS 视角 — D20=9 (轻量) |
-| 9 | `openai/skills` | 113 | B | Codex 配套 — D21=8 |
-| 10 | `ComposioHQ/awesome-claude-skills` | 111 | B | D21=10 (94.7% 含 anti-pattern 关键词，但 awesome-list 浅 stub 居多) |
-| 11 | `coreyhaines31/marketingskills` | 103 | B | 营销垂直 |
-| 12 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | UI/UX 产品化 |
-| 13 | `vercel-labs/agent-skills` | 101 | B | Vercel 官方 |
-| 14 | `multica-ai/andrej-karpathy-skills` | 92 | C | D20=10 + D21=9 但其他维度低 |
-| 15 | `kepano/obsidian-skills` | 72 | D | Obsidian 垂直 |
+| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 152 | S | 设计赛道 + D20=9 |
+| 4 | [`obra/superpowers`](https://github.com/obra/superpowers) | 150 | S | 原创方法论 — D21=7 |
+| 5 | [`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents) | 146 | S | "AI agency" — 222 个 agent 跨 18 领域 |
+| **6** | **[`juliusbrussee/caveman`](https://github.com/juliusbrussee/caveman)** | **137** | A | 🆕 v1.4 · "talk caveman, save 65% tokens" — viral (60k stars/39 天)；填补 token-efficient prompt engineering 缺口 |
+| 7 | `anthropics/skills` | 136 | A | 官方规范 |
+| 8 | `addyosmani/agent-skills` | 128 | A | 生产级 — D21=9 |
+| 9 | `mattpocock/skills` | 114 | B | TS 视角 — D20=9 |
+| 10 | `openai/skills` | 113 | B | Codex 配套 — D21=8 |
+| 11 | `ComposioHQ/awesome-claude-skills` | 111 | B | D21=10 (含 awesome-list noise caveat) |
+| 12 | `coreyhaines31/marketingskills` | 103 | B | 营销垂直 |
+| 13 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | UI/UX 产品化 |
+| 14 | `vercel-labs/agent-skills` | 101 | B | Vercel 官方 |
+| 15 | `multica-ai/andrej-karpathy-skills` | 92 | C | D20=10 + D21=9 但其他维度低 |
+| 16 | `kepano/obsidian-skills` | 72 | D | Obsidian 垂直 |
 
-> **v1.2 → v1.3 主要变更**：
-> 1. 新增 **2 个任务质量 dimensions**（D20-D21）：
->    - **D20 Task Decomposition** = 反转 `avg_skill_bytes`（更小 = 更好的任务拆分，假设"每个 skill 应聚焦一个任务"）
->    - **D21 Lesson-Encoded Quality** = 含 failure-marker / version / context 信号的 .md 占比（"有价值的 skill 应包含 模型未知知识 + 环境上下文 + 真实失败教训"）
-> 2. 总分上限：190 → **210**（21 dims × 10）；tier 阈值同比例放大
-> 3. Cohort 保持 15 repos
-> 4. **GS 仍 #1**（D9+D21 拉满 / D20=1 拉低，但其他维度足够多）；MA 从 cohort 末位上升（D20=10 + D21=9 显著加分）；C 因 D21=10（94.7% lesson markers — 含 caveat）上升 2 位
-> 5. **理念**：D20 与 D9 形成"广而深 vs 小而精"的张力对照；D21 量化"skill 是否承载真实价值密度"（v1.0-v1.2 没测到的维度）
-> 6. 完整 v1.2 → v1.3 Δ-diff 见 `scoring.ipynb` 第 7 cell。
+> **v1.3 → v1.4 变更**：
+> 1. 新增 `juliusbrussee/caveman` (CV) — **token-efficient prompt engineering** 唯一专项（"talk caveman, save tokens"）。**60k 星 / 39 天 = 1548 stars/day**（接近 NX 的 launch 峰值），4.67 commits/day（cohort 第 3 高），9 平台（**首个含 antigravity**）
+> 2. CV 总分 **137 (#6, A 级)**，仅 1 分超过 anthropics/skills 进 top-7
+> 3. CV 的 strongest dims：D6/D13/D17 都拉到 9-10
+> 4. CV 的 weakest dims：D3/D4/D8/D9 (体量小)、D14 (单一 prompt-engineering 垂直)
+> 5. Cohort: 15 → **16 repos**；总维度数 21 不变；max total 210 不变
+> 6. 完整 v1.3 → v1.4 Δ-diff 见 `scoring.ipynb` 第 7 cell。
 
 完整评分矩阵、按领域/角色推荐、方法论与 caveat 见 **[`EVALUATION.md`](./EVALUATION.md)**。
 
@@ -188,8 +188,9 @@ Re-run all cells，Cell 10 会自动渲染新旧 snapshot 的 Δ-diff。
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | 40,580 | 2026-02-15 | MIT |
 | [nexu-io/open-design](https://github.com/nexu-io/open-design) | 38,735 | 2026-04-28 | Apache-2.0 |
 | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | 30,825 | 2026-01-02 | MIT |
-| **[msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)** 🆕 | 96,620 | 2025-10-13 | MIT |
-| **[garrytan/gstack](https://github.com/garrytan/gstack)** 🆕 | 95,212 | 2026-03-11 | MIT |
+| **[msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)** | 96,620 | 2025-10-13 | MIT |
+| **[garrytan/gstack](https://github.com/garrytan/gstack)** | 95,212 | 2026-03-11 | MIT |
+| **[juliusbrussee/caveman](https://github.com/juliusbrussee/caveman)** 🆕 v1.4 | 60,365 | 2026-04-04 | MIT |
 | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 28,215 | 2026-01-15 | MIT |
 | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | 26,494 | 2025-12-08 | — |
 | [openai/skills](https://github.com/openai/skills) | 18,982 | 2025-11-25 | — |

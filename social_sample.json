@@ -365,6 +365,32 @@
         "avg_points": 1.5,
         "top_points": 2
       }
+    },
+    "CV": {
+      "reddit": {
+        "queries": [
+          "juliusbrussee caveman",
+          "github.com/juliusbrussee/caveman",
+          "caveman claude skill"
+        ],
+        "post_count": 105,
+        "total_comments": 15705,
+        "total_score": 82829,
+        "avg_score": 788.8,
+        "top_score": 6031
+      },
+      "hn": {
+        "queries": [
+          "juliusbrussee caveman",
+          "github.com/juliusbrussee/caveman",
+          "caveman claude skill"
+        ],
+        "story_count": 3,
+        "total_comments": 1,
+        "total_points": 9,
+        "avg_points": 3.0,
+        "top_points": 5
+      }
     }
   }
 }

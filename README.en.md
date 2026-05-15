@@ -9,9 +9,9 @@
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Task Guide](https://img.shields.io/badge/task→repo-TASK__GUIDE-red)](./TASK_GUIDE.en.md)
 [![5-Model Summary](https://img.shields.io/badge/5_AI_model_xref-agent__summary-blueviolet)](./agent_summary.en.md)
-[![Cohort size](https://img.shields.io/badge/repos-15-green)](./.gitmodules)
+[![Cohort size](https://img.shields.io/badge/repos-16-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-21-purple)](./EVALUATION.en.md#2-15-evaluation-dimensions)
-[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2_·_v1.3-yellow)](./scoring.ipynb)
+[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2_·_v1.3_·_v1.4-yellow)](./scoring.ipynb)
 [![Social signals](https://img.shields.io/badge/Reddit_+_HN-30d_sampled-orange)](./scoring.ipynb)
 [![Quality signals](https://img.shields.io/badge/D20_Decomp_+_D21_Lessons-v1.3-pink)](./EVALUATION.en.md)
 
@@ -77,38 +77,38 @@ skill-obs/
     ├── addyosmani__agent-skills/
     ├── vercel-labs__agent-skills/
     ├── garrytan__gstack/                       ← 🆕 v1.2
-    └── msitarzewski__agency-agents/            ← 🆕 v1.2
+    ├── msitarzewski__agency-agents/            ← 🆕 v1.2
+    └── juliusbrussee__caveman/                 ← 🆕 v1.4 (token-efficient)
 ```
 
-## 🏆 Top-line Findings (latest snapshot **v1.3** · 2026-05-13 · max **210**)
+## 🏆 Top-line Findings (latest snapshot **v1.4** · 2026-05-13 · max **210**)
 
 | Rank | Repo | Score /210 | Tier | Tagline |
 |---:|---|---:|:---:|---|
-| 🥇 1 | **[`garrytan/gstack`](https://github.com/garrytan/gstack)** | **156** | S | Garry Tan setup — D9=10 (52KB deepest) + D21=8 (rich lessons); D20=1 is the cost |
+| 🥇 1 | [`garrytan/gstack`](https://github.com/garrytan/gstack) | **156** | S | Garry Tan setup — D9=10 (52KB deepest) + D21=8 |
 | 🥈 2 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 154 | S | Comprehensive — de-facto standard |
-| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 152 | S | Design lane + D20=9 (3.4KB good decomposition) |
-| 4 | [`obra/superpowers`](https://github.com/obra/superpowers) | 150 | S | Original methodology — D21=7 (anti-pattern rich) |
-| 5 | **[`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents)** | 146 | S | "AI agency" — 222 agents across 18 domains |
-| 6 | `anthropics/skills` | 136 | A | Official spec |
-| 7 | `addyosmani/agent-skills` | 128 | A | Production-grade — D21=9 (strong Red Flags sections) |
-| 8 | `mattpocock/skills` | 114 | B | TS lens — D20=9 (lightweight) |
-| 9 | `openai/skills` | 113 | B | Codex companion — D21=8 |
-| 10 | `ComposioHQ/awesome-claude-skills` | 111 | B | D21=10 (94.7% match anti-pattern keywords, but caveat: awesome-list shallow stubs dominate) |
-| 11 | `coreyhaines31/marketingskills` | 103 | B | Marketing vertical |
-| 12 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | UI/UX product polish |
-| 13 | `vercel-labs/agent-skills` | 101 | B | Vercel official |
-| 14 | `multica-ai/andrej-karpathy-skills` | 92 | C | D20=10 + D21=9 but other dims weak |
-| 15 | `kepano/obsidian-skills` | 72 | D | Obsidian-specialized |
+| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 152 | S | Design lane + D20=9 |
+| 4 | [`obra/superpowers`](https://github.com/obra/superpowers) | 150 | S | Original methodology — D21=7 |
+| 5 | [`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents) | 146 | S | "AI agency" — 222 agents across 18 domains |
+| **6** | **[`juliusbrussee/caveman`](https://github.com/juliusbrussee/caveman)** | **137** | A | 🆕 v1.4 · "talk caveman, save 65% tokens" — viral (60k stars in 39 days); fills token-efficient prompt-engineering gap |
+| 7 | `anthropics/skills` | 136 | A | Official spec |
+| 8 | `addyosmani/agent-skills` | 128 | A | Production-grade — D21=9 |
+| 9 | `mattpocock/skills` | 114 | B | TS lens — D20=9 |
+| 10 | `openai/skills` | 113 | B | Codex companion — D21=8 |
+| 11 | `ComposioHQ/awesome-claude-skills` | 111 | B | D21=10 (awesome-list noise caveat) |
+| 12 | `coreyhaines31/marketingskills` | 103 | B | Marketing vertical |
+| 13 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | UI/UX product polish |
+| 14 | `vercel-labs/agent-skills` | 101 | B | Vercel official |
+| 15 | `multica-ai/andrej-karpathy-skills` | 92 | C | D20=10 + D21=9 but other dims weak |
+| 16 | `kepano/obsidian-skills` | 72 | D | Obsidian-specialized |
 
-> **v1.2 → v1.3 major changes**:
-> 1. Added **2 new task-quality dimensions** D20-D21:
->    - **D20 Task Decomposition** = inverse of `avg_skill_bytes` (smaller = better; theory: each skill should focus on one task)
->    - **D21 Lesson-Encoded Quality** = % of *.md with failure-marker / version / context signals (proxy for "valuable skills should contain model-unknown knowledge + env context + real-failure lessons")
-> 2. Max total: 190 → **210** (21 dims × 10); tier thresholds rescaled proportionally
-> 3. Cohort unchanged at 15 repos
-> 4. **GS still #1** (D9+D21 saturated / D20=1 penalty, but other dims sufficient); MA climbs from cohort bottom (D20=10 + D21=9 add ~19 points); C jumps 2 places thanks to D21=10 (caveat included)
-> 5. **Philosophy**: D20 vs D9 creates a "broad-and-deep vs small-and-focused" tension; D21 quantifies whether skills carry *real value density* (a dimension not measured in v1.0-v1.2)
-> 6. Full v1.2 → v1.3 Δ-diff in `scoring.ipynb` cell 7.
+> **v1.3 → v1.4 changes**:
+> 1. Added `juliusbrussee/caveman` (CV) — only **token-efficient prompt-engineering** specialist ("talk caveman, save tokens"). **60k stars in 39 days = 1548 stars/day** (near NX's launch peak); 4.67 commits/day (cohort #3); 9 platforms (**first to mention antigravity**)
+> 2. CV total **137 (#6, tier A)** — beats anthropics/skills by 1 point to enter top-7
+> 3. CV's strongest dims: D6/D13/D17 all 9-10
+> 4. CV's weakest dims: D3/D4/D8/D9 (small footprint); D14 (single prompt-engineering vertical)
+> 5. Cohort: 15 → **16 repos**; total dims 21 unchanged; max total 210 unchanged
+> 6. Full v1.3 → v1.4 Δ-diff in `scoring.ipynb` cell 7.
 
 Full score matrix, by-domain recommendations, methodology, and caveats: **[`EVALUATION.en.md`](./EVALUATION.en.md)**.
 
@@ -192,8 +192,9 @@ Then re-run: `python3 build_scoring_notebook.py`. The notebook regenerates with 
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | 40,580 | 2026-02-15 | MIT |
 | [nexu-io/open-design](https://github.com/nexu-io/open-design) | 38,735 | 2026-04-28 | Apache-2.0 |
 | [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) | 30,825 | 2026-01-02 | MIT |
-| **[msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)** 🆕 | 96,620 | 2025-10-13 | MIT |
-| **[garrytan/gstack](https://github.com/garrytan/gstack)** 🆕 | 95,212 | 2026-03-11 | MIT |
+| **[msitarzewski/agency-agents](https://github.com/msitarzewski/agency-agents)** | 96,620 | 2025-10-13 | MIT |
+| **[garrytan/gstack](https://github.com/garrytan/gstack)** | 95,212 | 2026-03-11 | MIT |
+| **[juliusbrussee/caveman](https://github.com/juliusbrussee/caveman)** 🆕 v1.4 | 60,365 | 2026-04-04 | MIT |
 | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | 28,215 | 2026-01-15 | MIT |
 | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | 26,494 | 2025-12-08 | — |
 | [openai/skills](https://github.com/openai/skills) | 18,982 | 2025-11-25 | — |

@@ -3,10 +3,10 @@
 > 🌐 **Language**: **🇨🇳 中文** · [🇬🇧 English](./EVALUATION.en.md)
 
 > 评测日期 / Date: **2026-05-13**  
-> 当前 Snapshot / Current: **v1.3** — **15-repo cohort × 21 dims**（v1.0 / v1.1 / v1.2 历史在 `scoring.ipynb`）  
+> 当前 Snapshot / Current: **v1.4** — **16-repo cohort × 21 dims**（v1.0 / v1.1 / v1.2 / v1.3 历史在 `scoring.ipynb`）  
 > 评分量表 / Scale: **1–10** (10 = best in cohort)  
 > 总分上限 / Max total: **210** (21 dims × 10)  
-> ⚠ 注意：本 markdown 中 §3/§4/§5 表格仍展示 v1.1 baseline 数据用于上下文。最新 v1.3 数据（含 GS / AA / D16-D21）请看 `scoring.ipynb`。§11 给出 v1.2 (D16-D19 社交信号)；**§12 给出 v1.3 (D20-D21 任务质量信号)**。
+> ⚠ 注意：本 markdown 中 §3/§4/§5 表格仍展示 v1.1 baseline 数据用于上下文。最新 v1.4 数据（含 GS / AA / CV / D16-D21）请看 `scoring.ipynb`。§11 给出 v1.2 (D16-D19 社交信号)；§12 给出 v1.3 (D20-D21 任务质量信号)；**§13 给出 v1.4 (CV caveman 加入)**。
 
 ## 1. 入选仓库 / Cohort
 
@@ -518,3 +518,74 @@ _所有原始查询通过 `gh repo view --json` + 本地 `find` 完成；submodu
 - **GS 的 #1 不再纯靠 popularity**，而是 popularity + D9（最深）+ D21（rich lessons）的组合— 多维度 robust win
 
 > 想看完整 21-dim × 15-repo 染色矩阵 + Δ v1.2→v1.3：打开 `scoring.ipynb`（GitHub 直接渲染，无需执行）。
+
+## 13. v1.4 Snapshot — 新增 `juliusbrussee/caveman` (CV)
+
+### 13.1 加入理由
+
+CV 是个**单点 viral repo**：
+- 概念：**"talk caveman, save tokens"** — 让 Claude 用 caveman 风格说话（短句、无虚词）减少 token 消耗 65%
+- 数据：60,365 stars / 39 天 alive = **1,548 stars/day**（接近 NX 的 launch 峰值）
+- 工程：很完整（bin/dist/commands/agents/plugins/evals/benchmarks/tests + 多 OS installer + Gemini extension）
+- **填补"token efficiency / prompt minification"垂直** — 之前 cohort 没有这个角度
+
+### 13.2 CV 21 维度评分
+
+| Dim | Score | 备注 |
+|---|---:|---|
+| D1 Star Velocity | 9 | 1,548 stars/day（含 launch 峰值 caveat）|
+| D2 Total Stars | 6 | 60k（M 之下 C 之上）|
+| D3 Forks | 3 | 3,346（NX 之下 V 之上）|
+| D4 Watchers | 2 | 141（最低段）|
+| D5 Recency | 9 | 1 天前 push |
+| D6 Cadence | 9 | 4.67 commits/day（仅次于 NX 42.5 和 AM 14.82）|
+| D7 Contributors | 6 | 29 |
+| D8 Skill Volume | 3 | 15 SKILL.md（小）|
+| D9 Skill Depth | 2 | avg 3.3KB（小）|
+| D10 Supp Material | 5 | 2.93 supp/skill |
+| D11 Doc Quality | 8 | 224 README + AGENTS+CLAUDE+GEMINI+INSTALL+CONTRIBUTING+docs/ |
+| D12 Eng Hygiene | 9 | benchmark/evals/tests + 多 OS installer + gemini-ext |
+| **D13 Multi-Agent** | **10** | **9 平台（首个含 antigravity）** — 与 NX/AA 并列顶 |
+| D14 Domain Breadth | 4 | 仅 prompt engineering 单一垂直 |
+| D15 Originality | 8 | 独特的 caveman 概念 + 病毒式传播 |
+| D16 Reddit Heat | 9 | 105 posts + 15705 comments |
+| **D17 Reddit Sentiment** | **10** | **avg 788.8**（与 GS 2769 / AA 2897 同 top tier）|
+| D18 HN Heat | 6 | 3 stories + 1 comment |
+| D19 HN Sentiment | 6 | avg 3.0 |
+| D20 Task Decomposition | 9 | avg 3.3KB（属于"小而精"档）|
+| D21 Lesson-Encoded | 4 | 22% lesson + 0% version + 6.8% context = 14.2 density |
+| **Σ Total** | **137** | **A 级，排 #6** |
+
+### 13.3 v1.4 完整排行（max 210）
+
+| Rank | Repo | Score | Tier |
+|---:|---|---:|:---:|
+| 🥇 1 | `garrytan/gstack` | 156 | S |
+| 🥈 2 | `affaan-m/everything-claude-code` | 154 | S |
+| 🥉 3 | `nexu-io/open-design` | 152 | S |
+| 4 | `obra/superpowers` | 150 | S |
+| 5 | `msitarzewski/agency-agents` | 146 | S |
+| **6** | **`juliusbrussee/caveman`** 🆕 | **137** | A |
+| 7 | `anthropics/skills` | 136 | A |
+| 8 | `addyosmani/agent-skills` | 128 | A |
+| 9 | `mattpocock/skills` | 114 | B |
+| 10 | `openai/skills` | 113 | B |
+| 11 | `ComposioHQ/awesome-claude-skills` | 111 | B |
+| 12 | `coreyhaines31/marketingskills` | 103 | B |
+| 13 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B |
+| 14 | `vercel-labs/agent-skills` | 101 | B |
+| 15 | `multica-ai/andrej-karpathy-skills` | 92 | C |
+| 16 | `kepano/obsidian-skills` | 72 | D |
+
+### 13.4 关键 caveat
+
+1. **CV launch-wave 偏置**：1,548 stars/day 含发布期病毒峰值。**meme 类 repo** 衰减通常比"工具类" repo 更快；6 个月后稳态 velocity 估计降到 200-400 stars/day 量级，对应 D1 会跌到 4-5 分。
+2. **CV 的 D14=4 是真实窄定位**：15 个 skill 全部围绕 "caveman talk" 这一个 prompt-style 优化 — 严格意义上是**单点 trick repo**，不是 framework。它的 #6 排位主要靠 D6/D13/D16/D17 拉动（active + 多平台 + 社交热度高）。
+3. **CV 占用的细分 niche 独特**：cohort 中没有其他 prompt-engineering / token-efficiency 专项。这对实际用户的价值不一定按总分线性看 — 如果你 specifically 担心 token 成本，CV 是**唯一选项**。
+4. **9 个平台首含 antigravity**：CV 是 cohort 中首个明确支持 antigravity 的 repo。如果用户走 antigravity 工作流，这是**独有 fit**。
+
+### 13.5 与 `agent_summary.md` 5-模型评测的对比
+
+CV 太新（创建于 2026-04-04），**§1-§6 的 5 模型评测都在 v1.2 之前进行**，**没有涵盖 CV**。如果未来想做 v1.4 完整 LLM 复评，需要重新 prompt 5 个模型评 CV 的实战价值。当前 v1.4 #6 是**本仓库自评分**，不代表 5 模型共识。
+
+> 想看完整 21-dim × 16-repo 染色矩阵 + Δ v1.3→v1.4：打开 `scoring.ipynb`（GitHub 直接渲染，无需执行）。

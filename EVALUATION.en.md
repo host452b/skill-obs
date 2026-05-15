@@ -3,10 +3,10 @@
 > 🌐 **Language**: [🇨🇳 中文](./EVALUATION.md) · **🇬🇧 English**
 
 > Evaluation date: **2026-05-13**
-> Current snapshot: **v1.3** — **15-repo cohort × 21 dims** (v1.0 / v1.1 / v1.2 retained in `scoring.ipynb` history)
+> Current snapshot: **v1.4** — **16-repo cohort × 21 dims** (v1.0 / v1.1 / v1.2 / v1.3 retained in `scoring.ipynb` history)
 > Scoring scale: **1–10** (10 = best in cohort)
 > Max total: **210** (21 dims × 10)
-> ⚠ Note: §3/§4/§5 tables in this markdown still show v1.1 baseline for context. Latest v1.3 data (including GS / AA / D16-D21) lives in `scoring.ipynb`. §11 covers v1.2 (D16-D19 social signals); **§12 covers v1.3 (D20-D21 task-quality signals)**.
+> ⚠ Note: §3/§4/§5 tables in this markdown still show v1.1 baseline for context. Latest v1.4 data (including GS / AA / CV / D16-D21) lives in `scoring.ipynb`. §11 covers v1.2 (D16-D19 social signals); §12 covers v1.3 (D20-D21 task-quality signals); **§13 covers v1.4 (CV caveman addition)**.
 
 ## 1. Cohort
 
@@ -519,3 +519,74 @@ Per-repo output: `lesson_pct`, `version_pct`, `context_pct`, `value_density_pct`
 - **GS's #1 is no longer popularity-only**; it's popularity + D9 (deepest) + D21 (rich lessons) combined — multi-dimensional robust win
 
 > For the full 21-dim × 15-repo colored matrix + Δ v1.2→v1.3: open `scoring.ipynb` (renders directly on GitHub, no execution needed).
+
+## 13. v1.4 Snapshot — added `juliusbrussee/caveman` (CV)
+
+### 13.1 Why include CV
+
+CV is a **single-point viral repo**:
+- Concept: **"talk caveman, save tokens"** — Claude speaks in caveman style (short sentences, no filler words), cutting token consumption by 65%
+- Data: 60,365 stars / 39 days alive = **1,548 stars/day** (near NX's launch peak)
+- Engineering: very complete (bin/dist/commands/agents/plugins/evals/benchmarks/tests + multi-OS installer + Gemini extension)
+- **Fills the "token efficiency / prompt minification" vertical** — previously uncovered in cohort
+
+### 13.2 CV 21-dim scoring
+
+| Dim | Score | Note |
+|---|---:|---|
+| D1 Star Velocity | 9 | 1,548 stars/day (launch-peak caveat) |
+| D2 Total Stars | 6 | 60k (between M and C) |
+| D3 Forks | 3 | 3,346 |
+| D4 Watchers | 2 | 141 (low tier) |
+| D5 Recency | 9 | 1 day ago |
+| D6 Cadence | 9 | 4.67 commits/day (after only NX 42.5 and AM 14.82) |
+| D7 Contributors | 6 | 29 |
+| D8 Skill Volume | 3 | 15 SKILL.md (small) |
+| D9 Skill Depth | 2 | avg 3.3KB (small) |
+| D10 Supp Material | 5 | 2.93 supp/skill |
+| D11 Doc Quality | 8 | 224 README + AGENTS+CLAUDE+GEMINI+INSTALL+CONTRIBUTING+docs/ |
+| D12 Eng Hygiene | 9 | benchmark/evals/tests + multi-OS installer + gemini-ext |
+| **D13 Multi-Agent** | **10** | **9 platforms (first to mention antigravity)** — tied with NX/AA at top |
+| D14 Domain Breadth | 4 | Only prompt-engineering vertical |
+| D15 Originality | 8 | Unique caveman concept + viral spread |
+| D16 Reddit Heat | 9 | 105 posts + 15705 comments |
+| **D17 Reddit Sentiment** | **10** | **avg 788.8** (top tier with GS 2769 / AA 2897) |
+| D18 HN Heat | 6 | 3 stories + 1 comment |
+| D19 HN Sentiment | 6 | avg 3.0 |
+| D20 Task Decomposition | 9 | avg 3.3KB (small-and-focused tier) |
+| D21 Lesson-Encoded | 4 | 22% lesson + 0% version + 6.8% context = 14.2 density |
+| **Σ Total** | **137** | **Tier A, rank #6** |
+
+### 13.3 Full v1.4 ranking (max 210)
+
+| Rank | Repo | Score | Tier |
+|---:|---|---:|:---:|
+| 🥇 1 | `garrytan/gstack` | 156 | S |
+| 🥈 2 | `affaan-m/everything-claude-code` | 154 | S |
+| 🥉 3 | `nexu-io/open-design` | 152 | S |
+| 4 | `obra/superpowers` | 150 | S |
+| 5 | `msitarzewski/agency-agents` | 146 | S |
+| **6** | **`juliusbrussee/caveman`** 🆕 | **137** | A |
+| 7 | `anthropics/skills` | 136 | A |
+| 8 | `addyosmani/agent-skills` | 128 | A |
+| 9 | `mattpocock/skills` | 114 | B |
+| 10 | `openai/skills` | 113 | B |
+| 11 | `ComposioHQ/awesome-claude-skills` | 111 | B |
+| 12 | `coreyhaines31/marketingskills` | 103 | B |
+| 13 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B |
+| 14 | `vercel-labs/agent-skills` | 101 | B |
+| 15 | `multica-ai/andrej-karpathy-skills` | 92 | C |
+| 16 | `kepano/obsidian-skills` | 72 | D |
+
+### 13.4 Key caveats
+
+1. **CV launch-wave bias**: 1,548 stars/day includes viral launch peak. **Meme-style repos** typically decay faster than tool repos; 6-month steady-state velocity will likely drop to 200-400 stars/day, dragging D1 down to 4-5.
+2. **CV's D14=4 reflects a genuinely narrow positioning**: all 15 skills are about "caveman talk" prompt-style optimization — strictly a **single-trick repo**, not a framework. The #6 ranking is driven by D6/D13/D16/D17 (active + multi-platform + high social heat).
+3. **CV's niche is unique**: no other prompt-engineering / token-efficiency specialist in cohort. For users specifically worried about token costs, CV is the **only option** — its value isn't strictly proportional to total score.
+4. **9-platform support includes antigravity**: CV is the first repo in cohort to explicitly support antigravity. If your workflow goes through antigravity, **CV is uniquely fitting**.
+
+### 13.5 Comparison with `agent_summary.en.md` 5-model evaluation
+
+CV is too new (created 2026-04-04), so **the 5-model evaluation in §1-§6 (collected before v1.2) does not cover CV**. To do a v1.4 full LLM re-evaluation, you'd need to re-prompt all 5 models on CV's operational value. The current v1.4 #6 is **this repo's internal scoring** — not the 5-model consensus.
+
+> For the full 21-dim × 16-repo colored matrix + Δ v1.3→v1.4: open `scoring.ipynb` (renders directly on GitHub, no execution needed).

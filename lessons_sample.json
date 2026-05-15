@@ -315,6 +315,16 @@
         "\\bwhy not\\b": 2,
         "\\bmistake[s]?\\b": 11
       }
+    },
+    "CV": {
+      "md_total": 59,
+      "files_with_lesson": 13,
+      "lesson_pct": 22.0,
+      "files_with_version": 0,
+      "version_pct": 0.0,
+      "files_with_context": 4,
+      "context_pct": 6.8,
+      "value_density_pct": 14.2
     }
   }
 }

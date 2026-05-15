@@ -43,3 +43,6 @@
 [submodule "skills/msitarzewski__agency-agents"]
 	path = skills/msitarzewski__agency-agents
 	url = https://github.com/msitarzewski/agency-agents.git
+[submodule "skills/juliusbrussee__caveman"]
+	path = skills/juliusbrussee__caveman
+	url = https://github.com/juliusbrussee/caveman.git
