@@ -1,0 +1,32 @@
+name: consistency
+
+# Guards the scoring data + docs from silent drift (see build_scoring_notebook.py
+# _self_check() and check_consistency.py). Runs on every PR and on pushes to main.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        # Submodules not needed: the guards only read the in-repo data model
+        # and the markdown leaderboards, not the submodule contents.
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install nbformat
+
+      - name: Data self-check + regenerate notebooks
+        # build_scoring_notebook.py runs _self_check() before writing anything:
+        # fails on score-sum vs `# total` drift, bad dims, or DOMAIN_RECS en/zh skew.
+        run: python3 build_scoring_notebook.py
+
+      - name: Cross-document consistency
+        # README top-line + EVALUATION §14.1 leaderboards must match canonical scores.
+        run: python3 check_consistency.py

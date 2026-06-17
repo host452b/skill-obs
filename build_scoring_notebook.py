@@ -6,10 +6,13 @@ Pattern (mirrors gguf_exp_on_mac/benchmark_visualization.ipynb):
   - outputs[0].data['text/html'] holds a pre-rendered colored table.
   - GitHub renders the notebook directly — no kernel, no execution needed.
 
+Emits BOTH scoring.ipynb (English) and scoring.cn.ipynb (Chinese) from the
+same data — UI strings come from the TXT i18n table; repo data is shared.
+
 Maintenance flow:
   1. Edit EVALUATIONS below (append a new dict; never modify history).
-  2. python3 build_scoring_notebook.py
-  3. git add scoring.ipynb build_scoring_notebook.py && git commit && git push
+  2. python3 build_scoring_notebook.py   # regenerates scoring.ipynb + scoring.cn.ipynb
+  3. git add scoring.ipynb scoring.cn.ipynb build_scoring_notebook.py && git commit && git push
 
 Color interpolation: rgba(220,60,60,0.35) worst → rgba(220,220,60,0.35) mid → rgba(40,200,100,0.35) best.
 Per-column min/max normalization; column-best is bolded.
@@ -54,6 +57,113 @@ DIMENSIONS = [
 ]
 DIM_IDS = [d[0] for d in DIMENSIONS]
 MAX_TOTAL = len(DIMENSIONS) * 10  # 210
+
+# Chinese dimension labels/descriptions (same IDs/order as DIMENSIONS).
+DIMENSIONS_ZH = [
+    ('D1',  '星增速 ⭐',            '创建至今每日新增 star（用户强调）'),
+    ('D2',  '总 Star 数',           '绝对人气'),
+    ('D3',  'Fork 数',              '复制 / 重度用户'),
+    ('D4',  'Watcher 数',           '深度订阅者'),
+    ('D5',  '提交新近度',           '距上次 push 天数（取反）'),
+    ('D6',  '提交频率',             '创建至今每日提交数'),
+    ('D7',  '贡献者数',             '作者多样性'),
+    ('D8',  '技能数量',             'SKILL.md 文件数'),
+    ('D9',  '技能深度',             'SKILL.md 平均字节数'),
+    ('D10', '辅料密度',             '每技能的辅助文档数'),
+    ('D11', '文档质量',             'README + 结构化文档'),
+    ('D12', '工程化程度',           'LICENSE/测试/hooks/CI/脚本'),
+    ('D13', '多 Agent 可移植性',    '支持的 agent 平台数'),
+    ('D14', '领域广度',             '通用 vs 垂直'),
+    ('D15', '原创性 / 权威性',      '首创、官方 vs 衍生'),
+    ('D16', 'Reddit 热度 (30天)',   '近 30 天 帖子数 + 评论数/10'),
+    ('D17', 'Reddit 口碑 (30天)',   '近 30 天 每帖平均 upvote'),
+    ('D18', 'HN 热度 (30天)',       '近 30 天 story×10 + 评论数'),
+    ('D19', 'HN 口碑 (30天)',       '近 30 天 每 story 平均 points'),
+    ('D20', '任务分解度',           'SKILL.md 平均字节数取反——技能越小分解越好（理论：每个技能应聚焦一个任务）'),
+    ('D21', '教训编码质量',         '含失败教训标记（anti-pattern / red-flag / when-NOT-to-use / lessons-learned / pitfalls）+ 版本/上下文信号的 *.md 占比——衡量"模型未知知识 + 环境上下文 + 真实失败教训"'),
+]
+
+
+def dims_for(lang: str):
+    return DIMENSIONS_ZH if lang == 'zh' else DIMENSIONS
+
+
+# UI string table. Keys are stable; values per language. Templates use str.format.
+TXT = {
+    'legend': {
+        'en': ('<p style="color:#666;font-size:0.85em;margin:4px 0">Color gradient: '
+               '<span style="background:rgba(220,60,60,0.35);padding:2px 8px;border-radius:3px">worst</span> → '
+               '<span style="background:rgba(220,220,60,0.35);padding:2px 8px;border-radius:3px">mid</span> → '
+               '<span style="background:rgba(40,200,100,0.35);padding:2px 8px;border-radius:3px">best</span>'
+               '&nbsp;·&nbsp;per-column normalized · column-best <b>bolded</b></p>'),
+        'zh': ('<p style="color:#666;font-size:0.85em;margin:4px 0">颜色梯度：'
+               '<span style="background:rgba(220,60,60,0.35);padding:2px 8px;border-radius:3px">最差</span> → '
+               '<span style="background:rgba(220,220,60,0.35);padding:2px 8px;border-radius:3px">中</span> → '
+               '<span style="background:rgba(40,200,100,0.35);padding:2px 8px;border-radius:3px">最佳</span>'
+               '&nbsp;·&nbsp;按列归一化 · 列最优值<b>加粗</b></p>'),
+    },
+    'overall_h3': {'en': '🏆 Overall Ranking — {date} (v{ver})', 'zh': '🏆 总排行 — {date}（v{ver}）'},
+    'th_num':      {'en': '#', 'zh': '#'},
+    'th_repo':     {'en': 'Repo', 'zh': '仓库'},
+    'th_tier':     {'en': 'Tier', 'zh': '等级'},
+    'th_total210': {'en': 'Total /210 ↑', 'zh': '总分 /210 ↑'},
+    'th_d1':       {'en': 'D1 ⭐ /10 ↑', 'zh': 'D1 ⭐ /10 ↑'},
+    'th_stars':    {'en': 'Stars ↑', 'zh': 'Stars ↑'},
+    'th_starsday': {'en': 'Stars/day ↑', 'zh': 'Stars/天 ↑'},
+    'th_forks':    {'en': 'Forks ↑', 'zh': 'Forks ↑'},
+    'th_contribs': {'en': 'Contribs ↑', 'zh': '贡献者 ↑'},
+    'th_desc':     {'en': 'Description', 'zh': '说明'},
+    'matrix_h3':   {'en': '📋 Full Score Matrix · {ndim} Dimensions × {nrepo} Repos — {date}',
+                    'zh': '📋 完整评分矩阵 · {ndim} 维 × {nrepo} repos — {date}'},
+    'matrix_note': {'en': '<p style="color:#666;font-size:0.85em;margin:4px 0">Each cell colored 1-10 within its dimension column. Column-best <b>bolded</b>. Hover header for definition.</p>',
+                    'zh': '<p style="color:#666;font-size:0.85em;margin:4px 0">每格按所在维度列的 1-10 着色，列最优值<b>加粗</b>，鼠标悬停表头查看定义。</p>'},
+    'dim_defs':    {'en': '📖 Dimension definitions', 'zh': '📖 维度定义'},
+    'th_total':    {'en': 'Total ↑', 'zh': '总分 ↑'},
+    'th_id':       {'en': 'ID', 'zh': 'ID'},
+    'th_label':    {'en': 'Label', 'zh': '名称'},
+    'th_descr':    {'en': 'Description', 'zh': '说明'},
+    'raw_h3':      {'en': '📊 Raw Metrics Snapshot — {date}', 'zh': '📊 原始指标快照 — {date}'},
+    'raw_note':    {'en': '<p style="color:#666;font-size:0.85em;margin:4px 0">↑ higher is better · ↓ lower is better. Per-column normalized.</p>',
+                    'zh': '<p style="color:#666;font-size:0.85em;margin:4px 0">↑ 越高越好 · ↓ 越低越好。按列归一化。</p>'},
+    'drift_h3':    {'en': '🔗 Submodule Snapshot & Drift — {date}', 'zh': '🔗 Submodule 快照与漂移 — {date}'},
+    'drift_note':  {'en': 'Snapshot SHAs captured at evaluation time ({eval}); current SHAs read at notebook build time ({now}).',
+                    'zh': '快照 SHA 采集于评测时刻（{eval}）；当前 SHA 读取于 notebook 构建时刻（{now}）。'},
+    'th_submodule':   {'en': 'Submodule', 'zh': 'Submodule'},
+    'th_snapshot_sha':{'en': 'Snapshot SHA', 'zh': '快照 SHA'},
+    'th_current_sha': {'en': 'Current SHA', 'zh': '当前 SHA'},
+    'th_status':      {'en': 'Status', 'zh': '状态'},
+    'st_missing':  {'en': '✗ missing', 'zh': '✗ 缺失'},
+    'st_same':     {'en': '✓ same', 'zh': '✓ 一致'},
+    'st_drifted':  {'en': '⚠ drifted', 'zh': '⚠ 漂移'},
+    'domain_h3':   {'en': '🎯 Best Repo by Domain — {date}', 'zh': '🎯 各领域最佳 repo — {date}'},
+    'domain_note': {'en': '<p style="color:#666;font-size:0.85em;margin:4px 0">Tier badges from the snapshot above; descriptions are the discriminating signal for that domain.</p>',
+                    'zh': '<p style="color:#666;font-size:0.85em;margin:4px 0">等级徽章来自上方快照；说明是该领域的关键区分信号。</p>'},
+    'th_domain':   {'en': 'Domain / Use case', 'zh': '领域 / 用例'},
+    'th_bestrepo': {'en': 'Best repo', 'zh': '最佳 repo'},
+    'th_why':      {'en': 'Why', 'zh': '理由'},
+    'diff_h3':     {'en': '🔁 Score Δ — {old} → {new}', 'zh': '🔁 评分变化 Δ — {old} → {new}'},
+    'diff_note':   {'en': '<p style="color:#666;font-size:0.85em;margin:4px 0">Per-dimension score change; positive (green) = improved.</p>',
+                    'zh': '<p style="color:#666;font-size:0.85em;margin:4px 0">各维度评分变化；正值（绿）= 提升。</p>'},
+    'th_dtotal':   {'en': 'ΔTotal', 'zh': 'Δ总分'},
+    'new_badge_txt': {'en': 'NEW', 'zh': '新增'},
+    # raw-metric column labels (keyed by metric key)
+    'rm_stars':      {'en': 'Stars ↑', 'zh': 'Stars ↑'},
+    'rm_stars_per_day': {'en': 'Stars/day ↑', 'zh': 'Stars/天 ↑'},
+    'rm_forks':      {'en': 'Forks ↑', 'zh': 'Forks ↑'},
+    'rm_watchers':   {'en': 'Watchers ↑', 'zh': 'Watchers ↑'},
+    'rm_contribs':   {'en': 'Contribs ↑', 'zh': '贡献者 ↑'},
+    'rm_days_alive': {'en': 'Days alive', 'zh': '存活天数'},
+    'rm_last_push':  {'en': 'Last push (d ago) ↓', 'zh': '距上次 push(天) ↓'},
+    'rm_commits_per_day': {'en': 'Commits/day ↑', 'zh': '提交/天 ↑'},
+    'rm_skill_md':   {'en': 'SKILL.md count ↑', 'zh': 'SKILL.md 数 ↑'},
+    'rm_avg_skill_bytes': {'en': 'Avg SKILL bytes ↑', 'zh': 'SKILL 平均字节 ↑'},
+    'rm_platforms':  {'en': 'Agent platforms ↑', 'zh': 'Agent 平台数 ↑'},
+}
+
+
+def t(key: str, lang: str, **kw) -> str:
+    s = TXT[key][lang]
+    return s.format(**kw) if kw else s
 
 # Repo registry: code → (owner, repo, oneliner)
 REPOS = [
@@ -452,7 +562,88 @@ DOMAIN_RECS = [
     ('Game 开发 / Game development',                              'AA',  '20 game-development agents — fills cohort game gap (the only repo with substantial game coverage)'),
     ('个性化 multi-role 创意 agency / Personality-driven agency',  'AA',  '222 agents across 18 domains (engineering/marketing/design/finance/spatial-computing/...); each agent has personality + emoji + vibe; ties NX on D13 (9 platforms)'),
     ('Token 优化 / Prompt engineering 节省 token',                'CV',  'caveman ("why use many token when few token do trick") — claims 65% token reduction via prompt-style minification; 9 platforms incl. antigravity; viral (60k stars in 39 days)'),
+    ('理解既有代码库 / Understand existing codebase',             'UA',  'Egonex-AI/Understand-Anything — turns a codebase into an interactive knowledge graph; only repo specialized in reading existing code (🆕 v1.5)'),
+    ('Spec-driven 开发 / Spec-driven development',                'OS',  'Fission-AI/OpenSpec — spec→tasks→implementation workflow; a spec tool (0 SKILL.md) with 517 docs (🆕 v1.5)'),
+    ('求职 / 简历自动化 / Job-search & resume automation',        'CO',  'santifer/career-ops — CV/ATS/application tracking; strongest engineering hygiene in cohort (D12=10), 13-language READMEs (🆕 v1.5)'),
+    ('设计品味 / 审美判断 / Design taste & aesthetic judgment',   'TS',  'Leonxlnx/taste-skill — steers agents away from generic output; highest lesson density among newcomers (41.4%) (🆕 v1.5)'),
+    ('近期趋势研究 / Recent-trend research',                      'L30', 'mvanhorn/last30days-skill — last-30-day trends across Reddit/X/YouTube/HN/web; single 140KB SKILL.md (deepest in cohort) (🆕 v1.5)'),
 ]
+
+# Chinese domain recommendations (parallel to DOMAIN_RECS, same order/codes).
+DOMAIN_RECS_ZH = [
+    ('学 SKILL.md 官方规范',              'A',   '官方 Anthropic 权威；D15=10 — frontmatter 标准制定者'),
+    ('OpenAI Codex 用户',                 'OAI', '官方 Codex 配套；D10=10 — 辅助文档最丰富'),
+    ('大而全 agent 工程框架',             'AM',  '综合 #1；commands + hooks + plugins + 安装脚本一站式'),
+    ('方法论 / 元技能',                   'O',   '原创 "superpowers" 框架；D15=9 — 方法论最深'),
+    ('生产级软件工程（通用）',            'AD',  '作者权威 + 结构清晰；D14=8'),
+    ('TypeScript / 真实工程',             'M',   'Matt Pocock 的 TS 优先视角；强观点策展'),
+    ('UI / UX 组件级',                    'NL',  'D9=10 — 最详尽的配色/字体/组件配方'),
+    ('设计系统 + 多平台输出',             'NX',  '19 skills + 71 design systems；D13=10（9 个 agent 平台）'),
+    ('营销 / CRO / SEO',                  'CH',  '唯一营销专项 repo；自带 validate-skills.sh'),
+    ('Obsidian / 知识管理',               'K',   'kepano（Obsidian 作者）维护；唯一覆盖 Canvas/Bases'),
+    ('零负担 CLAUDE.md（单文件 drop-in）','MA',  '单 CLAUDE.md drop-in；Karpathy LLM 编码反 anti-pattern'),
+    ('浏览 / 发现 skill',                 'C',   '864 个 SKILL.md 索引；最大 awesome-list'),
+    ('Vercel / Next.js / React 生产工程', 'V',   '官方 Vercel；40+ React 性能规则；D10=10 辅料密度'),
+    ('YC / 创业公司角色分工 setup',       'GS',  'Garry Tan 实战 Claude Code setup；23 个角色 agent（CEO/Designer/Eng-Mgr/Release/Doc/QA）；avg SKILL.md 最深（52KB）；Reddit 社交信号最强'),
+    ('Game 开发',                         'AA',  '20 个 game-development agents — 填补 cohort game 缺口（唯一有实质 game 覆盖的 repo）'),
+    ('个性化 multi-role 创意 agency',     'AA',  '222 个 agent 跨 18 领域（工程/营销/设计/金融/空间计算…）；每个 agent 有 personality + emoji + vibe；D13 与 NX 并列（9 平台）'),
+    ('Token 优化 / Prompt engineering 省 token', 'CV', 'caveman（"why use many token when few token do trick"）——号称 prompt 极简化省 65% token；9 平台含 antigravity；爆红（39 天 60k stars）'),
+    ('理解既有代码库',                    'UA',  'Egonex-AI/Understand-Anything — 把代码库转成交互式知识图谱；cohort 唯一专做"读懂既有代码"（🆕 v1.5）'),
+    ('Spec-driven 开发',                  'OS',  'Fission-AI/OpenSpec — spec→tasks→实现 工作流；spec 工具（0 个 SKILL.md）+ 517 docs（🆕 v1.5）'),
+    ('求职 / 简历自动化',                 'CO',  'santifer/career-ops — CV/ATS/求职追踪；cohort 最强工程化（D12=10）+ 13 语言 README（🆕 v1.5）'),
+    ('设计品味 / 审美判断',               'TS',  'Leonxlnx/taste-skill — 引导 agent 避免通用/平庸输出；新晋最高 lesson 密度（41.4%）（🆕 v1.5）'),
+    ('近期趋势研究',                      'L30', 'mvanhorn/last30days-skill — 跨 Reddit/X/YouTube/HN/web 的近 30 天趋势；单个 140KB SKILL.md（全 cohort 最深）（🆕 v1.5）'),
+]
+
+
+def domain_recs_for(lang: str):
+    return DOMAIN_RECS_ZH if lang == 'zh' else DOMAIN_RECS
+
+
+def _self_check() -> None:
+    """Regression guard — validate the data model before rendering.
+
+    Catches the drift modes that bit us before: a score edited without updating
+    its `# total` comment, a repo added to one DOMAIN_RECS list but not the other,
+    or an out-of-range / incomplete score row. Raises AssertionError so a broken
+    build fails loudly instead of silently shipping wrong numbers.
+    """
+    import re
+    repo_codes = {c for c, _, _, _ in REPOS}
+
+    # (a) Every snapshot's scores: known repo, dims ⊆ DIM_IDS, values in 1..10.
+    #     (Older snapshots legitimately have fewer dims — D16-D19 arrived in v1.2,
+    #     D20-D21 in v1.3 — so only require the FULL set on the latest/rendered one.)
+    dim_set = set(DIM_IDS)
+    for snap in EVALUATIONS:
+        for code, sc in snap.get('scores', {}).items():
+            assert code in repo_codes, f"v{snap['version']}: score for unknown repo '{code}'"
+            assert set(sc) <= dim_set, f"v{snap['version']}/{code}: unknown dim id(s) {set(sc) - dim_set}"
+            assert all(isinstance(v, int) and 1 <= v <= 10 for v in sc.values()), \
+                f"v{snap['version']}/{code}: a score is outside 1..10"
+    latest = EVALUATIONS[-1]
+    for code, sc in latest['scores'].items():
+        assert set(sc) == dim_set, f"latest (v{latest['version']})/{code}: must score all {len(DIM_IDS)} dims"
+
+    # (b) Inline `# NNN` total comments in the source must equal the actual row sum.
+    src = Path(__file__).read_text(encoding='utf-8')
+    checked = 0
+    for mt in re.finditer(r"'([A-Za-z0-9]+)':\s*\{('D1'[^}]*)\},\s*#\s*(\d+)", src):
+        code, body, stated = mt.group(1), mt.group(2), int(mt.group(3))
+        actual = sum(int(x) for x in re.findall(r":\s*(\d+)", body))
+        assert actual == stated, f"score row '{code}': values sum to {actual} but comment says # {stated}"
+        checked += 1
+
+    # (c) DOMAIN_RECS / DOMAIN_RECS_ZH must stay code-aligned, with valid codes.
+    en = [c for _, c, _ in DOMAIN_RECS]
+    zh = [c for _, c, _ in DOMAIN_RECS_ZH]
+    assert en == zh, 'DOMAIN_RECS and DOMAIN_RECS_ZH code sequences differ (keep them parallel)'
+    bad = [c for c in en if c not in repo_codes]
+    assert not bad, f'DOMAIN_RECS references unknown repo codes: {bad}'
+
+    print(f'self-check OK — {len(EVALUATIONS)} snapshots, {len(repo_codes)} repos, '
+          f'{len(DIM_IDS)} dims, {checked} score rows verified vs comments, '
+          f'{len(en)} domain recs.')
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -518,15 +709,7 @@ def tier_badge(tier: str) -> str:
 TD = 'padding:4px 10px'
 TH = 'padding:4px 10px;background:#f0f0f0'
 
-LEGEND = (
-    '<p style="color:#666;font-size:0.85em;margin:4px 0">'
-    'Color gradient: '
-    '<span style="background:rgba(220,60,60,0.35);padding:2px 8px;border-radius:3px">worst</span> → '
-    '<span style="background:rgba(220,220,60,0.35);padding:2px 8px;border-radius:3px">mid</span> → '
-    '<span style="background:rgba(40,200,100,0.35);padding:2px 8px;border-radius:3px">best</span>'
-    '&nbsp;·&nbsp;per-column normalized · column-best <b>bolded</b>'
-    '</p>'
-)
+# (Color legend is rendered per-language via TXT['legend'] — see t().)
 
 
 def iter_snapshot_repos(snapshot: dict):
@@ -557,7 +740,7 @@ def _fetch_current_shas() -> dict:
 # TABLE 1 · Overall Ranking
 # ──────────────────────────────────────────────────────────────────────────────
 
-def build_overall(snapshot: dict) -> str:
+def build_overall(snapshot: dict, lang: str = 'en') -> str:
     rows = []
     for code, owner, repo, label in iter_snapshot_repos(snapshot):
         sc = snapshot['scores'][code]
@@ -596,21 +779,21 @@ def build_overall(snapshot: dict) -> str:
     }
 
     parts = [
-        f'<h3>🏆 Overall Ranking — {snapshot["eval_date"][:10]} (v{snapshot["version"]})</h3>',
+        f'<h3>{t("overall_h3", lang, date=snapshot["eval_date"][:10], ver=snapshot["version"])}</h3>',
         f'<p style="color:#888;font-size:0.85em;margin:4px 0 8px 0">{snapshot["note"]}</p>',
-        LEGEND,
+        t('legend', lang),
         '<table style="border-collapse:collapse;font-size:0.92em">',
         '<tr>'
-        f'<th style="{TH};text-align:right">#</th>'
-        f'<th style="{TH};text-align:left">Repo</th>'
-        f'<th style="{TH};text-align:center">Tier</th>'
-        f'<th style="{TH};text-align:right">Total /210 ↑</th>'
-        f'<th style="{TH};text-align:right">D1 ⭐ /10 ↑</th>'
-        f'<th style="{TH};text-align:right">Stars ↑</th>'
-        f'<th style="{TH};text-align:right">Stars/day ↑</th>'
-        f'<th style="{TH};text-align:right">Forks ↑</th>'
-        f'<th style="{TH};text-align:right">Contribs ↑</th>'
-        f'<th style="{TH};text-align:left">Description</th>'
+        f'<th style="{TH};text-align:right">{t("th_num", lang)}</th>'
+        f'<th style="{TH};text-align:left">{t("th_repo", lang)}</th>'
+        f'<th style="{TH};text-align:center">{t("th_tier", lang)}</th>'
+        f'<th style="{TH};text-align:right">{t("th_total210", lang)}</th>'
+        f'<th style="{TH};text-align:right">{t("th_d1", lang)}</th>'
+        f'<th style="{TH};text-align:right">{t("th_stars", lang)}</th>'
+        f'<th style="{TH};text-align:right">{t("th_starsday", lang)}</th>'
+        f'<th style="{TH};text-align:right">{t("th_forks", lang)}</th>'
+        f'<th style="{TH};text-align:right">{t("th_contribs", lang)}</th>'
+        f'<th style="{TH};text-align:left">{t("th_desc", lang)}</th>'
         '</tr>',
     ]
 
@@ -647,7 +830,8 @@ def build_overall(snapshot: dict) -> str:
 # TABLE 2 · Full Score Matrix
 # ──────────────────────────────────────────────────────────────────────────────
 
-def build_score_matrix(snapshot: dict) -> str:
+def build_score_matrix(snapshot: dict, lang: str = 'en') -> str:
+    DIMS = dims_for(lang)
     rows = []
     for code, owner, repo, label in iter_snapshot_repos(snapshot):
         sc = snapshot['scores'][code]
@@ -660,19 +844,19 @@ def build_score_matrix(snapshot: dict) -> str:
     tot_lo = min(r['total'] for r in rows)
     tot_hi = best_total
 
-    th_cells = ['<th style="{}text-align:right">#</th>'.format(TH + ';'),
-                '<th style="{}text-align:left">Repo</th>'.format(TH + ';'),
-                '<th style="{}text-align:center">Tier</th>'.format(TH + ';')]
-    for did, label, descr in DIMENSIONS:
+    th_cells = ['<th style="{}text-align:right">{}</th>'.format(TH + ';', t('th_num', lang)),
+                '<th style="{}text-align:left">{}</th>'.format(TH + ';', t('th_repo', lang)),
+                '<th style="{}text-align:center">{}</th>'.format(TH + ';', t('th_tier', lang))]
+    for did, label, descr in DIMS:
         th_cells.append(
             f'<th style="{TH};text-align:right" title="{descr}">{did}</th>'
         )
-    th_cells.append(f'<th style="{TH};text-align:right">Total ↑</th>')
+    th_cells.append(f'<th style="{TH};text-align:right">{t("th_total", lang)}</th>')
 
     parts = [
-        f'<h3>📋 Full Score Matrix · 15 Dimensions × 12 Repos — {snapshot["eval_date"][:10]}</h3>',
-        '<p style="color:#666;font-size:0.85em;margin:4px 0">Each cell colored 1-10 within its dimension column. Column-best <b>bolded</b>. Hover header for definition.</p>',
-        LEGEND,
+        f'<h3>{t("matrix_h3", lang, ndim=len(DIMS), nrepo=len(rows), date=snapshot["eval_date"][:10])}</h3>',
+        t('matrix_note', lang),
+        t('legend', lang),
         '<table style="border-collapse:collapse;font-size:0.88em">',
         '<tr>' + ''.join(th_cells) + '</tr>',
     ]
@@ -695,10 +879,10 @@ def build_score_matrix(snapshot: dict) -> str:
     parts.append('</table>')
 
     # Dimension legend below
-    parts.append('<details style="margin-top:12px"><summary style="cursor:pointer;color:#666;font-size:0.88em">📖 Dimension definitions</summary>')
+    parts.append(f'<details style="margin-top:12px"><summary style="cursor:pointer;color:#666;font-size:0.88em">{t("dim_defs", lang)}</summary>')
     parts.append('<table style="border-collapse:collapse;font-size:0.85em;margin-top:6px">')
-    parts.append(f'<tr><th style="{TH};text-align:left">ID</th><th style="{TH};text-align:left">Label</th><th style="{TH};text-align:left">Description</th></tr>')
-    for did, label, descr in DIMENSIONS:
+    parts.append(f'<tr><th style="{TH};text-align:left">{t("th_id", lang)}</th><th style="{TH};text-align:left">{t("th_label", lang)}</th><th style="{TH};text-align:left">{t("th_descr", lang)}</th></tr>')
+    for did, label, descr in DIMS:
         parts.append(f'<tr><td style="{TD};text-align:left"><b>{did}</b></td><td style="{TD};text-align:left">{label}</td><td style="{TD};text-align:left;color:#666">{descr}</td></tr>')
     parts.append('</table></details>')
 
@@ -709,7 +893,7 @@ def build_score_matrix(snapshot: dict) -> str:
 # TABLE 3 · Raw Metrics
 # ──────────────────────────────────────────────────────────────────────────────
 
-def build_raw_metrics(snapshot: dict) -> str:
+def build_raw_metrics(snapshot: dict, lang: str = 'en') -> str:
     rows = []
     for code, owner, repo, _ in iter_snapshot_repos(snapshot):
         m = snapshot['raw_metrics'][code]
@@ -718,18 +902,18 @@ def build_raw_metrics(snapshot: dict) -> str:
     rows.sort(key=lambda r: r['stars'], reverse=True)
 
     cols = [
-        # (key, label, fmt, inverted)
-        ('stars',           'Stars ↑',           '{:,}',    False),
-        ('stars_per_day',   'Stars/day ↑',       '{:,.0f}', False),
-        ('forks',           'Forks ↑',           '{:,}',    False),
-        ('watchers',        'Watchers ↑',        '{:,}',    False),
-        ('contribs',        'Contribs ↑',        '{:,}',    False),
-        ('days_alive',      'Days alive',        '{}',      False),
-        ('last_push_days_ago', 'Last push (d ago) ↓', '{}', True),
-        ('commits_per_day', 'Commits/day ↑',     '{:,.2f}', False),
-        ('skill_md',        'SKILL.md count ↑',  '{:,}',    False),
-        ('avg_skill_bytes', 'Avg SKILL bytes ↑', '{:,}',    False),
-        ('platforms',       'Agent platforms ↑', '{}',      False),
+        # (key, txt_key, fmt, inverted)
+        ('stars',           'rm_stars',           '{:,}',    False),
+        ('stars_per_day',   'rm_stars_per_day',   '{:,.0f}', False),
+        ('forks',           'rm_forks',           '{:,}',    False),
+        ('watchers',        'rm_watchers',        '{:,}',    False),
+        ('contribs',        'rm_contribs',        '{:,}',    False),
+        ('days_alive',      'rm_days_alive',      '{}',      False),
+        ('last_push_days_ago', 'rm_last_push',    '{}',      True),
+        ('commits_per_day', 'rm_commits_per_day', '{:,.2f}', False),
+        ('skill_md',        'rm_skill_md',        '{:,}',    False),
+        ('avg_skill_bytes', 'rm_avg_skill_bytes', '{:,}',    False),
+        ('platforms',       'rm_platforms',       '{}',      False),
     ]
 
     col_ranges = {}
@@ -740,12 +924,12 @@ def build_raw_metrics(snapshot: dict) -> str:
         col_best[k] = min(vals) if inv else max(vals)
 
     parts = [
-        f'<h3>📊 Raw Metrics Snapshot — {snapshot["eval_date"][:10]}</h3>',
-        '<p style="color:#666;font-size:0.85em;margin:4px 0">↑ higher is better · ↓ lower is better. Per-column normalized.</p>',
-        LEGEND,
+        f'<h3>{t("raw_h3", lang, date=snapshot["eval_date"][:10])}</h3>',
+        t('raw_note', lang),
+        t('legend', lang),
         '<table style="border-collapse:collapse;font-size:0.88em">',
-        '<tr><th style="{}text-align:right">#</th><th style="{}text-align:left">Repo</th>'.format(TH + ';', TH + ';')
-        + ''.join(f'<th style="{TH};text-align:right">{lbl}</th>' for _, lbl, _, _ in cols)
+        '<tr><th style="{}text-align:right">{}</th><th style="{}text-align:left">{}</th>'.format(TH + ';', t('th_num', lang), TH + ';', t('th_repo', lang))
+        + ''.join(f'<th style="{TH};text-align:right">{t(lbl_key, lang)}</th>' for _, lbl_key, _, _ in cols)
         + '</tr>',
     ]
     for i, r in enumerate(rows, 1):
@@ -769,16 +953,16 @@ def build_raw_metrics(snapshot: dict) -> str:
 # TABLE 4 · Submodule Snapshot & Drift
 # ──────────────────────────────────────────────────────────────────────────────
 
-def build_drift_table(snapshot: dict, current_shas: dict) -> str:
+def build_drift_table(snapshot: dict, current_shas: dict, lang: str = 'en') -> str:
     rows = []
     for path, recorded in snapshot['submodule_shas'].items():
         cur = current_shas.get(path)
         if cur is None:
-            status, status_color = '✗ missing', 'rgba(220,60,60,0.40)'
+            status, status_color = t('st_missing', lang), 'rgba(220,60,60,0.40)'
         elif cur == recorded:
-            status, status_color = '✓ same',    'rgba(40,200,100,0.35)'
+            status, status_color = t('st_same', lang),    'rgba(40,200,100,0.35)'
         else:
-            status, status_color = '⚠ drifted', 'rgba(220,220,60,0.40)'
+            status, status_color = t('st_drifted', lang), 'rgba(220,220,60,0.40)'
         rows.append({
             'path':     path.replace('skills/', ''),
             'recorded': recorded,
@@ -787,17 +971,17 @@ def build_drift_table(snapshot: dict, current_shas: dict) -> str:
             'color':    status_color,
         })
     parts = [
-        f'<h3>🔗 Submodule Snapshot & Drift — {snapshot["eval_date"][:10]}</h3>',
+        f'<h3>{t("drift_h3", lang, date=snapshot["eval_date"][:10])}</h3>',
         f'<p style="color:#888;font-size:0.85em;margin:4px 0">'
-        f'Snapshot SHAs captured at evaluation time ({snapshot["eval_date"]}); '
-        f'current SHAs read at notebook build time ({_dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds")}).'
-        f'</p>',
+        + t('drift_note', lang, eval=snapshot["eval_date"],
+            now=_dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"))
+        + '</p>',
         '<table style="border-collapse:collapse;font-size:0.92em">',
         f'<tr>'
-        f'<th style="{TH};text-align:left">Submodule</th>'
-        f'<th style="{TH};text-align:left">Snapshot SHA</th>'
-        f'<th style="{TH};text-align:left">Current SHA</th>'
-        f'<th style="{TH};text-align:center">Status</th>'
+        f'<th style="{TH};text-align:left">{t("th_submodule", lang)}</th>'
+        f'<th style="{TH};text-align:left">{t("th_snapshot_sha", lang)}</th>'
+        f'<th style="{TH};text-align:left">{t("th_current_sha", lang)}</th>'
+        f'<th style="{TH};text-align:center">{t("th_status", lang)}</th>'
         f'</tr>',
     ]
     for r in rows:
@@ -822,21 +1006,22 @@ def build_drift_table(snapshot: dict, current_shas: dict) -> str:
 # TABLE 5 · By Domain
 # ──────────────────────────────────────────────────────────────────────────────
 
-def build_domain_recs(snapshot: dict) -> str:
+def build_domain_recs(snapshot: dict, lang: str = 'en') -> str:
+    total_lbl = '总分' if lang == 'zh' else 'Total'
     parts = [
-        f'<h3>🎯 Best Repo by Domain — {snapshot["eval_date"][:10]}</h3>',
-        '<p style="color:#666;font-size:0.85em;margin:4px 0">Tier badges from the snapshot above; descriptions are the discriminating signal for that domain.</p>',
+        f'<h3>{t("domain_h3", lang, date=snapshot["eval_date"][:10])}</h3>',
+        t('domain_note', lang),
         '<table style="border-collapse:collapse;font-size:0.92em">',
         f'<tr>'
-        f'<th style="{TH};text-align:right">#</th>'
-        f'<th style="{TH};text-align:left">Domain / Use case</th>'
-        f'<th style="{TH};text-align:left">Best repo</th>'
-        f'<th style="{TH};text-align:center">Tier</th>'
-        f'<th style="{TH};text-align:right">Total</th>'
-        f'<th style="{TH};text-align:left">Why</th>'
+        f'<th style="{TH};text-align:right">{t("th_num", lang)}</th>'
+        f'<th style="{TH};text-align:left">{t("th_domain", lang)}</th>'
+        f'<th style="{TH};text-align:left">{t("th_bestrepo", lang)}</th>'
+        f'<th style="{TH};text-align:center">{t("th_tier", lang)}</th>'
+        f'<th style="{TH};text-align:right">{total_lbl}</th>'
+        f'<th style="{TH};text-align:left">{t("th_why", lang)}</th>'
         f'</tr>',
     ]
-    for i, (domain, code, reason) in enumerate(DOMAIN_RECS, 1):
+    for i, (domain, code, reason) in enumerate(domain_recs_for(lang), 1):
         if code not in snapshot['scores']:
             continue  # repo not present in this snapshot; skip domain entry
         _, owner, repo, _ = REPO_BY_CODE[code]
@@ -860,18 +1045,18 @@ def build_domain_recs(snapshot: dict) -> str:
 # TABLE 6 · Δ-diff (if ≥2 snapshots)
 # ──────────────────────────────────────────────────────────────────────────────
 
-def build_diff(snap_new: dict, snap_old: dict) -> str:
+def build_diff(snap_new: dict, snap_old: dict, lang: str = 'en') -> str:
     parts = [
-        f'<h3>🔁 Score Δ — {snap_old["eval_date"][:10]} → {snap_new["eval_date"][:10]}</h3>',
-        '<p style="color:#666;font-size:0.85em;margin:4px 0">Per-dimension score change; positive (green) = improved.</p>',
+        f'<h3>{t("diff_h3", lang, old=snap_old["eval_date"][:10], new=snap_new["eval_date"][:10])}</h3>',
+        t('diff_note', lang),
         '<table style="border-collapse:collapse;font-size:0.88em">',
         '<tr>'
-        f'<th style="{TH};text-align:left">Repo</th>'
+        f'<th style="{TH};text-align:left">{t("th_repo", lang)}</th>'
         + ''.join(f'<th style="{TH};text-align:right">{did}</th>' for did in DIM_IDS)
-        + f'<th style="{TH};text-align:right">ΔTotal</th>'
+        + f'<th style="{TH};text-align:right">{t("th_dtotal", lang)}</th>'
         '</tr>',
     ]
-    NEW_BADGE = '<span style="background:rgba(40,200,100,0.45);padding:1px 6px;border-radius:3px;font-size:0.78em;font-weight:600;margin-left:6px">NEW</span>'
+    NEW_BADGE = f'<span style="background:rgba(40,200,100,0.45);padding:1px 6px;border-radius:3px;font-size:0.78em;font-weight:600;margin-left:6px">{t("new_badge_txt", lang)}</span>'
     for code, owner, repo, _ in REPOS:
         new = snap_new['scores'].get(code)
         old = snap_old['scores'].get(code)
@@ -920,49 +1105,36 @@ def make_code_cell_with_html(title: str, html: str, exec_count: int) -> nbf.Note
     return cell
 
 
-def main():
-    snapshot = EVALUATIONS[-1]
-    current_shas = _fetch_current_shas()
-
-    cells = []
-
-    # Cell 0 — intro markdown
-    cells.append(nbf.v4.new_markdown_cell(
+# Markdown cells + code-cell titles, per language.
+INTRO = {
+    'en': (
         '<!-- Pre-rendered HTML tables baked into outputs[].data["text/html"]. '
         'GitHub renders directly; no kernel needed. To update, edit EVALUATIONS '
         'in build_scoring_notebook.py and re-run that script. -->\n\n'
         '# Skill Repo Scoring\n\n'
-        f'**Latest snapshot**: `{snapshot["eval_date"]}` · `v{snapshot["version"]}` — _{snapshot["note"]}_\n\n'
-        f'**Cohort**: 12 skill-collection repos as submodules. **Dimensions**: 15 (see §[`EVALUATION.md`](./EVALUATION.md)).\n\n'
+        '> 🌐 **Language**: **🇬🇧 English** · [🇨🇳 中文](./scoring.cn.ipynb)\n\n'
+        '**Latest snapshot**: `{date}` · `v{ver}` — _{note}_\n\n'
+        '**Cohort**: {nrepo} skill-collection repos as submodules. **Dimensions**: {ndim} '
+        '(see [`EVALUATION.en.md`](./EVALUATION.en.md)).\n\n'
         '**Maintenance**: edit `EVALUATIONS` list in `build_scoring_notebook.py`, '
-        'append a new dict (never modify history), then `python3 build_scoring_notebook.py`.'
-    ))
+        'append a new dict (never modify history), then `python3 build_scoring_notebook.py` '
+        '(regenerates both `scoring.ipynb` and `scoring.cn.ipynb`).'
+    ),
+    'zh': (
+        '<!-- 预渲染的 HTML 表格已嵌入 outputs[].data["text/html"]，GitHub 直接渲染、无需 kernel。'
+        '更新方式：编辑 build_scoring_notebook.py 中的 EVALUATIONS 后重跑该脚本。 -->\n\n'
+        '# Skill Repo 评分\n\n'
+        '> 🌐 **语言**: [🇬🇧 English](./scoring.ipynb) · **🇨🇳 中文**\n\n'
+        '**最新快照**：`{date}` · `v{ver}` — _{note}_\n\n'
+        '**Cohort**：{nrepo} 个 skill-collection repo（以 submodule 形式）。**维度**：{ndim} 个'
+        '（详见 [`EVALUATION.md`](./EVALUATION.md)）。\n\n'
+        '**维护**：编辑 `build_scoring_notebook.py` 的 `EVALUATIONS` 列表，追加一个新 dict（切勿修改历史），'
+        '再 `python3 build_scoring_notebook.py`（会同时重新生成 `scoring.ipynb` 与 `scoring.cn.ipynb`）。'
+    ),
+}
 
-    # Cell 1 — Overall ranking
-    cells.append(make_code_cell_with_html('Overall Ranking', build_overall(snapshot), 1))
-
-    # Cell 2 — Full score matrix
-    cells.append(make_code_cell_with_html('Full Score Matrix (15 dims)', build_score_matrix(snapshot), 2))
-
-    # Cell 3 — Raw metrics
-    cells.append(make_code_cell_with_html('Raw Metrics Snapshot', build_raw_metrics(snapshot), 3))
-
-    # Cell 4 — Submodule drift
-    cells.append(make_code_cell_with_html('Submodule Snapshot & Drift', build_drift_table(snapshot, current_shas), 4))
-
-    # Cell 5 — Best by domain
-    cells.append(make_code_cell_with_html('Best Repo by Domain', build_domain_recs(snapshot), 5))
-
-    # Cell 6 — Diff (only if ≥2 snapshots)
-    if len(EVALUATIONS) >= 2:
-        cells.append(make_code_cell_with_html(
-            'Snapshot Δ-diff',
-            build_diff(EVALUATIONS[-1], EVALUATIONS[-2]),
-            6,
-        ))
-
-    # Cell N — closing markdown
-    cells.append(nbf.v4.new_markdown_cell(
+CLOSING = {
+    'en': (
         '## 📝 Long-term maintenance / 长期维护\n\n'
         'Each re-scoring run **appends** a new dict to `EVALUATIONS` in `build_scoring_notebook.py`. '
         'A snapshot dict contains:\n\n'
@@ -975,25 +1147,75 @@ def main():
         'the Δ-diff section auto-renders.\n\n'
         '**To add a new cohort member**: register it in `REPOS` list, add scores for it in every '
         'snapshot (use `null` if not evaluated in older snapshots), then re-run the build script.'
-    ))
+    ),
+    'zh': (
+        '## 📝 长期维护 / Long-term maintenance\n\n'
+        '每次重新评分都会向 `build_scoring_notebook.py` 的 `EVALUATIONS` **追加**一个新 dict。'
+        '一个快照 dict 包含：\n\n'
+        '- `eval_date` — ISO-8601 UTC 时间戳\n'
+        '- `version` — 人类可读标签\n'
+        '- `submodule_shas` — 评分时刻的 `{路径 → SHA}`（从 `git submodule status` 复制）\n'
+        '- `raw_metrics` — `{code → {指标 → 值}}`（gh API + 本地 `find`）\n'
+        '- `scores` — `{code → {维度id → 1-10 整数}}`（基于排名）\n\n'
+        '**切勿修改历史。** 旧快照作为审计轨迹留存。当存在 ≥2 个快照时，Δ-diff 部分会自动渲染。\n\n'
+        '**新增 cohort 成员**：在 `REPOS` 列表注册，并在每个快照里为它补分（旧快照未评测则用 `null`），'
+        '再重跑构建脚本。'
+    ),
+}
 
-    nb = nbf.v4.new_notebook()
-    nb.cells = cells
-    nb.metadata = {
-        'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
-        'language_info': {'name': 'python', 'version': '3.12'},
-    }
+CELL_TITLES = {
+    'en': {'overall': 'Overall Ranking', 'matrix': 'Full Score Matrix', 'raw': 'Raw Metrics Snapshot',
+           'drift': 'Submodule Snapshot & Drift', 'domain': 'Best Repo by Domain', 'diff': 'Snapshot Δ-diff'},
+    'zh': {'overall': '总排行', 'matrix': '完整评分矩阵', 'raw': '原始指标快照',
+           'drift': 'Submodule 快照与漂移', 'domain': '各领域最佳 repo', 'diff': '快照 Δ-diff'},
+}
 
-    out_path = REPO_ROOT / 'scoring.ipynb'
-    with open(out_path, 'w', encoding='utf-8') as f:
-        nbf.write(nb, f)
 
-    total_html = sum(
-        len(''.join(o['data']['text/html']) if isinstance(o['data']['text/html'], list) else o['data']['text/html'])
-        for c in cells if c.cell_type == 'code'
-        for o in c.get('outputs', []) if 'data' in o and 'text/html' in o['data']
-    )
-    print(f'Wrote {out_path.name} — {len(cells)} cells, {total_html:,} bytes of pre-baked HTML')
+def build_cells(lang: str, snapshot: dict, current_shas: dict) -> list:
+    ndim = len(DIMENSIONS)
+    nrepo = len(snapshot['scores'])
+    ct = CELL_TITLES[lang]
+    cells = [
+        nbf.v4.new_markdown_cell(INTRO[lang].format(
+            date=snapshot['eval_date'], ver=snapshot['version'],
+            note=snapshot['note'], nrepo=nrepo, ndim=ndim)),
+        make_code_cell_with_html(ct['overall'], build_overall(snapshot, lang), 1),
+        make_code_cell_with_html(f"{ct['matrix']} ({ndim} dims)", build_score_matrix(snapshot, lang), 2),
+        make_code_cell_with_html(ct['raw'], build_raw_metrics(snapshot, lang), 3),
+        make_code_cell_with_html(ct['drift'], build_drift_table(snapshot, current_shas, lang), 4),
+        make_code_cell_with_html(ct['domain'], build_domain_recs(snapshot, lang), 5),
+    ]
+    if len(EVALUATIONS) >= 2:
+        cells.append(make_code_cell_with_html(
+            ct['diff'], build_diff(EVALUATIONS[-1], EVALUATIONS[-2], lang), 6))
+    cells.append(nbf.v4.new_markdown_cell(CLOSING[lang]))
+    return cells
+
+
+def main():
+    _self_check()  # fail loudly on data drift before writing any notebook
+    snapshot = EVALUATIONS[-1]
+    current_shas = _fetch_current_shas()
+
+    # (lang, output filename) — repo convention: no-suffix = primary, .cn = Chinese.
+    for lang, fname in [('en', 'scoring.ipynb'), ('zh', 'scoring.cn.ipynb')]:
+        cells = build_cells(lang, snapshot, current_shas)
+        nb = nbf.v4.new_notebook()
+        nb.cells = cells
+        nb.metadata = {
+            'kernelspec': {'display_name': 'Python 3', 'language': 'python', 'name': 'python3'},
+            'language_info': {'name': 'python', 'version': '3.12'},
+        }
+        out_path = REPO_ROOT / fname
+        with open(out_path, 'w', encoding='utf-8') as f:
+            nbf.write(nb, f)
+
+        total_html = sum(
+            len(''.join(o['data']['text/html']) if isinstance(o['data']['text/html'], list) else o['data']['text/html'])
+            for c in cells if c.cell_type == 'code'
+            for o in c.get('outputs', []) if 'data' in o and 'text/html' in o['data']
+        )
+        print(f'Wrote {out_path.name} — {len(cells)} cells, {total_html:,} bytes of pre-baked HTML')
 
 
 if __name__ == '__main__':

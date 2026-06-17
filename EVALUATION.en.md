@@ -6,7 +6,11 @@
 > Current snapshot: **v1.5** — **21-repo cohort × 21 dims** (v1.0 / v1.1 / v1.2 / v1.3 / v1.4 retained in `scoring.ipynb` history)
 > Scoring scale: **1–10** (10 = best in cohort)
 > Max total: **210** (21 dims × 10)
-> ⚠ Note: §3/§4/§5 tables in this markdown still show v1.1 baseline for context. Latest v1.4 data (including GS / AA / CV / D16-D21) lives in `scoring.ipynb`. §11 covers v1.2 (D16-D19 social signals); §12 covers v1.3 (D20-D21 task-quality signals); **§13 covers v1.4 (CV caveman addition)**; **§14 covers v1.5 (adds UA/OS/CO/TS/L30 — 5 repos)**.
+> ⚠ **Reading guide (read this first)**
+>
+> 1. **Current authoritative data = §14 (v1.5) + [`scoring.ipynb`](./scoring.ipynb).** The **§3 / §4 / §5 tables here are a v1.1 historical snapshot (13 repos, max 150), kept for context only — the numbers are stale**; do not read them as current rankings (e.g. §5 shows AM=129 on the old scale; current §14 has AM=154, max 210). Section history: §11→v1.2 (D16-D19 social), §12→v1.3 (D20-D21 task quality), §13→v1.4 (CV), **§14→v1.5 (adds UA/OS/CO/TS/L30)**.
+> 2. **The 5 new v1.5 repos' scores are provisional**: subjective dims (D14/D15) and the 1-10 rank calibration were assigned in a single pass; and **Reddit was unreachable (HTTP 403) at eval time, so their D16/D17 are unmeasured and floored to 1** (`-1` sentinel in `raw_metrics`). The new repos are therefore biased low on the two social dims and **not fully comparable** to the existing 16 — treat their ranks as directional, not definitive.
+> 3. **Mixed collection dates**: the 16 existing repos' metrics are from **2026-05-13**; the 5 new repos from **2026-06-17**.
 
 ## 1. Cohort
 

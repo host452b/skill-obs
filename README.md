@@ -7,6 +7,7 @@
 
 [![Eval baseline](https://img.shields.io/badge/eval-2026--06--17-blue)](./EVALUATION.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
+[![Notebook 中文](https://img.shields.io/badge/notebook-scoring.cn.ipynb-orange)](./scoring.cn.ipynb)
 [![Task Guide](https://img.shields.io/badge/任务→repo-TASK__GUIDE-red)](./TASK_GUIDE.md)
 [![5-Model Summary](https://img.shields.io/badge/5_AI_模型对比-agent__summary-blueviolet)](./agent_summary.md)
 [![Cohort size](https://img.shields.io/badge/repos-21-green)](./.gitmodules)
@@ -54,8 +55,9 @@ jupyter nbconvert --to html --execute scoring.ipynb && open scoring.html
 skill-obs/
 ├── README.md                          ← 你正在看
 ├── EVALUATION.md                      ← 完整评测报告：15 维度 × 12 repos
-├── scoring.ipynb                      ← 可视化 notebook（绿→红分阶染色）
-├── build_scoring_notebook.py          ← 从源码重新生成 notebook 的脚本
+├── scoring.ipynb                      ← 可视化 notebook（英文，绿→红分阶染色）
+├── scoring.cn.ipynb                   ← 可视化 notebook（中文版，同源生成）
+├── build_scoring_notebook.py          ← 从源码重新生成两个 notebook 的脚本（中英双语）
 ├── .gitmodules                        ← 16 个 submodule 注册
 └── skills/                            ← 各 submodule（shallow clone）
     ├── affaan-m__everything-claude-code/

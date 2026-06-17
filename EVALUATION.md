@@ -6,7 +6,11 @@
 > 当前 Snapshot / Current: **v1.5** — **21-repo cohort × 21 dims**（v1.0 / v1.1 / v1.2 / v1.3 / v1.4 历史在 `scoring.ipynb`）  
 > 评分量表 / Scale: **1–10** (10 = best in cohort)  
 > 总分上限 / Max total: **210** (21 dims × 10)  
-> ⚠ 注意：本 markdown 中 §3/§4/§5 表格仍展示 v1.1 baseline 数据用于上下文。最新 v1.4 数据（含 GS / AA / CV / D16-D21）请看 `scoring.ipynb`。§11 给出 v1.2 (D16-D19 社交信号)；§12 给出 v1.3 (D20-D21 任务质量信号)；**§13 给出 v1.4 (CV caveman 加入)**；**§14 给出 v1.5（新增 UA/OS/CO/TS/L30 共 5 repo）**。
+> ⚠ **阅读须知 / Reading guide（务必先读）**
+>
+> 1. **当前有效数据 = §14 (v1.5) + [`scoring.ipynb`](./scoring.ipynb)。** 本 markdown 的 **§3 / §4 / §5 表格是 v1.1 历史快照（13 repos、满分 150），仅作上下文、数字已过时** —— 请勿当成当前排名（例：§5 显示 AM=129 是旧标尺；当前 §14 为 AM=154、满分 210）。分节历史：§11→v1.2 (D16-D19 社交信号)、§12→v1.3 (D20-D21 任务质量)、§13→v1.4 (CV)、**§14→v1.5（新增 UA/OS/CO/TS/L30）**。
+> 2. **5 个 v1.5 新 repo 的分数为 provisional（暂定）**：主观维度 (D14/D15) 与 1-10 rank 校准为单轮评估；且**评测时 Reddit 不可达 (HTTP 403)，其 D16/D17 未测量、floor 到 1**（`raw_metrics` 记 `-1` sentinel）。因此新 repo 在社交两维上被系统性低估，总分与原有 16 repo **不完全同口径**，名次宜作方向性参考而非精确定论。
+> 3. **采集时间混合**：原有 16 repo 的指标采于 **2026-05-13**，5 个新 repo 采于 **2026-06-17**。
 
 ## 1. 入选仓库 / Cohort
 
