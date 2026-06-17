@@ -593,7 +593,7 @@ CV 是个**单点 viral repo**：
 3. **CV 占用的细分 niche 独特**：cohort 中没有其他 prompt-engineering / token-efficiency 专项。这对实际用户的价值不一定按总分线性看 — 如果你 specifically 担心 token 成本，CV 是**唯一选项**。
 4. **9 个平台首含 antigravity**：CV 是 cohort 中首个明确支持 antigravity 的 repo。如果用户走 antigravity 工作流，这是**独有 fit**。
 
-### 13.5 与 `agent_summary.md` 5-模型评测的对比
+### 13.5 与五模型评测（[附录 B](#agent-summary)）的对比
 
 CV 太新（创建于 2026-04-04），**§1-§6 的 5 模型评测都在 v1.2 之前进行**，**没有涵盖 CV**。如果未来想做 v1.4 完整 LLM 复评，需要重新 prompt 5 个模型评 CV 的实战价值。当前 v1.4 #6 是**本仓库自评分**，不代表 5 模型共识。
 
@@ -652,3 +652,656 @@ v1.5 把 cohort 从 16 扩到 **21**，新增 5 个 repo：**UA** (`Egonex-AI/Un
 - **沿用既往 caveat**：v1.2 的 query 污染 / launch-wave / HN 稀疏，以及 v1.3 的 D20-vs-D9 冲突、value_density 跨 repo 不绝对可比，均继续适用。L30 (D9=10/D20=1) 与 TS (D9=9 + D21=9 但 D7=2) 是本轮最能体现这些 trade-off 的样本。
 
 > 想看完整 21-dim × 21-repo 染色矩阵 + Δ v1.4→v1.5：打开 `scoring.ipynb`（GitHub 直接渲染，无需执行）。
+
+
+---
+
+<a id="task-guide"></a>
+
+## 附录 A — Task → Repo 决策手册 / Task → Repo Decision Guide
+
+> 🔄 **v1.2 同步 (2026-05-13)**：cohort 已扩到 **15 repos**，新增 `garrytan/gstack` (GS) 和 `msitarzewski/agency-agents` (AA)。详见 §1 末尾、§3.7、§5 推荐 stacks、§6 缺口更新。**AA 已填补 game-dev 缺口**（20 game-dev agents）。
+>
+> 🔄 **v1.5 同步 (2026-06-17)**：cohort 扩到 **21 repos**，新增 `Egonex-AI/Understand-Anything` (UA)、`Fission-AI/OpenSpec` (OS)、`santifer/career-ops` (CO)、`Leonxlnx/taste-skill` (TS)、`mvanhorn/last30days-skill` (L30)。**UA 填补"理解既有代码库"缺口，CO 填补"求职"缺口，OS 填补"spec-driven 开发"缺口。** 详见 §1 表末与 §6。
+
+从 21 个 skill repo 的**功能正交**角度，给定具体 AI agent 任务，应该装哪个 repo（或哪个组合）？本手册覆盖：
+
+- §1 — 13 个 repo 在功能版图上的位置
+- §2 — **AM × O × NX 三大代表 repo 的 overlap / 正交 / 互补**（用户重点关注）
+- §3 — 其他重要 overlap pair
+- §4 — 任务 → 推荐 repo lookup（~50 个任务，覆盖 dev / AI / 设计 / 研究 / 内容 / 知识管理 / 数据等）
+- §5 — 推荐 stacks（个人 / 团队 / 角色组合）
+- §6 — 覆盖缺口（game / GPU kernel / Web3 / embedded 等 cohort 未覆盖领域）
+
+---
+
+### 1. 21 个 repo 的功能正交位置 / Functional positioning
+
+| Code | Repo | 正交位置（独占价值轴）|
+|---|---|---|
+| **GS** 🆕 | `garrytan/gstack` | **Opinionated 角色 setup** — Garry Tan 实战 23 个角色 agent (CEO/Designer/Eng-Mgr/Release/Doc/QA)；avg SKILL.md 52KB 是 cohort 最深 |
+| **AM** | `affaan-m/everything-claude-code` | **通用 agent harness** — 60 agents + 228 skills + commands + hooks + install 一站；breadth 之王 |
+| **O**  | `obra/superpowers` | **工程方法论** — TDD / debug / brainstorm / plan / review 等元技能；depth 之王 |
+| **NX** | `nexu-io/open-design` | **设计输出** — 19 skills + 71 design systems；多平台 (web/desktop/mobile/slides/PDF) creative production |
+| **AA** 🆕 | `msitarzewski/agency-agents` | **个性化 multi-role agency** — 222 agents 跨 **18 个领域**（含 game-dev / spatial / academic / finance）；每个 agent 有 personality + emoji + vibe |
+| **A**  | `anthropics/skills` | **官方规范 + 实用 demo** — SKILL.md 标准定义者；含 PDF / theme / doc-coauthoring 等 reference skills |
+| **NL** | `nextlevelbuilder/ui-ux-pro-max-skill` | **UI/UX 组件级** — 161 调色板 + 57 字体 + BM25 推理引擎；component-level 视觉 polish |
+| **AD** | `addyosmani/agent-skills` | **生产工程** — 通用 engineering 实践，重质量门（Specific / Verifiable / Battle-tested / Minimal）|
+| **CH** | `coreyhaines31/marketingskills` | **营销垂直** — CRO / SEO / copywriting / growth；唯一专项 |
+| **C**  | `ComposioHQ/awesome-claude-skills` | **Awesome-list** — 864 个 SKILL.md 索引；最广 discovery |
+| **M**  | `mattpocock/skills` | **TS 工程师个人视角** — /diagnose / /tdd / /grill-me 反失败模式 |
+| **OAI**| `openai/skills` | **Codex 配套 catalog** — 三层 .system / .curated / .experimental |
+| **MA** | `multica-ai/andrej-karpathy-skills` | **单文件行为指令** — Karpathy 4 条 LLM coding 反 anti-pattern 原则 |
+| **K**  | `kepano/obsidian-skills` | **Obsidian / Markdown / Canvas** — 知识管理唯一专项 |
+| **V**  | `vercel-labs/agent-skills` | **Vercel deploy + React/Next.js 实战** — 官方权威；live `WebFetch` 取最新 web 规则 |
+| **UA** 🆕 | `Egonex-AI/Understand-Anything` | **代码库理解 / 知识图谱** — 把既有 codebase 转成交互式知识图谱（节点/边/分层/导览）；填补"读懂 / onboard 既有大型代码库"缺口（cohort 此前各 repo 都偏"生产新代码"）；多平台 (claude/copilot/codex/opencode 等) |
+| **OS** 🆕 | `Fission-AI/OpenSpec` | **Spec-driven 开发** — spec→tasks→实现 的规格驱动工作流（0 个 SKILL.md，是 spec 工具而非技能集；517 docs）；与 O 的 process 方法论互补但更偏"先写规格再实现" |
+| **CO** 🆕 | `santifer/career-ops` | **求职 / 职业自动化** — 简历 / CV / ATS / 求职追踪垂直；cohort 全新领域；工程化极强 (D12=10)，13 语言 README |
+| **TS** 🆕 | `Leonxlnx/taste-skill` | **设计品味 / 审美判断** — 引导 agent 避免"通用/平庸"输出；与 NX（设计系统**产出**）正交（NX 管产出什么，TS 管审美判断/品味）；lesson 密度 41.4% |
+| **L30** 🆕 | `mvanhorn/last30days-skill` | **近期趋势研究** — 跨 Reddit/X/YouTube/HN/web 的近30天趋势；研究类新增；单个 140KB SKILL.md |
+
+---
+
+### 2. 三大代表 repo 横切对比 / AM × O × NX deep-dive
+
+> 这是问得最多的对比 — 这三个都是 cohort 顶端（总分 129 / 115 / 110），但各占不同轴。
+
+#### 2.1 核心定位
+
+| | **AM** (everything-claude-code) | **O** (superpowers) | **NX** (open-design) |
+|---|---|---|---|
+| 核心定位 | 通用 agent harness（capability surface）| 工程方法论（process layer）| 设计输出（output layer）|
+| 价值轴 | **广度** breadth | **深度** depth | **垂直** vertical |
+| 回答的问题 | "我们都装什么 agents / skills / commands？" | "怎么工作才不出错？" | "怎么产出好看且一致的视觉？" |
+| 内容主体 | 228 skills + 60 agents + commands + hooks | 14 高度精打磨的 skills（TDD / debug / plan / brainstorm 等）| 19 skills + 71 design systems |
+| 装机时机 | 团队 base setup | 任意时刻（要求纪律时）| 需要产出 UI / 视觉时 |
+| 强制度 | optional reference | **mandatory workflow**（hard gates）| optional reference |
+
+#### 2.2 Overlaps（内容碰撞点）
+
+| Pair | 碰撞区 | 具体内容 |
+|---|---|---|
+| AM ↔ O | **engineering methodology** | AM 含 reviewer/planner/python-reviewer 等 agents；O 含 TDD/debugging/planning skills。AM 是"装在 agent 里的"工程实践（commitlint/ESLint/CoC），O 是"写在 skill 里强制的"方法论 gates（HARD-GATE / eval evidence）|
+| AM ↔ NX | **前端 / UI 边界** | AM 有些 frontend-design / UI 相关 skills；NX 是全局 design system。AM 偏 "实现"，NX 偏 "规范" |
+| O ↔ NX | **几乎完全正交** | process layer 与 output layer 的关系；不太碰撞 |
+
+#### 2.3 Orthogonality（正交，独立可叠加）
+
+```
+                  Process / Methodology (O)
+                            │
+                            │
+  Capability ────────────── ┼────────────── Visual output
+  surface (AM)              │                  (NX)
+                            │
+                            │
+```
+
+- **AM ⊥ NX**：engineering harness vs design production —— 完全无冲突，常一起用
+- **O ⊥ NX**：methodology vs output —— 完全无冲突
+- **AM ⊥ O 有交集**：但交集本身是互补的（AM 提供 "做什么的能力"，O 提供 "怎么做的纪律"）
+
+#### 2.4 Complementarity（推荐叠加用法）
+
+| Stack | 适用场景 | 协同方式 |
+|---|---|---|
+| **AM + O** | 团队最佳基线 | AM 装满 capability 池；O 加 discipline gates。Agent 既有能力也有纪律。**最常见组合** |
+| **AM + NX** | 全栈交付（工程 + 设计） | AM 处理 engineering 实现；NX 处理视觉/UI 产出 |
+| **O + NX** | 设计师 + 想要 process 纪律 | O 的 brainstorming + writing-plans 指导设计决策；NX 产出 |
+| **AM + O + NX** | 一站式 power user | 工程 + 方法 + 设计全配。⚠ 代价：上下文成本最高，agent 选择困难，需要 careful 配置 |
+
+#### 2.5 何时只装其一
+
+| 装哪个 | 场景 |
+|---|---|
+| **只装 AM** | 你想要 "一键全配"，不想自己挑组件。已有 harness 想升级 |
+| **只装 O** | 你已有 setup 不想换，但想加 TDD/debug/plan **强制纪律层** |
+| **只装 NX** | 你是设计师 / 营销人员，不需要 AM 的 60 agents 但想用 design systems |
+
+---
+
+### 3. 其他重要 overlap / Other notable overlap pairs
+
+#### 3.1 A vs OAI — 两个官方 spec / Two official catalogs
+
+| 共性 | 差异 |
+|---|---|
+| 都是平台官方 (Anthropic vs OpenAI) | A 服务 Claude，OAI 服务 Codex；A 含 PDF/theme/doc-coauthoring 等通用 reference skills，OAI 含 skill-creator + eval 工具 |
+
+→ **互补**：用哪个看你的 host 平台。如果两个 agent 平台都用，一并装；spec 互相参考但实现独立。
+
+#### 3.2 AM vs AD — 两个广义 engineering / Two broad-eng repos
+
+| 共性 | 差异 |
+|---|---|
+| 都覆盖通用软件工程（API / 测试 / 性能 / 安全 / 重构 / 文档）| AM 是 **breadth + harness**（agents + commands + hooks）；AD 是 **depth + quality**（每个 skill 有 Verification + Red Flags 段，强制 4 原则 Specific/Verifiable/Battle-tested/Minimal）|
+
+→ **互补 with overlap**：AM 用作团队基础，AD 用作 review/critique 时的 "质量门"。或选其一即可（重复度~50%）。
+
+#### 3.3 NL vs NX — 两个 design / Two design repos
+
+| 共性 | 差异 |
+|---|---|
+| 都做设计 | NL 是 **component-level UI/UX**（按钮 / 表单 / 调色板 / 字体 / 推理引擎）；NX 是 **system-level + multi-platform output**（71 design systems + slides/PDF/video/mobile） |
+
+→ **互补**：
+- 单平台 UI 组件级 → **NL**
+- 跨平台创意产出 / 品牌系统 → **NX**
+- 同时做组件 + 品牌 → 一起装
+
+#### 3.4 M vs MA — 两个个人视角 / Two individual lenses
+
+| 共性 | 差异 |
+|---|---|
+| 都是个人作者 | M 是 **lightweight composable techniques**（/diagnose / /tdd / /grill-me）反失败模式；MA 是 **always-on 4 条 Karpathy 原则** 单文件 |
+
+→ **互补**：MA 装上是 base discipline；M 的 skills 按需触发。组合起来 = 个人开发者最轻量基线。
+
+#### 3.5 C vs everyone — Awesome-list 与所有人的 overlap
+
+C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skills）。差别：
+- C 的 SKILL.md 平均只有 3.4KB（vs O 的 8.2KB，AD 的 10.7KB）—— **broad but shallow**
+- C 含 864 个 SKILL.md，是 cohort 中最大的"目录"但 D10 辅料密度仅 0.03（最低）
+
+→ **何时用 C**：discovery / 浏览市场上有哪些 skill 形态。**不当主装**，可以挖到具体方向后转向对应的 specialist repo。
+
+#### 3.7 AM vs GS — 两个 "全能型" 但哲学相反（v1.2 新增）
+
+| 共性 | 差异 |
+|---|---|
+| 都是"团队 production 级"通用 harness | **AM = breadth + neutral**（228 skills + 60 agents，"装满 capability 池"）；**GS = depth + opinion**（51 skills，但平均 52KB，"Garry Tan 个人验证过的实战流程"）|
+
+→ **选择决策**：
+- 你的团队是 startup / 接受 strong opinion → **GS**（直接照搬 YC 大佬 setup）
+- 你的团队是 enterprise / 需要 capability 多样性 → **AM**（自己组合 / 替换组件）
+- 你想要 "AM 的广度 + GS 的深度" → 两者叠加，**AM 给 capability pool + GS 给 high-quality reference**
+
+#### 3.8 AM vs AA — 两个 "大全包" 但维度不同（v1.2 新增）
+
+| 共性 | 差异 |
+|---|---|
+| 都是大体量（AM 228 skills，AA 222 agents） | **AM = skill-centric**（每个 skill 解决一个能力）；**AA = role-centric + personality**（每个 agent 有 personality + emoji + vibe，按 *角色* 而非 *任务* 组织，18 个领域 vs AM 的工程领域为主）|
+
+→ **选择决策**：
+- 你要 "engineering capability 池" → **AM**
+- 你要 "多角色 / 跨领域 agency" → **AA**（含 finance/academic/spatial-computing/game-dev 等 AM 不覆盖的领域）
+- 同时用？— 可以，但 trigger 可能冲突，建议设置好优先级 / namespace
+
+#### 3.6 V vs A vs OAI — 三个官方 / Three official authorities
+
+| | A | OAI | V |
+|---|---|---|---|
+| 官方什么 | Claude Skills 规范 | Codex skill catalog | Vercel 部署 + React/Next.js |
+| 范围 | 横向（任何领域） | 横向（任何领域） | 纵向（web frontend / Vercel-native） |
+| 强项 | spec authority | 三层 .system/.curated/.experimental 治理模型 | live WebFetch 取最新 web 规则 |
+
+→ **正交**：三者覆盖完全不同的官方域。V 与 A/OAI 没有 overlap，是 platform-specific authority。
+
+---
+
+#### 3.9 UA vs O vs OS — 三条"过程 / 理解"轴（v1.5 新增）
+
+| | **UA** (Understand-Anything) | **O** (superpowers) | **OS** (OpenSpec) |
+|---|---|---|---|
+| 轴 | **理解既有代码**（读 / 映射 / onboard） | **怎么做**（TDD / debug / plan 方法论） | **规格优先地做**（spec → tasks → 实现） |
+| 方向 | 向内：理解已有的东西 | 过程：实现时的纪律 | 向内→向外：先定义意图，再实现 |
+| 产物 | 交互式知识图谱（节点/边/分层/导览） | 元技能（强制 gates） | 规格文档 + 任务拆解 |
+
+→ **互补**：UA 在你动手前把陌生代码库映射清楚；OS 把"想做的改动"变成规格；O 在实现时强制纪律。UA 与 NX/CO 正交（处于生命周期不同阶段）。
+
+---
+
+### 4. 任务 → 推荐 repo lookup
+
+> ✅ = primary（首选）· ➕ = secondary（次选 / 互补）· ⚠ = cohort 覆盖弱
+
+#### 4.1 Web / 移动 / 系统开发 / Web · Mobile · Systems
+
+| # | 任务 | 主推 | 次推 | 备注 |
+|---:|---|---|---|---|
+| 1 | **Web 前端 (React/Next.js production)** | V ✅ | AD ➕ AM ➕ | V 是 Vercel 官方；40+ React 性能规则按 Impact 排序 |
+| 2 | UI 组件 / 视觉 polish | NL ✅ | NX ➕ | NL 含 161 调色板 + 57 字体 + BM25 推理 |
+| 3 | React Native / 移动 web | V ✅ | NL ➕ | V 有 react-native-skills |
+| 4 | iOS / Android native | NL ✅ | A ➕ | NL 含 SwiftUI 栈；A 有 doc-coauthoring |
+| 5 | **后端 API / 微服务** | AM ✅ | AD ➕ O ➕ | AM 含 API/data/architecture agents；O 加方法论 gates |
+| 6 | 数据库 / SQL 优化 | AD ✅ | C ➕ | AD 强 Verification；C 有 DB-specific skills |
+| 7 | DevOps / CI / Deployment | AM ✅ | V ➕ | AM 含 hooks/commitlint/lint；V 专 Vercel deploy |
+| 8 | 云基础设施 / IaC (Terraform/K8s) | AM ⚠ | — | ⚠ cohort 弱，靠 AM 通用工程 |
+| 9 | **Game 开发** (Web / Engine) | **AA ✅** (v1.2) | C 搜 | 🆕 **AA 有 20 个 game-development agents**（之前 cohort 完全无 game 专项，AA 加入后填补）|
+| 10 | Web3 / Smart Contracts | ⚠ no specialist | C 搜 | ⚠ 同上 |
+| 11 | 嵌入式 / Rust systems | M ✅ | MA ➕ | M 的 first-principles + MA 反 anti-pattern |
+
+#### 4.2 AI / ML / Agent 建构 / AI · ML · Agent building
+
+| # | 任务 | 主推 | 次推 | 备注 |
+|---:|---|---|---|---|
+| 12 | **LLM 应用 / Agent 构建** | AM ✅ | OAI ➕ A ➕ | AM 是 agent harness 顶级；OAI 含 Codex 配套；A 是规范 |
+| 13 | Prompt 工程 | A ✅ | O ➕ | A 含 skill-creator；O 的 brainstorming 帮设计 prompt |
+| 14 | **Skill / Agent 元开发**（写新 skill） | A ✅ | OAI ➕ AM ➕ | A 定义 SKILL.md 规范；AM 给参考实现 |
+| 15 | RAG / 检索系统 | C 搜 ✅ | AM ➕ | C 有多个 search/research-writer skills |
+| 16 | **GPU kernel (CUDA / Triton / MPS)** | ⚠ no specialist | MA + M | ⚠ cohort **无 GPU 专项**；MA 反 anti-pattern + M 工程严谨做基础 |
+| 17 | Model fine-tuning | AD ✅ | M ➕ | 通用生产工程；专项弱 |
+| 18 | Model evaluation / benchmarking | **O ✅** | AD ➕ | O **强制 eval evidence**（gold standard）|
+| 19 | Inference 优化 / 性能 | AD ✅ | V (web 侧) | AD 性能实践；V 含 web 性能 |
+| 20 | Agent harness 优化 | **AM ✅** | O ➕ | AM 就是 "agent harness perf framework" |
+
+#### 4.3 工程方法论 / Engineering methodology
+
+| # | 任务 | 主推 | 次推 | 备注 |
+|---:|---|---|---|---|
+| 21 | **TDD** | **O ✅** | AD ➕ | O 的 TDD skill 是 gold standard |
+| 22 | **系统性调试** (debugging) | **O ✅** | M ➕ | O systematic-debugging + M /diagnose |
+| 23 | 头脑风暴 / 规划 | **O ✅** | — | O 的 brainstorming + writing-plans 套件 |
+| 24 | Code review | AM ✅ | AD ➕ O ➕ | AM 含多个 reviewer agents |
+| 25 | 重构 | M ✅ | O ➕ MA ➕ | M 减少 unnecessary diffs；O plan-first；MA "surgical changes" |
+| 26 | 大规模迁移 / framework upgrades | AD ✅ | M ➕ O ➕ | AD 含 migration patterns；O 加 plan 流程 |
+| 27 | 性能优化 (web) | V ✅ | AD ➕ | V 含 40+ React 性能规则 |
+| 28 | 性能优化 (通用) | AD ✅ | M ➕ | AD 生产工程；M first-principles feedback |
+| 29 | 安全审计 | AM ✅ | AD ➕ | 通用工程；专项弱 |
+| 30 | 架构决策 | O ✅ | AD ➕ AM ➕ | O 的 writing-plans + brainstorming |
+| 31 | 文档撰写 | A ✅ | K ➕ AD ➕ | A 含 doc-coauthoring；K 含 Markdown 格式专项 |
+| 31a 🆕 | **理解 / onboard 既有代码库** | **UA ✅** | O ➕ | UA 把 codebase 转成交互式知识图谱（节点/边/分层/导览）；cohort 唯一专做"读懂既有代码" |
+| 31b 🆕 | **Spec-driven 开发** (spec→实现) | **OS ✅** | O ➕ | OS 规格驱动工作流（spec→tasks→实现）；O 加方法论纪律 |
+
+#### 4.4 研究 / 实验 / 评测 / Research · Experimentation
+
+| # | 任务 | 主推 | 次推 | 备注 |
+|---:|---|---|---|---|
+| 32 | **论文 / 文献 review** | K ✅ | A ➕ | K Obsidian 笔记同步；A 输出 doc |
+| 33 | Benchmarking / 评测 | **O ✅** | M ➕ | O 强制 eval evidence；M /diagnose 强调 feedback loop |
+| 34 | 实验设计 | O ✅ | M ➕ | O 的 writing-plans + brainstorming |
+| 35 | **整晚 batch loop / autonomous run** | **AM ✅** | O ➕ | AM 含 install scripts + hooks + cron-style commands；O 含 dispatching-parallel-agents + subagent-driven-development |
+| 36 | 数据分析 / EDA | A ✅ | C ➕ | A 含 data-analysis demo skills |
+| 37 | 假设测试 / "做实验" | M ✅ | O ➕ | M /diagnose 强调 first-principles；O 加纪律 |
+| 38 | 论文写作 | A ✅ | K ➕ | A doc-coauthoring；K 笔记同步 |
+| 39 | Reproducibility / 复现 | O ✅ | MA ➕ | O 强制 verification；MA goal-driven execution |
+| 39a 🆕 | **近期趋势研究** (Reddit/X/YT/HN/web) | **L30 ✅** | C ➕ | L30 专做近 30 天跨平台趋势采集；C 搜索补充 |
+
+#### 4.5 设计 / 创意 / Design · Creative
+
+| # | 任务 | 主推 | 次推 | 备注 |
+|---:|---|---|---|---|
+| 40 | Design system | **NX ✅** | NL ➕ | NX 含 71 design systems |
+| 41 | Visual mockup / 视觉 | NX ✅ | NL ➕ | NX 多平台 (web/desktop/mobile) |
+| 42 | 品牌 / Logo / CI | NX ✅ | — | NX 含 brand-identity + logo skill |
+| 43 | 字体 / 配色 | **NL ✅** | NX ➕ | NL 161 调色板 + 57 字体配对 |
+| 44 | 幻灯 / Presentation | A ✅ | NX ➕ | A 的 theme-factory + slide skills 是 canonical |
+| 45 | PDF / Document 生成 | **A ✅** | C ➕ | A 的 PDF skill 是规范级 |
+| 46 | Icon | NX ✅ | NL ➕ | NX 含 icon-design 15 styles |
+| 47 | **品味探索 / 灵感 / mood board** | **NX ✅** | A ➕ | NX 71 design systems = 71 个 "品味样本"；A theme-factory 10 预设 |
+| 48 | 印刷 / Banner / 社交图 | NX ✅ | — | NX banner-design 22 styles |
+| 49 | UI/UX 组件级 | **NL ✅** | NX ➕ | NL component-level 最专 |
+| 50 | Brand voice | NX ✅ | CH ➕ | NX brand identity + CH 营销 voice |
+| 50a 🆕 | **审美判断 / 品味把关** | **TS ✅** | NX ➕ | TS 引导 agent 避免"通用/平庸"输出（NX 管产出什么，TS 管审美判断） |
+
+#### 4.6 内容 / 营销 / Content · Marketing
+
+| # | 任务 | 主推 | 次推 | 备注 |
+|---:|---|---|---|---|
+| 51 | Copywriting | **CH ✅** | — | CH 唯一专项 |
+| 52 | SEO | **CH ✅** | — | CH 唯一专项 |
+| 53 | **CRO / Landing page** | CH ✅ | V ➕ | CH page-cro + V web-design-guidelines（设计 + 转化） |
+| 54 | Email 营销 | CH ✅ | C ➕ | CH 专项 |
+| 55 | 社交媒体 | CH ✅ | C ➕ | CH + C 含 slack/twitter |
+| 56 | 内容研究 | C ✅ | CH ➕ | C 的 content-research-writer |
+| 57 | Growth analytics | CH ✅ | — | CH 含 analytics skills |
+
+#### 4.7 知识管理 / 笔记 / Knowledge management
+
+| # | 任务 | 主推 | 次推 | 备注 |
+|---:|---|---|---|---|
+| 58 | **Markdown / Obsidian** | **K ✅** | — | K 是 Obsidian creator 维护 |
+| 59 | Knowledge graphs / JSON Canvas | K ✅ | — | K 含 Canvas skill |
+| 60 | 个人笔记 | K ✅ | A ➕ | K Obsidian + A doc-coauthoring |
+| 61 | Meeting notes | C ✅ | K ➕ | C meeting-insights-analyzer |
+| 62 | Research synthesis | K ✅ | A ➕ | K 笔记 + A 输出 doc |
+
+#### 4.8 生产力 / 沟通 / Productivity · Communication
+
+| # | 任务 | 主推 | 次推 | 备注 |
+|---:|---|---|---|---|
+| 63 | Email | C ✅ | — | C internal-comms |
+| 64 | Slack / chat | C ✅ | — | C slack-gif-creator 等 |
+| 65 | 项目管理 | **O ✅** | AM ➕ | O plan management + AM commands |
+| 66 | Onboarding 文档 | A ✅ | AM ➕ | A doc-coauthoring（UA ➕ 可生成既有代码库的知识图谱辅助 onboarding） |
+| 66a 🆕 | **求职 / 简历 / ATS / 求职追踪** | **CO ✅** | — | CO 求职自动化垂直（CV / ATS / tracking）；cohort 唯一专项 |
+
+#### 4.9 数据 / 集成 / Data · Integration
+
+| # | 任务 | 主推 | 次推 | 备注 |
+|---:|---|---|---|---|
+| 67 | API 集成 (OAuth / REST / GraphQL) | C ✅ | AM ➕ | C 的 connect / connect-apps 系列 |
+| 68 | 浏览器自动化 | C ✅ | — | C 含相关 skills |
+| 69 | Web scraping | C ✅ | — | C 含相关 skills |
+| 70 | 数据 ETL | AD ✅ | C ➕ | AD 通用工程；C 有零星 |
+
+#### 4.10 元 / 通用 / Meta · General
+
+| # | 任务 | 主推 | 次推 | 备注 |
+|---:|---|---|---|---|
+| 71 | **5 分钟快速 CLAUDE.md drop-in** | **MA ✅** | — | 单文件零负担 |
+| 72 | 浏览 / 发现 skill 生态 | C ✅ | — | 864 SKILL.md 索引 |
+| 73 | 学 SKILL.md 规范 | A ✅ | OAI ➕ | A 是官方权威 |
+| 74 | 多 agent 平台兼容 | NX ✅ | NL ➕ V ➕ | NX 9 个平台覆盖最广 |
+| 75 | 个人独立工程师 | M ✅ | MA ➕ | M lightweight + MA 反 anti-pattern |
+| 76 | 团队 / 公司采用（通用 enterprise） | AM ✅ | AD ➕ O ➕ | AM 含 hooks/commitlint/CoC；AD 严质量门；O 强制方法论 |
+| 77 | 🆕 **YC / 创业公司 opinionated setup** | **GS ✅** | AM ➕ | 🆕 v1.2 · Garry Tan 实战角色 setup — 直接照搬，不用挑组件 |
+| 78 | 🆕 多角色 / 多领域 agency-as-agents | **AA ✅** | GS ➕ AM ➕ | 🆕 v1.2 · 222 agents 跨 18 领域（finance / academic / spatial-computing / game-dev 等小众） |
+| 79 | 🆕 单 SKILL 深度模板（学怎么写"厚" SKILL.md）| **GS ✅** | NL ➕ | 🆕 v1.2 · GS 平均 SKILL.md 52KB 是 cohort 最深；NL 12KB 第二 |
+
+---
+
+### 5. 推荐 Stacks / Recommended combinations
+
+> 不要装太多 — 上下文是公共资源。3-4 个 repo 通常足够。
+
+| Scenario / 场景 | Stack | 理由 |
+|---|---|---|
+| **个人独立工程师 (lightweight base)** | MA + M | 一行 CLAUDE.md 加 base discipline；M 的 skills 按需触发 |
+| **设计师 / 营销人员** | NX + K | NX 出设计；K 做笔记 / 研究归档 |
+| **团队 Dev base** | **AM + O** | Capability surface + methodology gates — **最常见组合** |
+| **Web Product Team** (Vercel-native) | V + AD + O | V 部署 + AD 工程门 + O 纪律 |
+| **Web Product Team** (full-stack with design) | AM + O + NX + V | 工程 + 方法 + 设计 + Vercel 部署 |
+| **Marketing / Growth Team** | CH + V + A | CH 营销实战 + V landing-page 工程 + A 文档输出 |
+| **Research / 学术** | K + O + A | K 笔记 + O 评测纪律 + A 文档输出 |
+| **AI Agent / Skill Builder** | A + AM + O | A 规范 + AM 参考实现 + O 方法论纪律 |
+| **试水 / 评估生态** | MA + C | MA 零负担引入 + C 浏览全生态 |
+| **Codex 用户** | OAI + O + A | Codex 配套 + 方法论 + spec 参考 |
+| 🆕 **YC / Startup 创始团队 (照搬式)** | **GS** + 可选 O | GS 一键拿 Garry Tan 实战 setup；O 加方法论纪律 |
+| 🆕 **跨领域工作室 / 多角色 agency** | **AA** + AM | AA 给 18 个领域的角色化 agent；AM 补 engineering harness |
+| 🆕 **游戏开发** | **AA** + M | AA 含 20 game-dev agents（v1.2 唯一覆盖）；M 加工程严谨度 |
+| 🆕 **想拿"最佳实例" SKILL.md 模板** | **GS** + A | GS 平均 52KB 是 cohort 最深 reference；A 是规范 |
+| 🆕 **接手 / onboard 遗留代码库** | **UA** + O | 🆕 v1.5 · UA 把既有代码映射成知识图谱；O 在你改动前加纪律 |
+| 🆕 **规格优先的产品团队** | **OS** + O + AM | 🆕 v1.5 · OS 定义 spec→tasks；O 加 gates；AM 提供实现所需的能力池 |
+| 🆕 **求职者 / 职业自动化** | **CO** + A | 🆕 v1.5 · CO 处理简历 / ATS / 求职追踪；A 出精修文档 |
+
+---
+
+### 6. 覆盖缺口 / Coverage gaps（cohort 未覆盖领域）
+
+21 个 repo **没有专项覆盖**的领域 — 这是未来 cohort 扩张的方向：
+
+> ✅ **v1.2 已填补**：~~Game 开发~~ — **AA 含 20 个 game-development agents**
+>
+> ✅ **v1.5 已填补**：~~理解 / onboard 既有代码库~~ (**UA**)、~~Spec-driven 开发~~ (**OS**)、~~求职 / 职业自动化~~ (**CO**) — 此前 cohort 均无专项
+
+| 缺口 / Gap | 当前最佳替代 | 建议 |
+|---|---|---|
+| **GPU kernel** (CUDA / Triton / MPS) | MA + M（间接） | ⚠ 需要专项 repo；MA 反 anti-pattern 帮纪律，M /diagnose 帮调试 |
+| **Web3 / 智能合约** | C 搜索 | ⚠ 需要专项 repo |
+| **Cloud IaC** (Terraform / K8s / Pulumi) | AM（通用工程） | ⚠ 缺专项；AM 的 hooks/commands 可装但不够深 |
+| **嵌入式 / Rust systems** | M + MA | ⚠ 间接，靠通用工程纪律 |
+| **Native mobile** (iOS / Android primary) | NL（部分 SwiftUI） | ⚠ NL 偏 UI 层，不覆盖 native API |
+| **Computer Vision / 多模态 ML** | AD + M（通用工程） | ⚠ 无 CV / multimodal 专项 |
+| **Data engineering at scale** (Spark / Airflow / dbt) | AD（通用）+ C 搜 | ⚠ 缺专项；AD 工程实践通用 |
+| **Database internals** (B-tree / OLAP / 优化) | AD | ⚠ 缺专项 |
+| **OS / Compiler / Linker** 工作 | M + MA（通用纪律） | ⚠ 最深的系统工作，cohort 完全不覆盖 |
+| **Quant / Trading 算法** | M + AD | ⚠ 缺专项 |
+| **Security offensive** (pentest / red team) | AM, AD（防御侧） | ⚠ 缺 offensive 专项 |
+
+> **关键观察 (v1.5 更新)**：cohort 强在"agent 开发 + 设计 + web frontend + 营销 + 知识管理 + 多角色 agency (v1.2 AA) + game-dev (v1.2 AA) + **代码库理解 (v1.5 UA) + spec-driven 开发 (v1.5 OS) + 求职自动化 (v1.5 CO)**"；弱在"low-level systems / GPU / 多模态 ML / cloud IaC / 智能合约"。深 system / GPU / Web3 仍处自建阶段。
+
+---
+
+### 附录 / Appendix: 13 repo 的功能正交矩阵
+
+> 简化 1-5 评分，每行表示该 repo 在该领域的覆盖强度。✅ ≥4，➕ ≥2，— = 不覆盖。
+
+| 领域 \ Repo | AM | O | NX | A | NL | AD | CH | C | M | OAI | MA | K | V | **GS** 🆕 | **AA** 🆕 |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 通用工程 | ✅ | ✅ | — | ➕ | — | ✅ | — | ➕ | ✅ | ✅ | ✅ | — | — | **✅** | ➕ |
+| Web 前端 | ➕ | — | — | — | ➕ | ➕ | ➕ | ➕ | — | — | — | — | **✅** | ➕ | ➕ |
+| UI/UX 设计 | — | — | **✅** | ➕ | **✅** | — | — | ➕ | — | — | — | — | ➕ | ➕ | ➕ |
+| Design system / 品牌 | — | — | **✅** | ➕ | ➕ | — | ➕ | — | — | — | — | — | — | ➕ | ➕ |
+| 方法论 (TDD/debug/plan) | ➕ | **✅** | — | ➕ | — | ➕ | — | ➕ | ➕ | ➕ | ✅ | — | — | ➕ | — |
+| AI / Agent 建构 | **✅** | ➕ | — | ✅ | — | ➕ | — | ➕ | — | ✅ | ➕ | — | — | **✅** | **✅** |
+| Skill 元开发 | ➕ | ➕ | — | **✅** | — | ➕ | ➕ | ➕ | — | **✅** | — | — | ➕ | ➕ | ➕ |
+| 营销 / Growth | — | — | ➕ | — | — | — | **✅** | ➕ | — | — | — | — | ➕ | — | ➕ |
+| 知识管理 | — | — | — | ➕ | — | — | — | — | — | — | — | **✅** | — | ➕ | ➕ |
+| 文档输出 | ➕ | — | ➕ | ✅ | — | ➕ | ➕ | ➕ | — | — | — | ➕ | — | ✅ | ➕ |
+| Performance / Optimization | ➕ | — | — | — | — | ✅ | — | — | ➕ | — | ➕ | — | **✅** | ➕ | — |
+| Research / Eval | ➕ | **✅** | — | ➕ | — | ➕ | — | — | ✅ | — | ➕ | ➕ | — | ➕ | ➕ |
+| Discovery / Browse | — | — | — | — | — | — | — | **✅** | — | — | — | — | — | — | ➕ |
+| **Game 开发** 🆕 | — | — | — | — | — | — | — | — | — | — | — | — | — | — | **✅** |
+| **多角色 agency (CEO/Designer/QA/etc)** 🆕 | ➕ | — | — | — | — | — | — | — | — | — | — | — | — | **✅** | **✅** |
+| **跨领域 (academic/finance/spatial)** 🆕 | ➕ | — | — | — | — | — | — | ➕ | — | — | — | — | — | — | **✅** |
+
+---
+
+_本手册基于 §10 哲学考据 + 各 repo 实际文档抽样。任务列表参考 AI agent 实际使用场景，并尝试覆盖用户提到的 game / 前后端 / AI GPU / 研究 / 实验 / loop / 设计 / 品味探索 + 类似 30+ 类。覆盖缺口部分诚实标注 — 不强行推荐 cohort 不擅长的领域。_
+
+
+---
+
+<a id="agent-summary"></a>
+
+## 附录 B — 五模型评测总结 / Five-Model Cross-Comparison
+
+本文档收录了 5 个不同 AI 模型（Claude / ChatGPT / Gemini / Grok / Perplexity）独立评估本仓库 15 个 skill repos 后的对比总结。**这不是我自己产出的评分**（评分见 `EVALUATION.md`），而是把不同模型在面对同一份 cohort 数据时给出的判断做了横向汇总。
+
+> ⏱️ **快照说明（v1.5 更新）**：本五模型对比基于 **15-repo cohort**（v1.3 时期）采集,**早于 v1.5 的 21-repo 扩容**（新增 UA/OS/CO/TS/L30）。这 5 个新 repo 未纳入本次跨模型评测;它们的本仓库自评分见 `EVALUATION.md §14`。重跑五模型对比是后续工作。
+
+相关文档：
+- 评分细节 → `EVALUATION.md` · [`scoring.ipynb`](./scoring.ipynb)
+- 按任务选 repo → 附录 A
+
+---
+
+### TL;DR
+
+**收敛后的最小可用组合**（5 模型交集）：
+
+1. `anthropics/skills`（底座）
+2. `obra/superpowers`（方法论）
+3. `gstack` 或 `everything-claude-code`（实战，二选一）
+4. 按需加 `nexu-io/open-design`（设计）、`vercel-labs/agent-skills`（Next.js）
+
+要不要加 `karpathy-skills` / `addyosmani` / `mattpocock` 取决于具体技术栈，**不存在"必须加"的共识**。
+
+---
+
+### 1. 强共识（所有模型都认）
+
+四个底层选择基本无争议：
+
+| Repo | 角色 | 5 模型共识 |
+|---|---|---|
+| `anthropics/skills` | 规范/底座层 | 所有人都装 |
+| `obra/superpowers` | 方法论层（TDD、subagent-driven） | 所有人都装 |
+| `gstack` **OR** `everything-claude-code` | 实战层（二选一） | solo 选前者，团队/多 harness 选后者 |
+| `nexu-io/open-design` | 设计扩展 | 在设计是瓶颈时加上 |
+
+### 2. 强共识（所有模型都避）
+
+| Repo | 原因 |
+|---|---|
+| `msitarzewski/agency-agents` | 222 个 personality agent 被一致定性为"**灵感库不是基础设施**"。ChatGPT 原话"不要把这类大而全的库当核心"；Claude 直接跳过；Gemini 警告 token 成本和延迟 |
+| `openai/skills`（D1=1） | 垫底，全员共识跳过 |
+| `kepano/obsidian-skills` | 只有 Obsidian 工作流才有意义 |
+
+### 3. 主要分歧
+
+#### 3.1 `multica-ai/andrej-karpathy-skills`
+
+- **Claude / Gemini**：看到 D1=9 觉得是高价值叠加
+- **ChatGPT**：当成"个人配置不适合主库"放 C 层
+- **判断**：这个分歧来自定位差异 — 它是 **overlay，不是 standalone**
+
+#### 3.2 `addyosmani/agent-skills`
+
+- **ChatGPT**：列为 A 级必用
+- **Grok / Claude**：没特别强调
+- **差异点**：你是否做生产后端
+
+#### 3.3 `ComposioHQ/awesome-claude-skills`
+
+- **Grok**：推荐用作 **发现层**
+- **其他人**：觉得 meta-list 深度不够，不属于工作流
+
+#### 3.4 `mattpocock/skills`
+
+- **全员同意**：只在 TypeScript 场景下用
+- **ChatGPT**：评为 B 级"日常贴近"
+- **Claude**：视作 **垂直工具**
+
+#### 3.5 推荐方法本身（meta-level disagreement）
+
+| 模型 | 推荐风格 |
+|---|---|
+| ChatGPT / Claude | 给完整 stack |
+| Grok | 主张"最多 2-3 个测试" |
+| Gemini | 不给推荐，反问你的场景 |
+
+### 4. 独特视角 / 各家独门洞察
+
+| 模型 | 独有视角 |
+|---|---|
+| **Claude** | 唯一做了 **`contribs < 20 = bus factor` 分析**（押人 vs 押社区），并警告整个生态不到一年**没经过真实生产检验** |
+| **ChatGPT** | 唯一给出**严格的五层架构**：规范 → 方法论 → 实战 → 工程 → 垂直 |
+| **Gemini** | 警告 **S 层锁定单一社区方法论**的风险 |
+| **Grok** | 实操原则 **"fit > score"** |
+
+### 5. 收敛后的最小可用组合（重述）
+
+> 5 个模型意见的交集 — 装这套不会被任何人反对。
+
+```
+┌─────────────────────────────────┐
+│ 1. anthropics/skills    (底座)  │  必装
+│ 2. obra/superpowers     (方法论) │  必装
+│ 3. gstack OR ECC        (实战)  │  二选一
+├─────────────────────────────────┤
+│ 4a. open-design        (设计场景)│  按需
+│ 4b. vercel-labs        (Next.js)│  按需
+├─────────────────────────────────┤
+│  karpathy / addyosmani / mattpocock │
+│  取决于技术栈 — 不存在共识必装        │
+└─────────────────────────────────┘
+```
+
+### 6. 注意
+
+**Perplexity 这次没产出实际内容**（只输出了搜索过程）—— 这是它在 **长 prompt + 表格输入** 下经常出现的失败模式，**不是数据问题**。
+
+---
+
+### 与本仓库自评分的对比 / Comparison with our internal v1.3 scoring
+
+| Repo | 5-模型共识层 | v1.3 score / 210 | v1.3 tier | 一致性 |
+|---|---|---:|:---:|---|
+| `garrytan/gstack` | 实战 (solo) | 156 | S | ✅ 模型 #1 & 我们 #1 |
+| `affaan-m/everything-claude-code` | 实战 (团队) | 154 | S | ✅ |
+| `nexu-io/open-design` | 设计按需 | 152 | S | ✅ |
+| `obra/superpowers` | 方法论必装 | 150 | S | ✅ |
+| `msitarzewski/agency-agents` | **避** | 146 | S | ⚠ 我们 S 但模型避 |
+| `anthropics/skills` | 底座必装 | 136 | A | ✅ |
+| `addyosmani/agent-skills` | 分歧 | 128 | A | — |
+| `mattpocock/skills` | TS-only | 114 | B | ✅ |
+| `openai/skills` | **避** | 113 | B | ⚠ |
+| `ComposioHQ/awesome-claude-skills` | 分歧 (发现层) | 111 | B | — |
+| `coreyhaines31/marketingskills` | （未点名） | 103 | B | — |
+| `nextlevelbuilder/ui-ux-pro-max-skill` | （未点名） | 102 | B | — |
+| `vercel-labs/agent-skills` | Next.js 按需 | 101 | B | ✅ |
+| `multica-ai/andrej-karpathy-skills` | 分歧 (overlay vs standalone) | 92 | C | ✅ 模型分歧 / 我们偏低 |
+| `kepano/obsidian-skills` | **避** | 72 | D | ✅ |
+
+**关键观察**：
+- **共识层和我们 v1.3 S-tier 高度重合** (4/5)，除了 `agency-agents` — 模型们认为它是"灵感库"，我们 v1.3 看见的是高 D11/D12/D13/D14 而给了 S，但 D20=2 + D21=5（中等）已经暗示它在"任务质量"维度并不顶尖
+- **`openai/skills` 模型共识避** vs 我们 B 级（113）— 我们因 D10=9（辅料）+ D21=8（lessons）拉高，但模型们认为 D1=1（velocity 末位）说明社区不买账
+- 这是有趣的**"自动评分 vs LLM 综合判断"分歧** — 我们的 21 维度评分是 *特征加和*，LLM 综合判断会做*非线性整合*（如"velocity 太低 = 不投资"作硬门）
+
+---
+
+_本总结收录自外部 5 个 LLM 的横向对比；具体评分方法学见 `EVALUATION.md` §2-§12。_
+
+---
+
+### 7. 补充：以"实战价值"视角的深度评测（单模型详细版）
+
+> 不同于 §1-§6 的"5 模型横向交集"，本节是**另一个独立 LLM**从"实战价值"出发的详细分类 + 排名。
+> 提供：分类学（系统型 / 官方标准型 / 垂直增强型 / 清单型）+ 5 步评价法 + 详细分档表 + 最终排名。
+> 注：原文含若干外链 citation 经判断为 AI 生成的伪引用（target 与论点无对应），**已移除**以避免误导。
+
+按**实战价值**而不是单纯星数看，这 15 个 skills set 里，真正有长期复用价值的主要分成 **4 类**：系统型、官方标准型、垂直增强型、清单型。
+
+> **本视角核心结论**：S 档里最强的是 `gstack` 和 `open-design`，A 档里最稳的是 `anthropics/skills`，B 档里最值得按场景选的是 `openai/skills`、`vercel-labs/agent-skills`、`mattpocock/skills`。
+
+#### 7.1 评价 5 步法
+
+1. 先看"**这是不是一个系统**"，不是看星数；能不能覆盖从规划、实现、评审、测试到交付，决定上限。
+2. 再看"**是不是官方或接近标准**"；官方仓库通常更适合作为底座，社区仓库更适合做加速层。
+3. 再看"**是不是垂直专精**"；设计、前端、营销、开发体验这类 repo，往往单点强，但不适合拿来当总框架。
+4. 最后才看本仓库的指标；`Total` 决定综合质量，`D1` 决定第一印象，`Stars/day` 看热度，`Forks/Contribs` 看生态深度。
+5. 所以最重要的问题不是"谁最火"，而是"**你要拿它做操作系统、模板库，还是灵感库**"。
+
+#### 7.2 分档判断
+
+| Repo | 优点 | 缺点 | 判断 |
+|---|---|---|---|
+| **garrytan/gstack** | 体系最完整，角色分工清晰，覆盖规划到上线 | 太重、太强势、学习成本高 | 最强系统型 |
+| **affaan-m/everything-claude-code** | 热度高、贡献者多、像资源中枢 | 容易杂，方法论不一定统一 | 强资源型，不一定强系统 |
+| **nexu-io/open-design** | D1 满分，设计导向非常明确 | 偏设计侧，不一定适合全栈流程 | 设计方向很强 |
+| **obra/superpowers** | 方法论感强，适合增强 agent 能力 | 可能偏抽象，落地闭环弱于 gstack | 好的增强层 |
+| **msitarzewski/agency-agents** | 覆盖面超广，222 agents 很吸睛 | "人格代理"容易虚胖，一致性风险高 | 广而不一定深 |
+| **anthropics/skills** | 官方、规范、适合作为基线 | 更像参考实现，不像战斗工作流 | 最稳底座 |
+| **addyosmani/agent-skills** | 工程化导向强，生产环境友好 | 范围偏窄，像工程增强包 | 适合工程团队 |
+| **mattpocock/skills** | 面向工程师，实操味道强 | 贡献者少，作者风格浓 | 适合 TS/工程开发者 |
+| **openai/skills** | 官方背书，便于理解 skill 抽象 | Codex 导向，不是 Claude 最佳实践中心 | 值得参考，不是主框架 |
+| **ComposioHQ/awesome-claude-skills** | 适合发现项目 | 清单本身不提供方法论 | 只能当导航站 |
+| **coreyhaines31/marketingskills** | 细分场景明确 | 太垂直，通用性弱 | 适合营销团队 |
+| **nextlevelbuilder/ui-ux-pro-max-skill** | UI/UX 场景强 | 容易停留在视觉层 | 适合补设计短板 |
+| **vercel-labs/agent-skills** | Web/Next.js/Vercel 场景很实用 | 技术栈绑定明显 | 适合前端产品团队 |
+| **multica-ai/andrej-karpathy-skills** | 理念强、规则感强 | 更像原则集，不是完整技能系统 | 适合当 CLAUDE.md 思想源 |
+| **kepano/obsidian-skills** | Obsidian 用户会很受用 | 场景窄，通用价值低 | 典型 niche repo |
+
+#### 7.3 重点评价
+
+1. **`gstack`**：如果你要的是"AI 软件工厂"，它最像完整产品而不是 skill 样例；仓库把自己定义成 23 个 specialist 加 8 个 power tools，并把流程组织成从思考、规划、构建、评审、测试到交付的完整链路。
+2. `gstack` 的问题也正因为它太完整：强依赖作者的方法论、命令体系和工作节奏，小团队上手会快，大团队统一采用会有治理成本。
+3. **`anthropics/skills`**：这是最适合拿来当"官方基线"的仓库；它明确是 Claude skills 的公开实现和示例库，包含 spec、template、不同类别的示例技能，还特别说明很多内容主要用于演示和教育。
+4. `anthropics/skills` 的缺点是：它更像"标准参考 + 样例仓库"，不是帮你直接跑完整研发流程的操作系统。
+5. **`openai/skills`**：价值在于官方抽象清晰，定位是 Codex 的 skills catalog，并把 skills 定义成可发现、可组合的自包含文件夹。
+6. `openai/skills` 的缺点是生态信号和 Claude 兼容心智都不如 Anthropic 这边强，所以更适合借鉴结构，不适合直接拿来当 Claude 主框架。
+
+#### 7.4 推荐选择
+
+1. 如果你要一个"**主工作流**"，选 `gstack`；它最像可直接投入实战的系统。
+2. 如果你要一个"**标准底座**"，选 `anthropics/skills`；它最像官方规范、示例和模板库。
+3. 如果你是**设计驱动产品**，额外叠加 `open-design` 或 `ui-ux-pro-max-skill`。
+4. 如果你是 **Next.js / Vercel 团队**，叠加 `vercel-labs/agent-skills`。
+5. 如果你是**多模型团队**，保留 `openai/skills` 作为兼容层思路，而不是唯一来源。
+
+#### 7.5 最终排名（按"长期可用性"）
+
+| Rank | Repo | 视角 |
+|---:|---|---|
+| 1 | `garrytan/gstack` | 重型作战系统 |
+| 2 | `anthropics/skills` | 官方标准件 |
+| 3 | `nexu-io/open-design` | 设计特种兵 |
+| 4 | `addyosmani/agent-skills` | 工程增强包 |
+| 5 | `vercel-labs/agent-skills` | Vercel/Next.js 实战 |
+| 6 | `mattpocock/skills` | TS 工程师工具箱 |
+| 7 | `openai/skills` | Codex 兼容参考 |
+| 8 | `obra/superpowers` | 方法论增强层 |
+| 9 | `everything-claude-code` | 资源中枢（不一定系统）|
+| 10 | `andrej-karpathy-skills` | CLAUDE.md 思想源 |
+| 11 | `awesome-claude-skills` | 发现导航 |
+| 12 | `ui-ux-pro-max-skill` | UI 视觉补丁 |
+| 13 | `marketingskills` | 营销垂直 |
+| 14 | `agency-agents` | 灵感库（不建议主用）|
+| 15 | `obsidian-skills` | Niche |
+
+> **一句话总结**：`gstack` 是"重型作战系统"，`anthropics/skills` 是"官方标准件"，`open-design` 是"设计特种兵"，其余大多是**增强包或导航包**。
+
+#### 7.6 §7 与 §1-§6 的对比
+
+| 视角 | §1-§6 (5-LLM 横向交集) | §7 (单 LLM 实战价值视角) |
+|---|---|---|
+| 推荐 #1 实战层 | `gstack` 或 `everything-claude-code` | **`gstack` 一票**（ECC 跌到 #9）|
+| 推荐 #1 底座 | `anthropics/skills` | 一致 |
+| `obra/superpowers` 定位 | 必装方法论层 | **降至 #8 "增强层"** |
+| `everything-claude-code` 定位 | 实战层备选 | **#9 "资源中枢，不一定系统"** |
+| `addyosmani` | 分歧 | **#4 工程增强包**（明确推荐工程团队）|
+| **最大分歧点** | obra & ECC 是否核心层 | §7 认为只有 gstack 是核心系统，其他都是辅助 |
+
+**判读**：§7 的"系统主义"视角比 §1-§6 的"合议式"视角更**自信地把 gstack 定为唯一主工作流**；§1-§6 倾向"obra 必装"作为方法论强制层，§7 把 obra 降级。这本身就是一个有意思的元数据 —— 不同 LLM 对"什么算 production-ready 框架"的标准本身有分歧。

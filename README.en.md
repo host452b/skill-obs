@@ -8,8 +8,8 @@
 [![Eval baseline](https://img.shields.io/badge/eval-2026--06--17-blue)](./EVALUATION.en.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Notebook 中文](https://img.shields.io/badge/notebook-scoring.cn.ipynb-orange)](./scoring.cn.ipynb)
-[![Task Guide](https://img.shields.io/badge/task→repo-TASK__GUIDE-red)](./TASK_GUIDE.en.md)
-[![5-Model Summary](https://img.shields.io/badge/5_AI_model_xref-agent__summary-blueviolet)](./agent_summary.en.md)
+[![Task Guide](https://img.shields.io/badge/task→repo-EVALUATION_Appx_A-red)](./EVALUATION.en.md#task-guide)
+[![5-Model Summary](https://img.shields.io/badge/5_AI_model_xref-EVALUATION_Appx_B-blueviolet)](./EVALUATION.en.md#agent-summary)
 [![Cohort size](https://img.shields.io/badge/repos-21-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-21-purple)](./EVALUATION.en.md#2-15-evaluation-dimensions)
 [![Snapshots](https://img.shields.io/badge/snapshots-v1.0_→_v1.5-yellow)](./scoring.ipynb)
@@ -124,9 +124,9 @@ skill-obs/
 
 Full score matrix, by-domain recommendations, methodology, and caveats: **[`EVALUATION.en.md`](./EVALUATION.en.md)**.
 
-A task-first decision matrix (which repo for which AI-agent task?) — see **[`TASK_GUIDE.en.md`](./TASK_GUIDE.en.md)** (AM × O × NX overlap/orthogonality/complementarity deep-dive + ~50 task lookup + recommended stacks + coverage gaps).
+A task-first decision matrix (which repo for which AI-agent task?) — see **[`EVALUATION.en.md` Appendix A](./EVALUATION.en.md#task-guide)** (AM × O × NX overlap/orthogonality/complementarity deep-dive + ~50 task lookup + recommended stacks + coverage gaps).
 
-**Cross-comparison summary of how 5 AI models (Claude / ChatGPT / Gemini / Grok / Perplexity) independently evaluated the cohort** — see **[`agent_summary.en.md`](./agent_summary.en.md)** — covers strong consensus picks (4 must-have / 3 avoid), main disagreements, the minimum viable stack, and a comparison with our internal v1.3 scoring.
+**Cross-comparison summary of how 5 AI models (Claude / ChatGPT / Gemini / Grok / Perplexity) independently evaluated the cohort** — see **[`EVALUATION.en.md` Appendix B](./EVALUATION.en.md#agent-summary)** — covers strong consensus picks (4 must-have / 3 avoid), main disagreements, the minimum viable stack, and a comparison with our internal v1.3 scoring.
 
 ## 📐 21 Evaluation Dimensions
 
