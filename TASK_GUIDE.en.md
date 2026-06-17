@@ -3,8 +3,9 @@
 > 🌐 **Language**: [🇨🇳 中文](./TASK_GUIDE.md) · **🇬🇧 English**
 
 > 🔄 **v1.2 sync (2026-05-13)**: cohort expanded to **15 repos**, adding `garrytan/gstack` (GS) and `msitarzewski/agency-agents` (AA). See §1 bottom, §3.7-3.8, §5 recommended stacks, §6 gap update. **AA fills the game-dev gap** (20 game-dev agents).
+> 🔄 **v1.5 sync (2026-06-17)**: cohort expanded to **21 repos**, adding `Egonex-AI/Understand-Anything` (UA), `Fission-AI/OpenSpec` (OS), `santifer/career-ops` (CO), `Leonxlnx/taste-skill` (TS), `mvanhorn/last30days-skill` (L30). **UA fills the "understand existing codebase" gap, CO fills the "job-search" gap, OS fills the "spec-driven development" gap.**
 
-A task-first decision matrix across the 15 skill repos. Given a concrete AI-agent task, which repo (or stack) should you install?
+A task-first decision matrix across the 21 skill repos. Given a concrete AI-agent task, which repo (or stack) should you install?
 
 - §1 — Where each repo sits on the functional map
 - §2 — **AM × O × NX deep-dive**: overlaps, orthogonality, and complementary stacks (the most-asked comparison)
@@ -15,7 +16,7 @@ A task-first decision matrix across the 15 skill repos. Given a concrete AI-agen
 
 ---
 
-## 1. Functional positioning of the 15 repos
+## 1. Functional positioning of the 21 repos
 
 | Code | Repo | Orthogonal niche (unique value axis) |
 |---|---|---|
@@ -34,6 +35,11 @@ A task-first decision matrix across the 15 skill repos. Given a concrete AI-agen
 | **MA** | `multica-ai/andrej-karpathy-skills` | **Single-file behavioral directive** — Karpathy's 4 LLM-coding anti-pattern principles |
 | **K**  | `kepano/obsidian-skills` | **Obsidian / Markdown / Canvas** — only KM specialist |
 | **V**  | `vercel-labs/agent-skills` | **Vercel deploy + React/Next.js production** — Official authority; live `WebFetch` for fresh web rules |
+| **UA** 🆕 | `Egonex-AI/Understand-Anything` | **Codebase comprehension / knowledge-graph** — turns an existing codebase into an interactive knowledge graph (nodes/edges/layers/tour); only repo for *understanding existing code* (all others lean toward producing new code); multi-platform (claude/copilot/codex/opencode) |
+| **OS** 🆕 | `Fission-AI/OpenSpec` | **Spec-driven development** — spec→tasks→implementation workflow ("write the spec first, then implement"); a spec tool not a skill collection (0 SKILL.md, 517 docs); complements O's process methodology |
+| **CO** 🆕 | `santifer/career-ops` | **Job-search / career automation** — resume / CV / ATS / application tracking; brand-new vertical (no prior career repo); very strong engineering, 13-language READMEs |
+| **TS** 🆕 | `Leonxlnx/taste-skill` | **Design taste / aesthetic judgment** — steers agents away from generic/mediocre output; orthogonal to NX (NX governs *what to produce*, TS governs *aesthetic judgment/taste*); high lesson density (41.4%) |
+| **L30** 🆕 | `mvanhorn/last30days-skill` | **Recent-trend research** — last-30-day trends across Reddit / X / YouTube / HN / web; new research category; one 140KB SKILL.md |
 
 ---
 
@@ -172,6 +178,16 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 
 → **Orthogonal**: all three cover entirely different "official" domains. V has no overlap with A/OAI; it's platform-specific authority.
 
+### 3.9 UA vs O vs OS — three "process / understanding" axes (v1.5 addition)
+
+| | **UA** (Understand-Anything) | **O** (superpowers) | **OS** (OpenSpec) |
+|---|---|---|---|
+| Axis | **Understand existing code** (read / map / onboard) | **How to build** (TDD / debug / plan methodology) | **Spec-first build** (spec → tasks → implementation) |
+| Direction | Inbound: comprehend what exists | Process: discipline while building | Inbound→outbound: define intent, then implement |
+| Artifact | Interactive knowledge graph (nodes/edges/layers/tour) | Meta-skills (mandatory gates) | Spec documents + task breakdown |
+
+→ **Complementary**: UA maps an unfamiliar codebase before you touch it; OS turns a desired change into a spec; O enforces discipline while implementing. UA ⊥ NX/CO (different lifecycle stages).
+
 ---
 
 ## 4. Task → Repo lookup
@@ -223,6 +239,8 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 | 29 | Security audit | AM ✅ | AD ➕ | General engineering; no specialist |
 | 30 | Architecture decisions | O ✅ | AD ➕ AM ➕ | O's writing-plans + brainstorming |
 | 31 | Documentation writing | A ✅ | K ➕ AD ➕ | A's doc-coauthoring; K's Markdown format depth |
+| 31a | **Understand / onboard onto an existing codebase** | **UA ✅** | A ➕ | 🆕 v1.5 · UA builds an interactive knowledge graph (nodes/edges/layers/onboarding tour) from existing code — only repo specialized in *reading* code |
+| 31b | **Spec-driven development** (spec → tasks → implementation) | **OS ✅** | O ➕ | 🆕 v1.5 · OS writes the spec first then implements; O adds methodology gates |
 
 ### 4.4 Research · Experimentation
 
@@ -236,6 +254,7 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 | 37 | Hypothesis testing / "running experiments" | M ✅ | O ➕ | M's /diagnose stresses first-principles; O adds discipline |
 | 38 | Paper writing | A ✅ | K ➕ | A doc-coauthoring; K note sync |
 | 39 | Reproducibility | O ✅ | MA ➕ | O mandates verification; MA goal-driven execution |
+| 39a | **Recent-trend research** (last-30-day, Reddit/X/YouTube/HN) | **L30 ✅** | C ➕ | 🆕 v1.5 · L30 specializes in last-30-day trends across social + web; C for broader discovery |
 
 ### 4.5 Design · Creative
 
@@ -248,10 +267,11 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 | 44 | Slides / Presentation | A ✅ | NX ➕ | A's theme-factory + slide skills are canonical |
 | 45 | PDF / document generation | **A ✅** | C ➕ | A's PDF skill is the standard |
 | 46 | Icon | NX ✅ | NL ➕ | NX has icon-design with 15 styles |
-| 47 | **Taste exploration / mood board** | **NX ✅** | A ➕ | NX's 71 design systems = 71 "taste samples"; A's theme-factory has 10 presets |
+| 47 | **Taste exploration / mood board** | **NX ✅** | TS ➕ A ➕ | NX's 71 design systems = 71 "taste samples"; 🆕 TS adds aesthetic-judgment guardrails (steers away from generic output); A's theme-factory has 10 presets |
 | 48 | Print / Banner / social images | NX ✅ | — | NX banner-design with 22 styles |
 | 49 | UI/UX component level | **NL ✅** | NX ➕ | NL is the specialist |
 | 50 | Brand voice | NX ✅ | CH ➕ | NX brand identity + CH marketing voice |
+| 50a | **Aesthetic judgment / avoid generic output** | **TS ✅** | NX ➕ | 🆕 v1.5 · TS governs *taste* (steers agents away from mediocre/generic results); NX governs *what to produce* |
 
 ### 4.6 Content · Marketing
 
@@ -270,7 +290,7 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 | # | Task | Primary | Secondary | Notes |
 |---:|---|---|---|---|
 | 58 | **Markdown / Obsidian** | **K ✅** | — | K is Obsidian creator's repo |
-| 59 | Knowledge graphs / JSON Canvas | K ✅ | — | K has Canvas skill |
+| 59 | Knowledge graphs / JSON Canvas | K ✅ | UA ➕ | K has Canvas skill; 🆕 UA builds knowledge graphs from code |
 | 60 | Personal notes | K ✅ | A ➕ | K Obsidian + A doc-coauthoring |
 | 61 | Meeting notes | C ✅ | K ➕ | C meeting-insights-analyzer |
 | 62 | Research synthesis | K ✅ | A ➕ | K notes + A doc output |
@@ -282,7 +302,8 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 | 63 | Email | C ✅ | — | C internal-comms |
 | 64 | Slack / chat | C ✅ | — | C slack-gif-creator etc. |
 | 65 | Project management | **O ✅** | AM ➕ | O plan management + AM commands |
-| 66 | Onboarding docs | A ✅ | AM ➕ | A doc-coauthoring |
+| 66 | Onboarding docs | A ✅ | UA ➕ AM ➕ | A doc-coauthoring; 🆕 UA generates onboarding guides from the codebase |
+| 66a | **Job search / resume / ATS** | **CO ✅** | — | 🆕 v1.5 · CO is the only career-automation vertical (resume/CV/ATS/application tracking) |
 
 ### 4.9 Data · Integration
 
@@ -300,7 +321,7 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 | 71 | **5-minute drop-in CLAUDE.md** | **MA ✅** | — | Single file, zero friction |
 | 72 | Browse / discover skill ecosystem | C ✅ | — | 864 SKILL.md index |
 | 73 | Learn the SKILL.md spec | A ✅ | OAI ➕ | A is official authority |
-| 74 | Multi-agent platform support | NX ✅ | NL ➕ V ➕ | NX covers 9 platforms |
+| 74 | Multi-agent platform support | NX ✅ | UA ➕ NL ➕ V ➕ | NX covers 9 platforms; 🆕 UA is multi-platform (claude/copilot/codex/opencode) |
 | 75 | Solo independent engineer | M ✅ | MA ➕ | M lightweight + MA anti-pattern |
 | 76 | Team / company adoption (general enterprise) | AM ✅ | AD ➕ O ➕ | AM hooks/commitlint/CoC; AD strict quality gates; O methodology enforcement |
 | 77 | 🆕 **YC / Startup opinionated setup** | **GS ✅** | AM ➕ | 🆕 v1.2 · Garry Tan's actual role setup — copy verbatim, no component picking |
@@ -329,14 +350,18 @@ C is an awesome-list, so **it overlaps with everyone** (by aggregating their ski
 | 🆕 **Cross-domain studio / multi-role agency** | **AA** + AM | AA provides 18-domain role agents; AM adds engineering harness |
 | 🆕 **Game development** | **AA** + M | AA has 20 game-dev agents (only v1.2 coverage); M adds engineering rigor |
 | 🆕 **"Best-in-class" SKILL.md template** | **GS** + A | GS avg 52KB = deepest cohort reference; A is the spec |
+| 🆕 **Inherit / onboard onto a legacy codebase** | **UA** + O | 🆕 v1.5 · UA maps the existing code into a knowledge graph; O adds discipline before you change it |
+| 🆕 **Spec-first product team** | **OS** + O + AM | 🆕 v1.5 · OS defines spec→tasks; O adds gates; AM supplies the capability pool to implement |
+| 🆕 **Job seeker / career automation** | **CO** + A | 🆕 v1.5 · CO handles resume/ATS/tracking; A for polished document output |
 
 ---
 
 ## 6. Coverage gaps (areas the cohort doesn't cover)
 
-The 15-repo cohort has **no specialist** for these domains — opportunities for future cohort additions:
+The cohort previously had **no specialist** for these domains — opportunities for future cohort additions:
 
 > ✅ **v1.2 closed**: ~~Game development~~ — **AA ships 20 game-development agents**
+> ✅ **v1.5 closed**: ~~Understand existing codebase~~ — **UA builds interactive knowledge graphs from existing code**; ~~Spec-driven development~~ — **OS ships a spec→tasks→implementation workflow**; ~~Job-search / career automation~~ — **CO is a full resume/CV/ATS/application-tracking vertical**
 
 | Gap | Best fallback | Suggestion |
 |---|---|---|
@@ -352,7 +377,7 @@ The 15-repo cohort has **no specialist** for these domains — opportunities for
 | **Quant / Trading algorithms** | M + AD | ⚠ Missing specialist |
 | **Offensive security** (pentest / red team) | AM, AD (defensive) | ⚠ No offensive specialist |
 
-> **Key observation (v1.2 update)**: the cohort is strong in *agent dev + design + web frontend + marketing + KM + **multi-role agency (v1.2 AA) + game-dev (v1.2 AA)***; weak in *low-level systems / GPU / multimodal ML / cloud IaC / smart contracts*. Deep systems / GPU / Web3 are still self-built territory.
+> **Key observation (v1.5 update)**: the cohort is strong in *agent dev + design + web frontend + marketing + KM + multi-role agency (AA) + game-dev (AA) + **codebase comprehension (v1.5 UA) + spec-driven dev (v1.5 OS) + job-search (v1.5 CO) + design taste (v1.5 TS) + recent-trend research (v1.5 L30)***; weak in *low-level systems / GPU / multimodal ML / cloud IaC / smart contracts*. Deep systems / GPU / Web3 are still self-built territory.
 
 ---
 
@@ -378,6 +403,8 @@ The 15-repo cohort has **no specialist** for these domains — opportunities for
 | **Game development** 🆕 | — | — | — | — | — | — | — | — | — | — | — | — | — | — | **✅** |
 | **Multi-role agency (CEO/Designer/QA/etc)** 🆕 | ➕ | — | — | — | — | — | — | — | — | — | — | — | — | **✅** | **✅** |
 | **Cross-domain (academic/finance/spatial)** 🆕 | ➕ | — | — | — | — | — | — | ➕ | — | — | — | — | — | — | **✅** |
+
+> 🆕 **v1.5 repos** (UA / OS / CO / TS / L30) open new domain rows not in the 13-repo matrix above: **codebase comprehension** (UA), **spec-driven dev** (OS), **job-search / career** (CO), **design taste** (TS), **recent-trend research** (L30). Each is the sole occupant of its column, so they are listed in §1 rather than scored here.
 
 ---
 

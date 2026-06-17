@@ -3,8 +3,10 @@
 > 🌐 **Language**: **🇨🇳 中文** · [🇬🇧 English](./TASK_GUIDE.en.md)
 
 > 🔄 **v1.2 同步 (2026-05-13)**：cohort 已扩到 **15 repos**，新增 `garrytan/gstack` (GS) 和 `msitarzewski/agency-agents` (AA)。详见 §1 末尾、§3.7、§5 推荐 stacks、§6 缺口更新。**AA 已填补 game-dev 缺口**（20 game-dev agents）。
+>
+> 🔄 **v1.5 同步 (2026-06-17)**：cohort 扩到 **21 repos**，新增 `Egonex-AI/Understand-Anything` (UA)、`Fission-AI/OpenSpec` (OS)、`santifer/career-ops` (CO)、`Leonxlnx/taste-skill` (TS)、`mvanhorn/last30days-skill` (L30)。**UA 填补"理解既有代码库"缺口，CO 填补"求职"缺口，OS 填补"spec-driven 开发"缺口。** 详见 §1 表末与 §6。
 
-从 15 个 skill repo 的**功能正交**角度，给定具体 AI agent 任务，应该装哪个 repo（或哪个组合）？本手册覆盖：
+从 21 个 skill repo 的**功能正交**角度，给定具体 AI agent 任务，应该装哪个 repo（或哪个组合）？本手册覆盖：
 
 - §1 — 13 个 repo 在功能版图上的位置
 - §2 — **AM × O × NX 三大代表 repo 的 overlap / 正交 / 互补**（用户重点关注）
@@ -15,7 +17,7 @@
 
 ---
 
-## 1. 15 个 repo 的功能正交位置 / Functional positioning
+## 1. 21 个 repo 的功能正交位置 / Functional positioning
 
 | Code | Repo | 正交位置（独占价值轴）|
 |---|---|---|
@@ -34,6 +36,11 @@
 | **MA** | `multica-ai/andrej-karpathy-skills` | **单文件行为指令** — Karpathy 4 条 LLM coding 反 anti-pattern 原则 |
 | **K**  | `kepano/obsidian-skills` | **Obsidian / Markdown / Canvas** — 知识管理唯一专项 |
 | **V**  | `vercel-labs/agent-skills` | **Vercel deploy + React/Next.js 实战** — 官方权威；live `WebFetch` 取最新 web 规则 |
+| **UA** 🆕 | `Egonex-AI/Understand-Anything` | **代码库理解 / 知识图谱** — 把既有 codebase 转成交互式知识图谱（节点/边/分层/导览）；填补"读懂 / onboard 既有大型代码库"缺口（cohort 此前各 repo 都偏"生产新代码"）；多平台 (claude/copilot/codex/opencode 等) |
+| **OS** 🆕 | `Fission-AI/OpenSpec` | **Spec-driven 开发** — spec→tasks→实现 的规格驱动工作流（0 个 SKILL.md，是 spec 工具而非技能集；517 docs）；与 O 的 process 方法论互补但更偏"先写规格再实现" |
+| **CO** 🆕 | `santifer/career-ops` | **求职 / 职业自动化** — 简历 / CV / ATS / 求职追踪垂直；cohort 全新领域；工程化极强 (D12=10)，13 语言 README |
+| **TS** 🆕 | `Leonxlnx/taste-skill` | **设计品味 / 审美判断** — 引导 agent 避免"通用/平庸"输出；与 NX（设计系统**产出**）正交（NX 管产出什么，TS 管审美判断/品味）；lesson 密度 41.4% |
+| **L30** 🆕 | `mvanhorn/last30days-skill` | **近期趋势研究** — 跨 Reddit/X/YouTube/HN/web 的近30天趋势；研究类新增；单个 140KB SKILL.md |
 
 ---
 
@@ -223,6 +230,8 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 | 29 | 安全审计 | AM ✅ | AD ➕ | 通用工程；专项弱 |
 | 30 | 架构决策 | O ✅ | AD ➕ AM ➕ | O 的 writing-plans + brainstorming |
 | 31 | 文档撰写 | A ✅ | K ➕ AD ➕ | A 含 doc-coauthoring；K 含 Markdown 格式专项 |
+| 31a 🆕 | **理解 / onboard 既有代码库** | **UA ✅** | O ➕ | UA 把 codebase 转成交互式知识图谱（节点/边/分层/导览）；cohort 唯一专做"读懂既有代码" |
+| 31b 🆕 | **Spec-driven 开发** (spec→实现) | **OS ✅** | O ➕ | OS 规格驱动工作流（spec→tasks→实现）；O 加方法论纪律 |
 
 ### 4.4 研究 / 实验 / 评测 / Research · Experimentation
 
@@ -236,6 +245,7 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 | 37 | 假设测试 / "做实验" | M ✅ | O ➕ | M /diagnose 强调 first-principles；O 加纪律 |
 | 38 | 论文写作 | A ✅ | K ➕ | A doc-coauthoring；K 笔记同步 |
 | 39 | Reproducibility / 复现 | O ✅ | MA ➕ | O 强制 verification；MA goal-driven execution |
+| 39a 🆕 | **近期趋势研究** (Reddit/X/YT/HN/web) | **L30 ✅** | C ➕ | L30 专做近 30 天跨平台趋势采集；C 搜索补充 |
 
 ### 4.5 设计 / 创意 / Design · Creative
 
@@ -252,6 +262,7 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 | 48 | 印刷 / Banner / 社交图 | NX ✅ | — | NX banner-design 22 styles |
 | 49 | UI/UX 组件级 | **NL ✅** | NX ➕ | NL component-level 最专 |
 | 50 | Brand voice | NX ✅ | CH ➕ | NX brand identity + CH 营销 voice |
+| 50a 🆕 | **审美判断 / 品味把关** | **TS ✅** | NX ➕ | TS 引导 agent 避免"通用/平庸"输出（NX 管产出什么，TS 管审美判断） |
 
 ### 4.6 内容 / 营销 / Content · Marketing
 
@@ -282,7 +293,8 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 | 63 | Email | C ✅ | — | C internal-comms |
 | 64 | Slack / chat | C ✅ | — | C slack-gif-creator 等 |
 | 65 | 项目管理 | **O ✅** | AM ➕ | O plan management + AM commands |
-| 66 | Onboarding 文档 | A ✅ | AM ➕ | A doc-coauthoring |
+| 66 | Onboarding 文档 | A ✅ | AM ➕ | A doc-coauthoring（UA ➕ 可生成既有代码库的知识图谱辅助 onboarding） |
+| 66a 🆕 | **求职 / 简历 / ATS / 求职追踪** | **CO ✅** | — | CO 求职自动化垂直（CV / ATS / tracking）；cohort 唯一专项 |
 
 ### 4.9 数据 / 集成 / Data · Integration
 
@@ -334,9 +346,11 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 
 ## 6. 覆盖缺口 / Coverage gaps（cohort 未覆盖领域）
 
-15 个 repo **没有专项覆盖**的领域 — 这是未来 cohort 扩张的方向：
+21 个 repo **没有专项覆盖**的领域 — 这是未来 cohort 扩张的方向：
 
 > ✅ **v1.2 已填补**：~~Game 开发~~ — **AA 含 20 个 game-development agents**
+>
+> ✅ **v1.5 已填补**：~~理解 / onboard 既有代码库~~ (**UA**)、~~Spec-driven 开发~~ (**OS**)、~~求职 / 职业自动化~~ (**CO**) — 此前 cohort 均无专项
 
 | 缺口 / Gap | 当前最佳替代 | 建议 |
 |---|---|---|
@@ -352,7 +366,7 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 | **Quant / Trading 算法** | M + AD | ⚠ 缺专项 |
 | **Security offensive** (pentest / red team) | AM, AD（防御侧） | ⚠ 缺 offensive 专项 |
 
-> **关键观察 (v1.2 更新)**：cohort 强在"agent 开发 + 设计 + web frontend + 营销 + 知识管理 + **多角色 agency (v1.2 AA 加入) + game-dev (v1.2 AA 加入)**"；弱在"low-level systems / GPU / 多模态 ML / cloud IaC / 智能合约"。深 system / GPU / Web3 仍处自建阶段。
+> **关键观察 (v1.5 更新)**：cohort 强在"agent 开发 + 设计 + web frontend + 营销 + 知识管理 + 多角色 agency (v1.2 AA) + game-dev (v1.2 AA) + **代码库理解 (v1.5 UA) + spec-driven 开发 (v1.5 OS) + 求职自动化 (v1.5 CO)**"；弱在"low-level systems / GPU / 多模态 ML / cloud IaC / 智能合约"。深 system / GPU / Web3 仍处自建阶段。
 
 ---
 

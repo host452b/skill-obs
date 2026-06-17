@@ -2,11 +2,11 @@
 
 > 🌐 **Language**: [🇨🇳 中文](./EVALUATION.md) · **🇬🇧 English**
 
-> Evaluation date: **2026-05-13**
-> Current snapshot: **v1.4** — **16-repo cohort × 21 dims** (v1.0 / v1.1 / v1.2 / v1.3 retained in `scoring.ipynb` history)
+> Evaluation date: **2026-06-17** (v1.5 · baseline v1.0 was 2026-05-13)
+> Current snapshot: **v1.5** — **21-repo cohort × 21 dims** (v1.0 / v1.1 / v1.2 / v1.3 / v1.4 retained in `scoring.ipynb` history)
 > Scoring scale: **1–10** (10 = best in cohort)
 > Max total: **210** (21 dims × 10)
-> ⚠ Note: §3/§4/§5 tables in this markdown still show v1.1 baseline for context. Latest v1.4 data (including GS / AA / CV / D16-D21) lives in `scoring.ipynb`. §11 covers v1.2 (D16-D19 social signals); §12 covers v1.3 (D20-D21 task-quality signals); **§13 covers v1.4 (CV caveman addition)**.
+> ⚠ Note: §3/§4/§5 tables in this markdown still show v1.1 baseline for context. Latest v1.4 data (including GS / AA / CV / D16-D21) lives in `scoring.ipynb`. §11 covers v1.2 (D16-D19 social signals); §12 covers v1.3 (D20-D21 task-quality signals); **§13 covers v1.4 (CV caveman addition)**; **§14 covers v1.5 (adds UA/OS/CO/TS/L30 — 5 repos)**.
 
 ## 1. Cohort
 
@@ -25,6 +25,11 @@
 | CH | [`coreyhaines31/marketingskills`](https://github.com/coreyhaines31/marketingskills) | 28,215 | 4,550 | 2026-01-15 | 2026-05-06 | Marketing / CRO / SEO |
 | **V** | **[`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills)** | **26,494** | **2,416** | **2025-12-08** | **2026-05-07** | **Vercel deploy + React/Next.js skills (🆕 v1.1)** |
 | OAI| [`openai/skills`](https://github.com/openai/skills) | 18,982 | 1,259 | 2025-11-25 | 2026-05-12 | Codex skills catalog |
+| **UA** 🆕 | **[`Egonex-AI/Understand-Anything`](https://github.com/Egonex-AI/Understand-Anything)** | **62,155** | **5,129** | **2026-03-15** | **2026-06-16** | **Codebase → interactive knowledge graph (🆕 v1.5)** |
+| **OS** 🆕 | **[`Fission-AI/OpenSpec`](https://github.com/Fission-AI/OpenSpec)** | **55,241** | **3,866** | **2025-08-05** | **2026-06-13** | **Spec-driven dev workflow for AI agents (🆕 v1.5)** |
+| **CO** 🆕 | **[`santifer/career-ops`](https://github.com/santifer/career-ops)** | **54,306** | **10,774** | **2026-04-04** | **2026-06-16** | **Job-search / career automation (🆕 v1.5)** |
+| **TS** 🆕 | **[`Leonxlnx/taste-skill`](https://github.com/Leonxlnx/taste-skill)** | **45,534** | **3,169** | **2026-02-19** | **2026-06-12** | **Design "taste" — steers off generic output (🆕 v1.5)** |
+| **L30** 🆕 | **[`mvanhorn/last30days-skill`](https://github.com/mvanhorn/last30days-skill)** | **43,681** | **3,592** | **2026-01-23** | **2026-06-17** | **Last-30-day trend research (🆕 v1.5)** |
 
 > Note: `forrestchang/andrej-karpathy-skills` is redirected by GitHub to `multica-ai/andrej-karpathy-skills` (owner rename/transfer); merged as a single entry.
 
@@ -590,3 +595,55 @@ CV is a **single-point viral repo**:
 CV is too new (created 2026-04-04), so **the 5-model evaluation in §1-§6 (collected before v1.2) does not cover CV**. To do a v1.4 full LLM re-evaluation, you'd need to re-prompt all 5 models on CV's operational value. The current v1.4 #6 is **this repo's internal scoring** — not the 5-model consensus.
 
 > For the full 21-dim × 16-repo colored matrix + Δ v1.3→v1.4: open `scoring.ipynb` (renders directly on GitHub, no execution needed).
+
+---
+
+## 14. v1.5 Snapshot — 5 repos added (cohort 16 → 21)
+
+This round expands the cohort from 16 to 21 repos with five additions: **UA** `Egonex-AI/Understand-Anything`, **OS** `Fission-AI/OpenSpec`, **CO** `santifer/career-ops`, **TS** `Leonxlnx/taste-skill`, **L30** `mvanhorn/last30days-skill`. All metrics are real data collected **2026-06-17** (D1-D7 via `gh` API, D8/D9/D13/D20 via local scan, D21 via `scan_lessons.py`, D18/D19 via HN Algolia). ⚠ **Reddit-403 caveat**: Reddit's search endpoint returned HTTP 403 at eval time, so **D16/D17 are unmeasured for the 5 new repos and floored to 1** (raw_metrics store a `-1` sentinel); the existing 16 repos retain their v1.4 Reddit data.
+
+### 14.1 Full v1.5 ranking (max 210)
+
+| Rank | Repo | Score | Tier |
+|---:|---|---:|:---:|
+| 🥇 1 | `garrytan/gstack` | 156 | S |
+| 🥈 2 | `affaan-m/everything-claude-code` | 154 | S |
+| 🥉 3 | `nexu-io/open-design` | 152 | S |
+| 4 | `obra/superpowers` | 150 | S |
+| 5 | `msitarzewski/agency-agents` | 146 | S |
+| 6 | `juliusbrussee/caveman` | 137 | A |
+| 7 | `anthropics/skills` | 136 | A |
+| 8 | `addyosmani/agent-skills` | 128 | A |
+| **9** | **`Egonex-AI/Understand-Anything`** 🆕 | **117** | **B** |
+| 10 | `mattpocock/skills` | 114 | B |
+| 11 | `openai/skills` | 113 | B |
+| **12** | **`santifer/career-ops`** 🆕 | **113** | **B** |
+| 13 | `ComposioHQ/awesome-claude-skills` | 111 | B |
+| 14 | `coreyhaines31/marketingskills` | 103 | B |
+| 15 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B |
+| 16 | `vercel-labs/agent-skills` | 101 | B |
+| **17** | **`mvanhorn/last30days-skill`** 🆕 | **98** | **C** |
+| **18** | **`Fission-AI/OpenSpec`** 🆕 | **97** | **C** |
+| 19 | `multica-ai/andrej-karpathy-skills` | 92 | C |
+| **20** | **`Leonxlnx/taste-skill`** 🆕 | **84** | **C** |
+| 21 | `kepano/obsidian-skills` | 72 | D |
+
+> Tier thresholds (max=210, per `tier_for_total()` in `build_scoring_notebook.py`): S+ ≥165, S ≥145, A ≥125, B ≥100, C ≥80, D <80. TS at 84 lands in **C** by this rule. CO and OAI tie at 113; OAI ranked ahead on tie-break (stable sort, existing-repo precedence).
+
+### 14.2 New-repo profiles
+
+- **UA — `Egonex-AI/Understand-Anything` (#9, B, 117)**: turns a codebase into an interactive knowledge graph — the most general-purpose newcomer (code-understanding / dev tooling). **Strongest**: D5=10 (pushed 1d ago), D6=9 (6.05 commits/day), D12=9 (hygiene), D13=8 (multi-platform), D15=8. **Weakest**: D8=2 (only 8 SKILL.md). Raw: 62,155★ / 5,129 forks / 200 watchers / 43 contribs / 94d alive / 661 stars-day; 8 SKILL.md @ ~10KB avg, lesson 14.2%.
+- **CO — `santifer/career-ops` (#12, B, 113)**: job-search / career automation (CV, ATS, application tracking) — niche but exceptionally well-kept. **Strongest**: D12=10 (the strongest engineering hygiene in the whole cohort), D5=10, D11=9 (13-language READMEs), D7=8, D3=7 (10.7k forks — second-highest fork count in cohort). **Weakest**: D14=3 (narrow domain), D8=2. Raw: 54,306★ / 10,774 forks / 207 watchers / 93 contribs / 74d / 734 stars-day; 4 SKILL.md @ ~4KB, 110 supporting docs incl. 13-language READMEs, lesson 12.3%.
+- **L30 — `mvanhorn/last30days-skill` (#17, C, 98)**: researches last-30-day trends across Reddit / X / YouTube / HN / web (trend-research niche). **Strongest**: D9=10 (its single SKILL.md is 140KB — the **deepest single skill in the entire cohort**), D5=10, D6=8, D7=7. **Weakest**: D8=1 (one skill) and D20=1 (that one giant skill is the worst-decomposed in cohort — D9/D20 directly conflict here). Raw: 43,681★ / 3,592 forks / 153 watchers / 48 contribs / 145d / 301 stars-day; 1 SKILL.md @ 140KB, lesson 14.3%.
+- **OS — `Fission-AI/OpenSpec` (#18, C, 97)**: spec-driven development workflow for AI coding agents (general methodology). It is a **spec tool, not a skill pack** — 0 `SKILL.md` files but 517 supporting docs. **Strongest**: D7=8 (60 contribs — most-contributed newcomer), D10=8, D12=9 (hygiene), D15=8. **Weakest**: D8=1, D9=1 (no SKILL.md to measure), D21=3. Raw: 55,241★ / 3,866 forks / 245 watchers / 60 contribs / 316d (oldest newcomer) / 175 stars-day; lesson 5.8%.
+- **TS — `Leonxlnx/taste-skill` (#20, C, 84)**: a design-"taste" skill that steers agents away from generic, templated output (niche but cross-cutting aesthetics). **Strongest**: D21=9 (lesson 41.4% — the **highest lesson density of any newcomer**), D9=9 (23KB avg — deepest newcomer skills), D15=7. **Weakest**: D7=2 (only 6 contributors) and D13=1 (single-platform). Raw: 45,534★ / 3,169 forks / 132 watchers / 6 contribs / 118d / 386 stars-day; 13 SKILL.md @ ~23KB avg, lesson 41.4%.
+
+### 14.3 Data sources & caveats
+
+1. **Reddit-403 → D16/D17 floored to 1 for the 5 new repos.** Reddit's `search.json` returned HTTP 403 during this collection run, so social-heat/sentiment could not be sampled for UA/OS/CO/TS/L30; their raw_metrics carry a `-1` sentinel and the dimensions are floored to 1. The original 16 repos keep their v1.4 Reddit figures, so cross-repo D16/D17 comparisons against newcomers are not meaningful this round.
+2. **Data sources**: D1-D7 via `gh` API; D8/D9/D13/D20 via local submodule scan; D21 via `scan_lessons.py`; D18/D19 via HN Algolia. HN signal for newcomers is sparse (TS and L30 each have 1 story, the rest 0).
+3. **OS measured as a spec tool**: with 0 `SKILL.md`, OS scores near-floor on D8/D9/D20/D21 by construction — this reflects format, not lack of value; its strength is methodology + docs (D7/D10/D12/D15).
+4. **L30's D9=10 vs D20=1** is the sharpest case of the D9↔D20 conflict noted in §12.5(3): one 140KB skill is simultaneously the "deepest" and the "least decomposed."
+5. **Runtime caveats from v1.2-v1.4 still apply** (query contamination, launch-wave velocity bias, HN sparsity) to the carried-over 16-repo data.
+
+> For the full 21-dim × 21-repo colored matrix + Δ v1.4→v1.5: open `scoring.ipynb` (renders directly on GitHub, no execution needed).

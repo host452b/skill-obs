@@ -3,15 +3,15 @@
 > 🌐 **Language**: [🇨🇳 中文](./README.md) · **🇬🇧 English**
 
 > **Skill Observatory** — a meta-repository that benchmarks the current Agent Skills / Claude Skills ecosystem.
-> 12 of the most active skill-collection repos are vendored in as **git submodules**, scored across **15 dimensions**, visualized in a notebook, and tracked over time via append-only snapshots.
+> 21 skill-collection repos are vendored in as **git submodules**, scored across **21 dimensions**, visualized in a notebook, and tracked over time via append-only snapshots.
 
-[![Eval baseline](https://img.shields.io/badge/eval-2026--05--13-blue)](./EVALUATION.en.md)
+[![Eval baseline](https://img.shields.io/badge/eval-2026--06--17-blue)](./EVALUATION.en.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Task Guide](https://img.shields.io/badge/task→repo-TASK__GUIDE-red)](./TASK_GUIDE.en.md)
 [![5-Model Summary](https://img.shields.io/badge/5_AI_model_xref-agent__summary-blueviolet)](./agent_summary.en.md)
-[![Cohort size](https://img.shields.io/badge/repos-16-green)](./.gitmodules)
+[![Cohort size](https://img.shields.io/badge/repos-21-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-21-purple)](./EVALUATION.en.md#2-15-evaluation-dimensions)
-[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2_·_v1.3_·_v1.4-yellow)](./scoring.ipynb)
+[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_→_v1.5-yellow)](./scoring.ipynb)
 [![Social signals](https://img.shields.io/badge/Reddit_+_HN-30d_sampled-orange)](./scoring.ipynb)
 [![Quality signals](https://img.shields.io/badge/D20_Decomp_+_D21_Lessons-v1.3-pink)](./EVALUATION.en.md)
 
@@ -78,37 +78,47 @@ skill-obs/
     ├── vercel-labs__agent-skills/
     ├── garrytan__gstack/                       ← 🆕 v1.2
     ├── msitarzewski__agency-agents/            ← 🆕 v1.2
-    └── juliusbrussee__caveman/                 ← 🆕 v1.4 (token-efficient)
+    ├── juliusbrussee__caveman/                 ← 🆕 v1.4 (token-efficient)
+    ├── Egonex-AI__Understand-Anything/          ← 🆕 v1.5 (codebase→knowledge graph)
+    ├── Fission-AI__OpenSpec/                     ← 🆕 v1.5 (spec-driven dev)
+    ├── santifer__career-ops/                     ← 🆕 v1.5 (job-search automation)
+    ├── Leonxlnx__taste-skill/                    ← 🆕 v1.5 (design taste)
+    └── mvanhorn__last30days-skill/               ← 🆕 v1.5 (trend research)
 ```
 
-## 🏆 Top-line Findings (latest snapshot **v1.4** · 2026-05-13 · max **210**)
+## 🏆 Top-line Findings (latest snapshot **v1.5** · 2026-06-17 · max **210**)
 
-| Rank | Repo | Score /210 | Tier | Tagline |
+| Rank | Repo | Score / 210 | Tier | Tag |
 |---:|---|---:|:---:|---|
 | 🥇 1 | [`garrytan/gstack`](https://github.com/garrytan/gstack) | **156** | S | Garry Tan setup — D9=10 (52KB deepest) + D21=8 |
-| 🥈 2 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 154 | S | Comprehensive — de-facto standard |
-| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 152 | S | Design lane + D20=9 |
+| 🥈 2 | [`affaan-m/everything-claude-code`](https://github.com/affaan-m/everything-claude-code) | 154 | S | All-in-one — de-facto standard |
+| 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 152 | S | Design track + D20=9 |
 | 4 | [`obra/superpowers`](https://github.com/obra/superpowers) | 150 | S | Original methodology — D21=7 |
 | 5 | [`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents) | 146 | S | "AI agency" — 222 agents across 18 domains |
-| **6** | **[`juliusbrussee/caveman`](https://github.com/juliusbrussee/caveman)** | **137** | A | 🆕 v1.4 · "talk caveman, save 65% tokens" — viral (60k stars in 39 days); fills token-efficient prompt-engineering gap |
+| 6 | [`juliusbrussee/caveman`](https://github.com/juliusbrussee/caveman) | 137 | A | "talk caveman, save 65% tokens" — token-efficient prompt engineering |
 | 7 | `anthropics/skills` | 136 | A | Official spec |
 | 8 | `addyosmani/agent-skills` | 128 | A | Production-grade — D21=9 |
-| 9 | `mattpocock/skills` | 114 | B | TS lens — D20=9 |
-| 10 | `openai/skills` | 113 | B | Codex companion — D21=8 |
-| 11 | `ComposioHQ/awesome-claude-skills` | 111 | B | D21=10 (awesome-list noise caveat) |
-| 12 | `coreyhaines31/marketingskills` | 103 | B | Marketing vertical |
-| 13 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | UI/UX product polish |
-| 14 | `vercel-labs/agent-skills` | 101 | B | Vercel official |
-| 15 | `multica-ai/andrej-karpathy-skills` | 92 | C | D20=10 + D21=9 but other dims weak |
-| 16 | `kepano/obsidian-skills` | 72 | D | Obsidian-specialized |
+| **9** | **[`Egonex-AI/Understand-Anything`](https://github.com/Egonex-AI/Understand-Anything)** | **117** | B | 🆕 v1.5 · codebase→interactive knowledge graph; D5=10/D6=9/D12=9/D13=8 (multi-platform), 661 stars/day |
+| 10 | `mattpocock/skills` | 114 | B | TS lens — D20=9 |
+| 11 | `openai/skills` | 113 | B | Codex companion — D21=8 |
+| **12** | **[`santifer/career-ops`](https://github.com/santifer/career-ops)** | **113** | B | 🆕 v1.5 · job-search/career automation; D12=10 (strongest eng hygiene) + D3=7 (10.7k forks) + 13-language READMEs, 734 stars/day |
+| 13 | `ComposioHQ/awesome-claude-skills` | 111 | B | D21=10 (with awesome-list noise caveat) |
+| 14 | `coreyhaines31/marketingskills` | 103 | B | Marketing vertical |
+| 15 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | UI/UX productized |
+| 16 | `vercel-labs/agent-skills` | 101 | B | Vercel official |
+| **17** | **[`mvanhorn/last30days-skill`](https://github.com/mvanhorn/last30days-skill)** | **98** | C | 🆕 v1.5 · last-30-day trend research; D9=10 (single 140KB SKILL.md, deepest in cohort) but D20=1 (one giant skill) |
+| **18** | **[`Fission-AI/OpenSpec`](https://github.com/Fission-AI/OpenSpec)** | **97** | C | 🆕 v1.5 · spec-driven development; 0 SKILL.md (spec tool) but D12=9 + 517 docs |
+| 19 | `multica-ai/andrej-karpathy-skills` | 92 | C | D20=10 + D21=9 but low elsewhere |
+| **20** | **[`Leonxlnx/taste-skill`](https://github.com/Leonxlnx/taste-skill)** | **84** | C | 🆕 v1.5 · design "taste" skill; D21=9 (41.4% lesson density, highest among newcomers) + D9=9 (13 skills avg 23KB) but low community/contributors |
+| 21 | `kepano/obsidian-skills` | 72 | D | Obsidian vertical |
 
-> **v1.3 → v1.4 changes**:
-> 1. Added `juliusbrussee/caveman` (CV) — only **token-efficient prompt-engineering** specialist ("talk caveman, save tokens"). **60k stars in 39 days = 1548 stars/day** (near NX's launch peak); 4.67 commits/day (cohort #3); 9 platforms (**first to mention antigravity**)
-> 2. CV total **137 (#6, tier A)** — beats anthropics/skills by 1 point to enter top-7
-> 3. CV's strongest dims: D6/D13/D17 all 9-10
-> 4. CV's weakest dims: D3/D4/D8/D9 (small footprint); D14 (single prompt-engineering vertical)
-> 5. Cohort: 15 → **16 repos**; total dims 21 unchanged; max total 210 unchanged
-> 6. Full v1.3 → v1.4 Δ-diff in `scoring.ipynb` cell 7.
+> **v1.4 → v1.5 changes**:
+> 1. Cohort **16 → 21 repos**: added `Egonex-AI/Understand-Anything` (UA), `Fission-AI/OpenSpec` (OS), `santifer/career-ops` (CO), `Leonxlnx/taste-skill` (TS), `mvanhorn/last30days-skill` (L30). Total dims 21 unchanged; max 210 unchanged.
+> 2. **Real data** (collected 2026-06-17): D1-D7 via `gh` API; D8/D9/D13/D20 via local structural scan; D21 via `scan_lessons.py`; D18/D19 via HN Algolia.
+> 3. ⚠️ **Reddit unreachable** (HTTP 403): D16/D17 for the 5 new repos are unmeasured, floored to 1 (recorded as `-1` sentinel in `raw_metrics`). The existing 16 repos retain their v1.4 Reddit data.
+> 4. Best newcomers: **UA #9 (B)** — engineering + multi-platform + high velocity; **CO #12 (B)** — strongest D12 hygiene + 13-language i18n.
+> 5. Extremes: **L30** has a single **140KB** SKILL.md (deepest in cohort → D9=10, but D20=1); **TS** has **41.4%** lesson density (highest among newcomers → D21=9).
+> 6. Full v1.4 → v1.5 Δ-diff in `scoring.ipynb` cell 7.
 
 Full score matrix, by-domain recommendations, methodology, and caveats: **[`EVALUATION.en.md`](./EVALUATION.en.md)**.
 
