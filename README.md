@@ -226,6 +226,8 @@ skill-obs/
 - 抄 **L30 的 ADR 纪律**：确定性契约入阻断门；贵且不确定的 LLM-judge eval 留 `workflow_dispatch` 手动。
 - 抄 **OpenSpec 的 migration + drift 测试**：把「升级后落到用户磁盘的 skill 文件」当一个被测的契约。
 
+> 📄 完整的「测试设计借鉴 + 落地模板」（七条设计原则、LLM-judge 实现骨架、最小目录布局、两层 CI、决策表、反模式、出处映射）见 **[`skill_test.md`](./skill_test.md)**。
+
 ## 🎨 Notebook 渲染示意 / Notebook preview
 
 `scoring.ipynb` 的 11 个 cells：

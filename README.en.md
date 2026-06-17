@@ -231,6 +231,8 @@ There is **no** standardized "skill-testing framework." The real stack falls int
 - Steal **L30's ADR discipline**: deterministic contracts in the blocking gate; expensive/non-deterministic LLM-judge evals kept manual via `workflow_dispatch`.
 - Steal **OpenSpec's migration + drift tests**: treat "the skill files that end up on the user's disk after an upgrade" as a tested contract.
 
+> 📄 The full "patterns + starter template" (7 design principles, LLM-judge skeleton, minimal layout, two-tier CI, decision table, anti-patterns, source map): **[`skill_test.md`](./skill_test.md)**.
+
 ## 🎨 Notebook Layout
 
 `scoring.ipynb` is **pre-rendered** — each code cell source is just `# Title` and the visualization is baked into `outputs[].data['text/html']`. **GitHub renders it directly without a kernel.**
