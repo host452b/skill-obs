@@ -5,13 +5,13 @@
 > **Skill Observatory** — 一个对当下 Agent Skills / Claude Skills 生态做横向评测的元仓库。
 > 12 个主流 skill collection repo 作为 git submodule，配 15 维度评分 + 可视化 notebook + append-only 评估历史。
 
-[![Eval baseline](https://img.shields.io/badge/eval-2026--05--13-blue)](./EVALUATION.md)
+[![Eval baseline](https://img.shields.io/badge/eval-2026--06--17-blue)](./EVALUATION.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
 [![Task Guide](https://img.shields.io/badge/任务→repo-TASK__GUIDE-red)](./TASK_GUIDE.md)
 [![5-Model Summary](https://img.shields.io/badge/5_AI_模型对比-agent__summary-blueviolet)](./agent_summary.md)
-[![Cohort size](https://img.shields.io/badge/repos-16-green)](./.gitmodules)
+[![Cohort size](https://img.shields.io/badge/repos-21-green)](./.gitmodules)
 [![Dimensions](https://img.shields.io/badge/dimensions-21-purple)](./EVALUATION.md#2-15-个评测维度--15-evaluation-dimensions)
-[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_·_v1.1_·_v1.2_·_v1.3_·_v1.4-yellow)](./scoring.ipynb)
+[![Snapshots](https://img.shields.io/badge/snapshots-v1.0_→_v1.5-yellow)](./scoring.ipynb)
 [![Social signals](https://img.shields.io/badge/Reddit_+_HN-30d_sampled-orange)](./scoring.ipynb)
 [![Quality signals](https://img.shields.io/badge/D20_Decomp_+_D21_Lessons-v1.3-pink)](./EVALUATION.md)
 
@@ -73,10 +73,15 @@ skill-obs/
     ├── obra__superpowers/
     ├── openai__skills/
     ├── addyosmani__agent-skills/
-    └── vercel-labs__agent-skills/
+    ├── vercel-labs__agent-skills/
+    ├── Egonex-AI__Understand-Anything/          ← 🆕 v1.5 (codebase→knowledge graph)
+    ├── Fission-AI__OpenSpec/                     ← 🆕 v1.5 (spec-driven dev)
+    ├── santifer__career-ops/                     ← 🆕 v1.5 (job-search automation)
+    ├── Leonxlnx__taste-skill/                    ← 🆕 v1.5 (design taste)
+    └── mvanhorn__last30days-skill/               ← 🆕 v1.5 (trend research)
 ```
 
-## 🏆 Top-line Findings (latest snapshot **v1.4** · 2026-05-13 · max **210**)
+## 🏆 Top-line Findings (latest snapshot **v1.5** · 2026-06-17 · max **210**)
 
 | Rank | Repo | Score / 210 | Tier | 标签 |
 |---:|---|---:|:---:|---|
@@ -85,25 +90,30 @@ skill-obs/
 | 🥉 3 | [`nexu-io/open-design`](https://github.com/nexu-io/open-design) | 152 | S | 设计赛道 + D20=9 |
 | 4 | [`obra/superpowers`](https://github.com/obra/superpowers) | 150 | S | 原创方法论 — D21=7 |
 | 5 | [`msitarzewski/agency-agents`](https://github.com/msitarzewski/agency-agents) | 146 | S | "AI agency" — 222 个 agent 跨 18 领域 |
-| **6** | **[`juliusbrussee/caveman`](https://github.com/juliusbrussee/caveman)** | **137** | A | 🆕 v1.4 · "talk caveman, save 65% tokens" — viral (60k stars/39 天)；填补 token-efficient prompt engineering 缺口 |
+| 6 | [`juliusbrussee/caveman`](https://github.com/juliusbrussee/caveman) | 137 | A | "talk caveman, save 65% tokens" — token-efficient prompt engineering |
 | 7 | `anthropics/skills` | 136 | A | 官方规范 |
 | 8 | `addyosmani/agent-skills` | 128 | A | 生产级 — D21=9 |
-| 9 | `mattpocock/skills` | 114 | B | TS 视角 — D20=9 |
-| 10 | `openai/skills` | 113 | B | Codex 配套 — D21=8 |
-| 11 | `ComposioHQ/awesome-claude-skills` | 111 | B | D21=10 (含 awesome-list noise caveat) |
-| 12 | `coreyhaines31/marketingskills` | 103 | B | 营销垂直 |
-| 13 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | UI/UX 产品化 |
-| 14 | `vercel-labs/agent-skills` | 101 | B | Vercel 官方 |
-| 15 | `multica-ai/andrej-karpathy-skills` | 92 | C | D20=10 + D21=9 但其他维度低 |
-| 16 | `kepano/obsidian-skills` | 72 | D | Obsidian 垂直 |
+| **9** | **[`Egonex-AI/Understand-Anything`](https://github.com/Egonex-AI/Understand-Anything)** | **117** | B | 🆕 v1.5 · 代码库→交互式知识图谱；D5=10/D6=9/D12=9/D13=8（多平台），661 stars/day |
+| 10 | `mattpocock/skills` | 114 | B | TS 视角 — D20=9 |
+| 11 | `openai/skills` | 113 | B | Codex 配套 — D21=8 |
+| **12** | **[`santifer/career-ops`](https://github.com/santifer/career-ops)** | **113** | B | 🆕 v1.5 · 求职/简历自动化；D12=10（最强工程化）+ D3=7（10.7k forks）+ 13 语言 README，734 stars/day |
+| 13 | `ComposioHQ/awesome-claude-skills` | 111 | B | D21=10 (含 awesome-list noise caveat) |
+| 14 | `coreyhaines31/marketingskills` | 103 | B | 营销垂直 |
+| 15 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B | UI/UX 产品化 |
+| 16 | `vercel-labs/agent-skills` | 101 | B | Vercel 官方 |
+| **17** | **[`mvanhorn/last30days-skill`](https://github.com/mvanhorn/last30days-skill)** | **98** | C | 🆕 v1.5 · 近30天趋势研究；D9=10（单文件 140KB 最深 SKILL.md）但 D20=1（巨型单技能） |
+| **18** | **[`Fission-AI/OpenSpec`](https://github.com/Fission-AI/OpenSpec)** | **97** | C | 🆕 v1.5 · spec-driven 开发；0 个 SKILL.md（spec 工具）但 D12=9 + 517 docs |
+| 19 | `multica-ai/andrej-karpathy-skills` | 92 | C | D20=10 + D21=9 但其他维度低 |
+| **20** | **[`Leonxlnx/taste-skill`](https://github.com/Leonxlnx/taste-skill)** | **84** | C | 🆕 v1.5 · 设计"品味"技能；D21=9（41.4% lesson 密度最高）+ D9=9（13 技能均 23KB）但社区/contrib 低 |
+| 21 | `kepano/obsidian-skills` | 72 | D | Obsidian 垂直 |
 
-> **v1.3 → v1.4 变更**：
-> 1. 新增 `juliusbrussee/caveman` (CV) — **token-efficient prompt engineering** 唯一专项（"talk caveman, save tokens"）。**60k 星 / 39 天 = 1548 stars/day**（接近 NX 的 launch 峰值），4.67 commits/day（cohort 第 3 高），9 平台（**首个含 antigravity**）
-> 2. CV 总分 **137 (#6, A 级)**，仅 1 分超过 anthropics/skills 进 top-7
-> 3. CV 的 strongest dims：D6/D13/D17 都拉到 9-10
-> 4. CV 的 weakest dims：D3/D4/D8/D9 (体量小)、D14 (单一 prompt-engineering 垂直)
-> 5. Cohort: 15 → **16 repos**；总维度数 21 不变；max total 210 不变
-> 6. 完整 v1.3 → v1.4 Δ-diff 见 `scoring.ipynb` 第 7 cell。
+> **v1.4 → v1.5 变更**：
+> 1. Cohort **16 → 21 repos**：新增 `Egonex-AI/Understand-Anything` (UA)、`Fission-AI/OpenSpec` (OS)、`santifer/career-ops` (CO)、`Leonxlnx/taste-skill` (TS)、`mvanhorn/last30days-skill` (L30)。总维度数 21 不变；max 210 不变。
+> 2. **真实数据**（2026-06-17 采集）：D1-D7 via `gh` API；D8/D9/D13/D20 本地结构扫描；D21 via `scan_lessons.py`；D18/D19 via HN Algolia。
+> 3. ⚠️ **Reddit 不可达**（HTTP 403）：5 个新 repo 的 D16/D17 未测量，floored 到 1（`raw_metrics` 中记为 `-1` sentinel）。既有 16 repo 的 v1.4 reddit 数据保留。
+> 4. 最佳新晋：**UA #9 (B)** — 工程化 + 多平台 + 高 velocity；**CO #12 (B)** — 最强 D12 工程化 + 13 语言 i18n。
+> 5. 极值：**L30** 单个 SKILL.md 达 **140KB**（全 cohort 最深 → D9=10，但 D20=1）；**TS** lesson 密度 **41.4%**（全新晋最高 → D21=9）。
+> 6. 完整 v1.4 → v1.5 Δ-diff 见 `scoring.ipynb` 第 7 cell。
 
 完整评分矩阵、按领域/角色推荐、方法论与 caveat 见 **[`EVALUATION.md`](./EVALUATION.md)**。
 

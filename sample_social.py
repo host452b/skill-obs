@@ -44,6 +44,14 @@ REPOS = [
     ('MA',  'multica-ai',       'andrej-karpathy-skills'),
     ('K',   'kepano',           'obsidian-skills'),
     ('V',   'vercel-labs',      'agent-skills'),
+    ('GS',  'garrytan',         'gstack'),
+    ('AA',  'msitarzewski',     'agency-agents'),
+    ('CV',  'juliusbrussee',    'caveman'),
+    ('UA',  'Egonex-AI',        'Understand-Anything'),
+    ('OS',  'Fission-AI',       'OpenSpec'),
+    ('CO',  'santifer',         'career-ops'),
+    ('TS',  'Leonxlnx',         'taste-skill'),
+    ('L30', 'mvanhorn',         'last30days-skill'),
 ]
 
 USER_AGENT = 'skill-obs/1.0 (https://github.com/host452b/skill-obs)'

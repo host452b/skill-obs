@@ -4,6 +4,8 @@
 
 本文档收录了 5 个不同 AI 模型（Claude / ChatGPT / Gemini / Grok / Perplexity）独立评估本仓库 15 个 skill repos 后的对比总结。**这不是我自己产出的评分**（评分见 [`EVALUATION.md`](./EVALUATION.md)），而是把不同模型在面对同一份 cohort 数据时给出的判断做了横向汇总。
 
+> ⏱️ **快照说明（v1.5 更新）**：本五模型对比基于 **15-repo cohort**（v1.3 时期）采集,**早于 v1.5 的 21-repo 扩容**（新增 UA/OS/CO/TS/L30）。这 5 个新 repo 未纳入本次跨模型评测;它们的本仓库自评分见 [`EVALUATION.md §14`](./EVALUATION.md)。重跑五模型对比是后续工作。
+
 相关文档：
 - 评分细节 → [`EVALUATION.md`](./EVALUATION.md) · [`scoring.ipynb`](./scoring.ipynb)
 - 按任务选 repo → [`TASK_GUIDE.md`](./TASK_GUIDE.md)

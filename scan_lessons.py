@@ -36,6 +36,12 @@ REPOS = [
     ('V',   'vercel-labs__agent-skills'),
     ('GS',  'garrytan__gstack'),
     ('AA',  'msitarzewski__agency-agents'),
+    ('CV',  'juliusbrussee__caveman'),
+    ('UA',  'Egonex-AI__Understand-Anything'),
+    ('OS',  'Fission-AI__OpenSpec'),
+    ('CO',  'santifer__career-ops'),
+    ('TS',  'Leonxlnx__taste-skill'),
+    ('L30', 'mvanhorn__last30days-skill'),
 ]
 
 # Failure-lesson markers (the user's criterion #3)

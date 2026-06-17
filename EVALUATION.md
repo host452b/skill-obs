@@ -3,10 +3,10 @@
 > 🌐 **Language**: **🇨🇳 中文** · [🇬🇧 English](./EVALUATION.en.md)
 
 > 评测日期 / Date: **2026-05-13**  
-> 当前 Snapshot / Current: **v1.4** — **16-repo cohort × 21 dims**（v1.0 / v1.1 / v1.2 / v1.3 历史在 `scoring.ipynb`）  
+> 当前 Snapshot / Current: **v1.5** — **21-repo cohort × 21 dims**（v1.0 / v1.1 / v1.2 / v1.3 / v1.4 历史在 `scoring.ipynb`）  
 > 评分量表 / Scale: **1–10** (10 = best in cohort)  
 > 总分上限 / Max total: **210** (21 dims × 10)  
-> ⚠ 注意：本 markdown 中 §3/§4/§5 表格仍展示 v1.1 baseline 数据用于上下文。最新 v1.4 数据（含 GS / AA / CV / D16-D21）请看 `scoring.ipynb`。§11 给出 v1.2 (D16-D19 社交信号)；§12 给出 v1.3 (D20-D21 任务质量信号)；**§13 给出 v1.4 (CV caveman 加入)**。
+> ⚠ 注意：本 markdown 中 §3/§4/§5 表格仍展示 v1.1 baseline 数据用于上下文。最新 v1.4 数据（含 GS / AA / CV / D16-D21）请看 `scoring.ipynb`。§11 给出 v1.2 (D16-D19 社交信号)；§12 给出 v1.3 (D20-D21 任务质量信号)；**§13 给出 v1.4 (CV caveman 加入)**；**§14 给出 v1.5（新增 UA/OS/CO/TS/L30 共 5 repo）**。
 
 ## 1. 入选仓库 / Cohort
 
@@ -25,6 +25,11 @@
 | CH | [`coreyhaines31/marketingskills`](https://github.com/coreyhaines31/marketingskills) | 28,215 | 4,550 | 2026-01-15 | 2026-05-06 | Marketing / CRO / SEO |
 | **V** | **[`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills)** | **26,494** | **2,416** | **2025-12-08** | **2026-05-07** | **Vercel deploy + React/Next.js skills (🆕 v1.1)** |
 | OAI| [`openai/skills`](https://github.com/openai/skills) | 18,982 | 1,259 | 2025-11-25 | 2026-05-12 | Codex skills catalog |
+| **UA** 🆕 | **[`Egonex-AI/Understand-Anything`](https://github.com/Egonex-AI/Understand-Anything)** | **62,155** | **5,129** | **2026-03-15** | **2026-06-16** | **代码库→交互式知识图谱 (🆕 v1.5)** |
+| **OS** 🆕 | **[`Fission-AI/OpenSpec`](https://github.com/Fission-AI/OpenSpec)** | **55,241** | **3,866** | **2025-08-05** | **2026-06-13** | **spec-driven 开发工作流 (🆕 v1.5)** |
+| **CO** 🆕 | **[`santifer/career-ops`](https://github.com/santifer/career-ops)** | **54,306** | **10,774** | **2026-04-04** | **2026-06-16** | **求职/简历自动化 CV/ATS/tracking (🆕 v1.5)** |
+| **TS** 🆕 | **[`Leonxlnx/taste-skill`](https://github.com/Leonxlnx/taste-skill)** | **45,534** | **3,169** | **2026-02-19** | **2026-06-12** | **设计"品味"技能，避免通用输出 (🆕 v1.5)** |
+| **L30** 🆕 | **[`mvanhorn/last30days-skill`](https://github.com/mvanhorn/last30days-skill)** | **43,681** | **3,592** | **2026-01-23** | **2026-06-17** | **近 30 天趋势研究 Reddit/X/YouTube/HN/web (🆕 v1.5)** |
 
 > 注 / Note: `forrestchang/andrej-karpathy-skills` 已被 GitHub 重定向到 `multica-ai/andrej-karpathy-skills`（仓库迁移/重命名），合并为同一项。
 
@@ -589,3 +594,57 @@ CV 是个**单点 viral repo**：
 CV 太新（创建于 2026-04-04），**§1-§6 的 5 模型评测都在 v1.2 之前进行**，**没有涵盖 CV**。如果未来想做 v1.4 完整 LLM 复评，需要重新 prompt 5 个模型评 CV 的实战价值。当前 v1.4 #6 是**本仓库自评分**，不代表 5 模型共识。
 
 > 想看完整 21-dim × 16-repo 染色矩阵 + Δ v1.3→v1.4：打开 `scoring.ipynb`（GitHub 直接渲染，无需执行）。
+
+## 14. v1.5 Snapshot — 新增 5 repo (cohort 16 → 21)
+
+v1.5 把 cohort 从 16 扩到 **21**，新增 5 个 repo：**UA** (`Egonex-AI/Understand-Anything`)、**OS** (`Fission-AI/OpenSpec`)、**CO** (`santifer/career-ops`)、**TS** (`Leonxlnx/taste-skill`)、**L30** (`mvanhorn/last30days-skill`)。本轮数据为真实采集，时间戳 **2026-06-17**（D1-D7 走 `gh` API，D8/D9/D13/D20 本地扫描，D21 `scan_lessons.py`，D18/D19 HN Algolia）。
+
+> ⚠ **Reddit-403 caveat**：采集时 Reddit 公共 API 不可达（HTTP 403），**5 个新 repo 的 D16/D17 未测量，floored 到 1**（`raw_metrics` 记 `-1` sentinel）。既有 16 个 repo 保留 v1.4 的 Reddit 数据。因此新 repo 的总分在 social 两维上被低估，下面排名以"已采集维度"为准。
+
+### 14.1 v1.5 完整排行（21 repos · max 210）
+
+| Rank | Repo | Score | Tier |
+|---:|---|---:|:---:|
+| 🥇 1 | `garrytan/gstack` | 156 | S |
+| 🥈 2 | `affaan-m/everything-claude-code` | 154 | S |
+| 🥉 3 | `nexu-io/open-design` | 152 | S |
+| 4 | `obra/superpowers` | 150 | S |
+| 5 | `msitarzewski/agency-agents` | 146 | S |
+| 6 | `juliusbrussee/caveman` | 137 | A |
+| 7 | `anthropics/skills` | 136 | A |
+| 8 | `addyosmani/agent-skills` | 128 | A |
+| **9** | **`Egonex-AI/Understand-Anything`** 🆕 | **117** | B |
+| 10 | `mattpocock/skills` | 114 | B |
+| 11 | `openai/skills` | 113 | B |
+| **12** | **`santifer/career-ops`** 🆕 | **113** | B |
+| 13 | `ComposioHQ/awesome-claude-skills` | 111 | B |
+| 14 | `coreyhaines31/marketingskills` | 103 | B |
+| 15 | `nextlevelbuilder/ui-ux-pro-max-skill` | 102 | B |
+| 16 | `vercel-labs/agent-skills` | 101 | B |
+| **17** | **`mvanhorn/last30days-skill`** 🆕 | **98** | C |
+| **18** | **`Fission-AI/OpenSpec`** 🆕 | **97** | C |
+| 19 | `multica-ai/andrej-karpathy-skills` | 92 | C |
+| **20** | **`Leonxlnx/taste-skill`** 🆕 | **84** | C |
+| 21 | `kepano/obsidian-skills` | 72 | D |
+
+> 5 个新 repo 直接插进中段（#9 / #12 / #17 / #18 / #20）；top-8 与 v1.4 完全一致，扩 cohort 没有动摇头部结论。Tier 阈值沿用 §12.4 校准（S ≥145, A ≥125, B ≥100, C ≥80, D <80）。
+
+### 14.2 新晋 5 repo 画像 / Profiles of the 5 newcomers
+
+**UA — `Egonex-AI/Understand-Anything`（#9, B, 117）**：一句话 = **把代码库变成交互式知识图谱**。62,155 stars / 5,129 forks / 200 watchers / 43 contribs，2026-03-15 创建、2026-06-16 push，94 天 alive，**661 stars/day**、6.05 commits/day。8 个 SKILL.md、平均 ~10KB、lesson 14.2%。强项：D5=10（最近 push）+ D6=9（活跃）+ D12=9（工程化）+ D13=8（多平台）+ D15=8（原创代码理解工具）；弱项 D8=2（skill 量少）。领域偏代码理解 / 开发工具，相对通用。社区热度（stars/day 661 + 高活跃）是它进 B 级前段的主要拉力。
+
+**CO — `santifer/career-ops`（#12, B, 113）**：一句话 = **求职 / 简历自动化（CV / ATS / tracking）**。54,306 stars / **10,774 forks**（新晋最高 fork）/ 207 watchers / 93 contribs，2026-04-04 创建、2026-06-16 push，74 天 alive，**734 stars/day**（5 个新 repo 最高 velocity）、4.41 commits/day。4 个 SKILL.md、平均 ~4KB、110 份 docs（含 13 语言 README）、lesson 12.3%。强项：**D12=10（cohort 最强工程化）** + D5=10 + D11=9（13 语言 i18n）+ D7=8 + D3=7（10.7k forks 体现真实复制）；弱项 D14=3（垂直）+ D8=2。领域是求职 / 职业，属 niche，但工程化 + i18n 把它顶进 B 级。
+
+**L30 — `mvanhorn/last30days-skill`（#17, C, 98）**：一句话 = **近 30 天趋势研究（Reddit / X / YouTube / HN / web）**。43,681 stars / 3,592 forks / 153 watchers / 48 contribs，2026-01-23 创建、2026-06-17 push，145 天 alive，**301 stars/day**、4.37 commits/day。只有 1 个 SKILL.md 但 **140KB（全 cohort 单文件最深）**、lesson 14.3%。强项：**D9=10（最深 skill）** + D5=10 + D6=8 + D7=7；弱项 D8=1（单 skill）+ **D20=1（巨型单技能 = 任务分解最差）**。领域是趋势研究 niche。它是 D9（深度）与 D20（分解）冲突的又一个极端案例——单个 140KB skill 把"研究全流程"塞进一个文件。
+
+**OS — `Fission-AI/OpenSpec`（#18, C, 97）**：一句话 = **spec-driven 开发工作流**。55,241 stars / 3,866 forks / 245 watchers / 60 contribs，2025-08-05 创建（5 个新 repo 中最老）、2026-06-13 push，316 天 alive，**175 stars/day**、1.91 commits/day。**0 个 SKILL.md**（它是 spec 工具而非 skill 集）、517 份 docs、lesson 5.8%。强项：D7=8 + D10=8（辅料密度）+ D12=9（工程化）+ D15=8（原创方法论）；弱项 D8=1（无 SKILL.md）+ D9=1（无 skill 深度可测）+ D21=3。领域是 spec 驱动开发方法论，较通用。它是 cohort 里少见的"非 SKILL.md 形态"项目，D8/D9 天然吃亏，但凭 docs 密度 + 方法论原创性站住 C 级。
+
+**TS — `Leonxlnx/taste-skill`（#20, C, 84）**：一句话 = **设计"品味"技能，避免通用输出**。45,534 stars / 3,169 forks / 132 watchers / **仅 6 contribs**，2026-02-19 创建、2026-06-12 push，118 天 alive，386 stars/day、**0.90 commits/day**（新晋最低）。13 个 SKILL.md、平均 23KB（深）、**lesson 41.4%（新晋最高 value-density）**。强项：**D21=9（教训密度新晋最高）** + D9=9（深）+ D15=7；弱项 **D7=2（仅 6 贡献者）** + D13=1（单平台）。领域是设计品味 / 美学，niche 但跨领域可用。它靠 D21/D9 的内容质量撑分，但贡献者极少 + 平台不可移植把总分压到 C 级底部（84，仅高于 D 线 4 分）——是"内容好但工程/生态薄"的典型。
+
+### 14.3 数据来源与局限 / Data sources & caveats
+
+- **数据源**：D1-D7 走 `gh` repo API（stars/forks/watchers/contribs/created/pushed 等）；D8/D9/D13/D20 本地扫描 submodule（SKILL.md 计数 + 平均字节 + 平台关键词 + 反转字节）；D21 `scan_lessons.py`（lesson/version/context marker → value-density）；D18/D19 HN Algolia Search API。
+- **⚠ Reddit-403**：采集时 Reddit 公共 API 返回 HTTP 403，**5 个新 repo 的 D16/D17 未能测量，floored 到 1**，`raw_metrics` 用 `-1` sentinel 标记。既有 16 个 repo 仍沿用 v1.4 的 Reddit 数据，未重采。因此新 repo 与既有 repo 在 social 两维上**口径不完全一致**，新 repo 的总分对 D16/D17 是保守低估。
+- **沿用既往 caveat**：v1.2 的 query 污染 / launch-wave / HN 稀疏，以及 v1.3 的 D20-vs-D9 冲突、value_density 跨 repo 不绝对可比，均继续适用。L30 (D9=10/D20=1) 与 TS (D9=9 + D21=9 但 D7=2) 是本轮最能体现这些 trade-off 的样本。
+
+> 想看完整 21-dim × 21-repo 染色矩阵 + Δ v1.4→v1.5：打开 `scoring.ipynb`（GitHub 直接渲染，无需执行）。

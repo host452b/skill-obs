@@ -4,6 +4,8 @@
 
 This document collects the cross-model summary of 5 AI models (Claude / ChatGPT / Gemini / Grok / Perplexity) independently evaluating this repo's 15 skill repos. **This is not my own scoring** (see [`EVALUATION.en.md`](./EVALUATION.en.md)) — it's a horizontal aggregation of judgments made by different models on the same cohort.
 
+> ⏱️ **Snapshot note (v1.5 update)**: This five-model comparison was collected on the **15-repo cohort** (v1.3 era), **predating the v1.5 expansion to 21 repos** (which added UA/OS/CO/TS/L30). Those 5 new repos are NOT part of this cross-model comparison; their in-repo scores live in [`EVALUATION.en.md §14`](./EVALUATION.en.md). Re-running the five-model comparison is follow-up work.
+
 Related docs:
 - Scoring detail → [`EVALUATION.en.md`](./EVALUATION.en.md) · [`scoring.ipynb`](./scoring.ipynb)
 - Task → repo lookup → [`TASK_GUIDE.en.md`](./TASK_GUIDE.en.md)

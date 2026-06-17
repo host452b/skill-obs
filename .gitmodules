@@ -46,3 +46,18 @@
 [submodule "skills/juliusbrussee__caveman"]
 	path = skills/juliusbrussee__caveman
 	url = https://github.com/juliusbrussee/caveman.git
+[submodule "skills/Egonex-AI__Understand-Anything"]
+	path = skills/Egonex-AI__Understand-Anything
+	url = https://github.com/Egonex-AI/Understand-Anything.git
+[submodule "skills/Fission-AI__OpenSpec"]
+	path = skills/Fission-AI__OpenSpec
+	url = https://github.com/Fission-AI/OpenSpec.git
+[submodule "skills/santifer__career-ops"]
+	path = skills/santifer__career-ops
+	url = https://github.com/santifer/career-ops.git
+[submodule "skills/Leonxlnx__taste-skill"]
+	path = skills/Leonxlnx__taste-skill
+	url = https://github.com/Leonxlnx/taste-skill.git
+[submodule "skills/mvanhorn__last30days-skill"]
+	path = skills/mvanhorn__last30days-skill
+	url = https://github.com/mvanhorn/last30days-skill.git
