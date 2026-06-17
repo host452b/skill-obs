@@ -181,6 +181,18 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 
 ---
 
+### 3.9 UA vs O vs OS — 三条"过程 / 理解"轴（v1.5 新增）
+
+| | **UA** (Understand-Anything) | **O** (superpowers) | **OS** (OpenSpec) |
+|---|---|---|---|
+| 轴 | **理解既有代码**（读 / 映射 / onboard） | **怎么做**（TDD / debug / plan 方法论） | **规格优先地做**（spec → tasks → 实现） |
+| 方向 | 向内：理解已有的东西 | 过程：实现时的纪律 | 向内→向外：先定义意图，再实现 |
+| 产物 | 交互式知识图谱（节点/边/分层/导览） | 元技能（强制 gates） | 规格文档 + 任务拆解 |
+
+→ **互补**：UA 在你动手前把陌生代码库映射清楚；OS 把"想做的改动"变成规格；O 在实现时强制纪律。UA 与 NX/CO 正交（处于生命周期不同阶段）。
+
+---
+
 ## 4. 任务 → 推荐 repo lookup
 
 > ✅ = primary（首选）· ➕ = secondary（次选 / 互补）· ⚠ = cohort 覆盖弱
@@ -341,6 +353,9 @@ C 是 awesome-list，**它和谁都 overlap**（因为它聚合所有人的 skil
 | 🆕 **跨领域工作室 / 多角色 agency** | **AA** + AM | AA 给 18 个领域的角色化 agent；AM 补 engineering harness |
 | 🆕 **游戏开发** | **AA** + M | AA 含 20 game-dev agents（v1.2 唯一覆盖）；M 加工程严谨度 |
 | 🆕 **想拿"最佳实例" SKILL.md 模板** | **GS** + A | GS 平均 52KB 是 cohort 最深 reference；A 是规范 |
+| 🆕 **接手 / onboard 遗留代码库** | **UA** + O | 🆕 v1.5 · UA 把既有代码映射成知识图谱；O 在你改动前加纪律 |
+| 🆕 **规格优先的产品团队** | **OS** + O + AM | 🆕 v1.5 · OS 定义 spec→tasks；O 加 gates；AM 提供实现所需的能力池 |
+| 🆕 **求职者 / 职业自动化** | **CO** + A | 🆕 v1.5 · CO 处理简历 / ATS / 求职追踪；A 出精修文档 |
 
 ---
 

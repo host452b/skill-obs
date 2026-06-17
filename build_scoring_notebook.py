@@ -600,6 +600,52 @@ def domain_recs_for(lang: str):
     return DOMAIN_RECS_ZH if lang == 'zh' else DOMAIN_RECS
 
 
+def _self_check() -> None:
+    """Regression guard — validate the data model before rendering.
+
+    Catches the drift modes that bit us before: a score edited without updating
+    its `# total` comment, a repo added to one DOMAIN_RECS list but not the other,
+    or an out-of-range / incomplete score row. Raises AssertionError so a broken
+    build fails loudly instead of silently shipping wrong numbers.
+    """
+    import re
+    repo_codes = {c for c, _, _, _ in REPOS}
+
+    # (a) Every snapshot's scores: known repo, dims ⊆ DIM_IDS, values in 1..10.
+    #     (Older snapshots legitimately have fewer dims — D16-D19 arrived in v1.2,
+    #     D20-D21 in v1.3 — so only require the FULL set on the latest/rendered one.)
+    dim_set = set(DIM_IDS)
+    for snap in EVALUATIONS:
+        for code, sc in snap.get('scores', {}).items():
+            assert code in repo_codes, f"v{snap['version']}: score for unknown repo '{code}'"
+            assert set(sc) <= dim_set, f"v{snap['version']}/{code}: unknown dim id(s) {set(sc) - dim_set}"
+            assert all(isinstance(v, int) and 1 <= v <= 10 for v in sc.values()), \
+                f"v{snap['version']}/{code}: a score is outside 1..10"
+    latest = EVALUATIONS[-1]
+    for code, sc in latest['scores'].items():
+        assert set(sc) == dim_set, f"latest (v{latest['version']})/{code}: must score all {len(DIM_IDS)} dims"
+
+    # (b) Inline `# NNN` total comments in the source must equal the actual row sum.
+    src = Path(__file__).read_text(encoding='utf-8')
+    checked = 0
+    for mt in re.finditer(r"'([A-Za-z0-9]+)':\s*\{('D1'[^}]*)\},\s*#\s*(\d+)", src):
+        code, body, stated = mt.group(1), mt.group(2), int(mt.group(3))
+        actual = sum(int(x) for x in re.findall(r":\s*(\d+)", body))
+        assert actual == stated, f"score row '{code}': values sum to {actual} but comment says # {stated}"
+        checked += 1
+
+    # (c) DOMAIN_RECS / DOMAIN_RECS_ZH must stay code-aligned, with valid codes.
+    en = [c for _, c, _ in DOMAIN_RECS]
+    zh = [c for _, c, _ in DOMAIN_RECS_ZH]
+    assert en == zh, 'DOMAIN_RECS and DOMAIN_RECS_ZH code sequences differ (keep them parallel)'
+    bad = [c for c in en if c not in repo_codes]
+    assert not bad, f'DOMAIN_RECS references unknown repo codes: {bad}'
+
+    print(f'self-check OK — {len(EVALUATIONS)} snapshots, {len(repo_codes)} repos, '
+          f'{len(DIM_IDS)} dims, {checked} score rows verified vs comments, '
+          f'{len(en)} domain recs.')
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 # COLOR
 # ──────────────────────────────────────────────────────────────────────────────
@@ -1147,6 +1193,7 @@ def build_cells(lang: str, snapshot: dict, current_shas: dict) -> list:
 
 
 def main():
+    _self_check()  # fail loudly on data drift before writing any notebook
     snapshot = EVALUATIONS[-1]
     current_shas = _fetch_current_shas()
 
