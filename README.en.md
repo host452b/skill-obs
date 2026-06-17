@@ -7,6 +7,7 @@
 
 [![Eval baseline](https://img.shields.io/badge/eval-2026--06--17-blue)](./EVALUATION.en.md)
 [![Notebook](https://img.shields.io/badge/notebook-scoring.ipynb-orange)](./scoring.ipynb)
+[![Notebook 中文](https://img.shields.io/badge/notebook-scoring.cn.ipynb-orange)](./scoring.cn.ipynb)
 [![Task Guide](https://img.shields.io/badge/task→repo-TASK__GUIDE-red)](./TASK_GUIDE.en.md)
 [![5-Model Summary](https://img.shields.io/badge/5_AI_model_xref-agent__summary-blueviolet)](./agent_summary.en.md)
 [![Cohort size](https://img.shields.io/badge/repos-21-green)](./.gitmodules)
@@ -59,8 +60,9 @@ skill-obs/
 ├── README.en.md                       ← you are here
 ├── EVALUATION.md                      ← Full evaluation (中文)
 ├── EVALUATION.en.md                   ← Full evaluation (English)
-├── scoring.ipynb                      ← Pre-rendered visualization (GitHub-renderable)
-├── build_scoring_notebook.py          ← Source-of-truth: data + HTML generation
+├── scoring.ipynb                      ← Pre-rendered visualization (English, GitHub-renderable)
+├── scoring.cn.ipynb                   ← Pre-rendered visualization (Chinese, same source)
+├── build_scoring_notebook.py          ← Source-of-truth: data + bilingual HTML generation
 ├── .gitmodules                        ← 12 submodule registrations
 └── skills/                            ← Each submodule (shallow clone)
     ├── affaan-m__everything-claude-code/
