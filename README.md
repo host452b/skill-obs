@@ -139,6 +139,93 @@ skill-obs/
 | 社交信号 (v1.2) | **D16 Reddit Heat** (30d posts + comments) · **D17 Reddit Sentiment** (30d avg upvote) · **D18 HN Heat** (30d stories + comments) · **D19 HN Sentiment** (30d avg points) |
 | **🆕 任务质量信号 (v1.3)** | **D20 Task Decomposition** (反转 avg SKILL.md 字节，越小越好 — 每个 skill 应聚焦一个任务) · **D21 Lesson-Encoded Quality** (含 anti-pattern / red-flag / lessons-learned / version / context 标记的 .md 占比 — "有价值的 skill 应包含 模型未知知识 + 环境上下文 + 真实失败教训") |
 
+## 🧪 Skill 验证 / 测试 / 防回归 横向研究（v1.5 附录 · 未计分）
+
+> 现有 21 个维度里 **没有**任何一维直接衡量「这个 repo 是否验证 skill 的**行为 / 效果**、是否防行为回归」——`D12 Engineering Hygiene` 只把 tests/CI/validators 笼统当工程信号。本节是对 21 个 repo 的专项遍历结论，提议作为 **D22 Skill-Behavior Validation Rigor**（暂不计分，遵循「不把判断写进单文件」原则）。
+>
+> **核心区分**：绝大多数 repo「测的是支撑脚本 / lint frontmatter」，而**真正运行 skill、对它的输出或效果打分**的极少。
+
+### 用到的测试框架与实现方式
+
+社区**没有**统一的「skill 测试框架」。实测栈分四类：
+
+| 类别 | 工具 | 谁在用 · 怎么实现 |
+|---|---|---|
+| 通用代码 test runner | **Vitest** / **Pytest** / 自研 Node runner | UA·OS·NX·GS 用 vitest；L30·AM 用 pytest（`uv run pytest`）；CO 用自研 `test-all.mjs`（无框架，自己数 pass/fail）；AM 用 `node tests/run-all.js`。**只测脚本，不碰 prose** |
+| LLM-as-judge 行为评测（**全是自研，无共享库**） | `claude -p` / Anthropic SDK / Gemini REST + 打分 | **GS** `test/helpers/llm-judge.ts`+`benchmark-judge.ts` 跑 `claude -p` 比 `eval-baselines.json`；**anthropics** `skill-creator` 用 `run_eval.py`+`grader.md`/`comparator.md` 子 agent 判官；**L30** `evaluate_search_quality.py` 调 Gemini 判官出 Precision@5/nDCG；**caveman** `llm_run.py` 三臂 + tiktoken 数 token |
+| 结构 / frontmatter validator（测形不测效） | `agentskills/skills-ref` · `Flash-Brew-Digital/validate-skill` · `claude plugin validate` · 自研 sh | **CH** 双 validator（自研 + 官方 skills-ref）；**AD** 用 `claude plugin validate`+真实安装；**AA** `lint-agents.sh`；**OAI** `quick_validate.py` |
+| AI review bot / 视觉回归 | CodeRabbit · `claude-code-action` · Playwright | **CO·OS** 挂 `.coderabbit.yaml`；**NL** 挂 `/code-review` bot；**NX** 用 Playwright `toHaveScreenshot` 截图基线（针对 app UI，非 skill 产出） |
+
+> **最接近「可复用 skill 测试框架」的**：`affaan-m/everything-claude-code` 出货了 `eval-harness`（eval-driven-development 框架）、`agent-eval`（pass@k + YAML task 定义）、`skill-comply`（测「prompt 中立时 agent 是否仍遵守 SKILL.md」）——但这是**卖给用户**的工具，没接到它自己的 CI 门。
+
+### L0–L5 验证层级阶梯
+
+| 层 | 含义 |
+|---|---|
+| **L0** | 无验证（纯人工策展 prose） |
+| **L1** | 仅 CHANGELOG / 版本纪律 |
+| **L2** | 支撑**代码**测试（脚本单元/集成，**不碰 skill prose**） |
+| **L3** | **skill 行为**评测（eval / LLM-judge / golden transcript / 对 skill I/O 的契约测试） |
+| **L4** | **CI 回归门**（PR/push 上阻断式跑） |
+| **L5** | **元技能**：明文规定「如何写 / 测 / 验证一个 skill」 |
+
+### 主表（21 repo）
+
+| Repo | 命中层级 | 真测 skill 行为? | 回归防护核心 |
+|---|---|---|---|
+| **GS** gstack | L1·L2·L3·L4·L5 | ✅ 唯一全闭环 | `eval-baselines.json`+回归判官+version/docs 门 |
+| **L30** last30days | L1·L2·L3·L4 | ✅ 最完整两层 | 阻断契约套件 + 跨 git-ref LLM-judge A/B |
+| **caveman** | L1·L2·L3 | ✅ 测 token 效果 | 提交 `snapshots/results.json`+`skill_md_sha256` 钉版本 |
+| **A** anthropics | L3·L5 | ✅ 统计化（不入库） | 新旧快照 head-to-head + train/test split |
+| **O** superpowers | L1·L2·L3·L5 | ✅ 对抗式行为 TDD | verify-before-done + 可重跑行为测试 + 94% PR 拒绝 |
+| **OAI** openai | L2·L3\*·L5 | ◑ golden（不 gate） | eval JSON + QA rubric（手动重跑） |
+| **CH** marketingskills | L1·L2·L3\*·L4 | ◑ 设计了不 gate | per-skill SemVer + frontmatter CI（197 evals 未入门） |
+| **AM** affaan-m | L1·L2·L4·L5 | ✖ eval 工具卖给用户 | 矩阵 CI 仅守代码+元数据 |
+| **UA** Understand-Anything | L2·L3·L4 | ◑ 脚本 golden | 字节级**确定性**断言 + 阻断 CI |
+| **OS** OpenSpec | L1·L2·L3·L4 | ◑ 测**交付/安装** | **migration + drift** 测试 |
+| **CO** career-ops | L1·L2·L3\*·L4 | ◑ grep prose 契约 | 阻断 CI + 分支保护 + CodeRabbit |
+| **NX** open-design | L1·L2·L3·L4·L5\* | ✖ 测引擎/UI | 240 测试 + Playwright 截图基线 |
+| **AD** addyosmani | L2·L4·L5 | ✖ 守打包/可装 | `claude plugin validate` + 真实安装 |
+| **V** vercel-labs | L2·L4·L5 | ✖ 守 rules 构建 | path-filtered 单 skill 门 |
+| **AA** agency-agents | L2·L4 | ✖ frontmatter lint | `lint-agents.sh` 阻断 PR |
+| **NL** ui-ux-pro-max | L1·L2 | ✖ conda CI 近空跑 | `skill.json` 版本 + LLM-reviewer bot |
+| **C** ComposioHQ | L4 | ✖ 守 list 卫生 | diff 感知 PR 门（限定 README 区域） |
+| **M** mattpocock | L1·L5 | ✖ | `write-a-skill` 清单 + `deprecated/` 目录生命周期 |
+| **TS** taste-skill | L1 | ✖ 人工观察 | 失败→具名禁令 + 起飞前 checklist |
+| **MA** karpathy | L0 | ✖ | 无（仅 README 主观「怎么判断在生效」） |
+| **K** obsidian | L0 | ✖ | 无 |
+
+> `*` = L3\* 评测套件已设计但未入 CI；L5\* 为非正式（review-lane / red-spec 文档而非元技能）。◑ = 有但不阻断 / 只测代码或契约层。✖ = 该层缺失或只守打包。
+
+### 真正测「skill 行为」的少数派（按严格度）
+
+1. **GS gstack** — 唯一全闭环且阻断在 CI：`skill-e2e-*.test.ts` 用 `claude -p`/Agent SDK 真跑 skill 打 golden，`llm-judge.ts` 给 1–5 分 + 算**埋雷检出率**，`evals.yml` 12 套件矩阵在 Docker 里跑、贴 PR「通过/失败+成本」评论（diff 选择压到 ~$4/run）。
+2. **L30 last30days** — 确定性契约入阻断 CI + **离线** Gemini-judge A/B（跨 git-ref，Precision@5/nDCG@5），并用一份 ADR 明文论证 judge eval 为何**不进**阻断门（成本/判官不确定→会变 flaky）。
+3. **caveman** — 唯一测「效果」：三臂 `baseline`/`terse`/`skill`，诚实指标取 **skill−terse**（剔除「泛泛简洁」的功劳）；提交结果快照 + `skill_md_sha256` 钉到具体 SKILL.md。
+4. **anthropics `skill-creator`** — 同轮 spawn 装/不装（或新/旧快照）双 subagent + 判官子 agent + mean±stddev + 60/40 train/test split 防过拟合（作者期工具，不入库不 gate）。
+5. **obra/superpowers** — 对抗式 TDD-for-skills：让没装 skill 的 fresh subagent 在压力场景失败 → 逐字记录狡辩 → 写最小 skill 堵 → 重跑；真行为测试埋 SQL 注入断言 skill 被触发且 bug 被拦（无 CI，靠 94% PR 拒绝治理）。
+6. **OAI / CH** — golden-transcript eval JSON（query+expected_behavior+success_criteria / assertion 清单），**设计好但未接进 CI**。
+
+### 回归防护工具箱
+
+| 机制 | 谁在用 | 一句话 |
+|---|---|---|
+| **基线对比 eval** | GS·A·L30·caveman | 量化「这版是不是变差了」——最硬核 |
+| **CI 阻断门** | GS·L30·OS·UA·CO·AM·NX·AD·V·AA·C | 但多数只 gate 代码/打包/frontmatter，仅 GS·L30 gate 到**行为** |
+| **确定性 / golden 钉死** | UA（字节级）·caveman（snapshot+sha）·L30（mock-JSON） | 同输入必同输出，改逻辑立刻现 diff |
+| **migration + drift 测试** | OS（最佳） | 专测「升级后落到磁盘的 skill 文件是否仍正确」 |
+| **prose 契约断言** | CO（grep 门短语）·GS（命令存在性）·AD（hook JSON） | 防 SKILL.md 承重指令被悄悄删改 |
+| **版本 / CHANGELOG 纪律** | GS·OS（changesets）·CO（Release-Please）·CH | 每条修复都能追到锁它的那个测试 |
+| **治理门（人工）** | O（94% PR 拒绝 + 必交 eval evidence）·anthropics | 改 Red-Flags 表必须附前后 eval 证据 |
+| **累积反模式清单** | TS | 纯 prose repo 的防护：每次踩坑变永久具名禁令 |
+
+### 可借鉴（尤其想给自己的 skill 做回归测试时）
+
+- 抄 **GS**：代表性 prompt → golden fixture → `claude -p` 跑 → LLM-judge 打分 → 存 baseline → 新版比基线，diff 选择 + 成本上限进 CI。
+- 抄 **caveman 的 control-arm**：测「装 skill vs 等价的精简指令」的**边际**差异，别把模型本来就会的功劳算给 skill。
+- 抄 **L30 的 ADR 纪律**：确定性契约入阻断门；贵且不确定的 LLM-judge eval 留 `workflow_dispatch` 手动。
+- 抄 **OpenSpec 的 migration + drift 测试**：把「升级后落到用户磁盘的 skill 文件」当一个被测的契约。
+
 ## 🎨 Notebook 渲染示意 / Notebook preview
 
 `scoring.ipynb` 的 11 个 cells：

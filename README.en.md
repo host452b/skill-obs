@@ -144,6 +144,93 @@ Brief (full definitions in [`EVALUATION.en.md §2`](./EVALUATION.en.md#2-15-eval
 | Social signals (v1.2) | **D16 Reddit Heat** (30d posts + comments) · **D17 Reddit Sentiment** (30d avg upvote) · **D18 HN Heat** (30d stories + comments) · **D19 HN Sentiment** (30d avg points) |
 | **🆕 Task-quality signals (v1.3)** | **D20 Task Decomposition** (inverse of avg SKILL.md bytes — smaller = better; theory: each skill should focus on one task) · **D21 Lesson-Encoded Quality** (% of *.md with anti-pattern / red-flag / lessons-learned / version / context markers — proxy for "valuable skills should contain model-unknown knowledge + env context + real-failure lessons") |
 
+## 🧪 Skill Validation / Testing / Regression — cross-study (v1.5 appendix · unscored)
+
+> None of the 21 scored dimensions directly measures whether a repo **validates skill behavior/effect or guards against behavioral regression** — `D12 Engineering Hygiene` lumps tests/CI/validators into one engineering signal. This section is a dedicated traversal of all 21 repos, proposed as **D22 Skill-Behavior Validation Rigor** (kept unscored, honoring the "don't bake judgments into a single file" principle).
+>
+> **The key distinction**: most repos test their *supporting scripts* or *lint frontmatter*; very few **actually run the skill and score its output/effect**.
+
+### Testing frameworks used & how they're implemented
+
+There is **no** standardized "skill-testing framework." The real stack falls into four buckets:
+
+| Category | Tooling | Who · how it's implemented |
+|---|---|---|
+| Generic code test runner | **Vitest** / **Pytest** / bespoke Node runner | UA·OS·NX·GS use vitest; L30·AM use pytest (`uv run pytest`); CO uses a homegrown `test-all.mjs` (no framework, counts pass/fail itself); AM uses `node tests/run-all.js`. **Tests scripts, never prose** |
+| LLM-as-judge behavior eval (**all bespoke, no shared lib**) | `claude -p` / Anthropic SDK / Gemini REST + scoring | **GS** `test/helpers/llm-judge.ts`+`benchmark-judge.ts` run `claude -p` vs `eval-baselines.json`; **anthropics** `skill-creator` uses `run_eval.py`+`grader.md`/`comparator.md` judge subagents; **L30** `evaluate_search_quality.py` calls Gemini as judge for Precision@5/nDCG; **caveman** `llm_run.py` runs 3 arms + tiktoken token counting |
+| Structure / frontmatter validator (shape, not effect) | `agentskills/skills-ref` · `Flash-Brew-Digital/validate-skill` · `claude plugin validate` · homegrown sh | **CH** dual validators (homegrown + official skills-ref); **AD** uses `claude plugin validate` + real install; **AA** `lint-agents.sh`; **OAI** `quick_validate.py` |
+| AI review bot / visual regression | CodeRabbit · `claude-code-action` · Playwright | **CO·OS** wire `.coderabbit.yaml`; **NL** wires the `/code-review` bot; **NX** uses Playwright `toHaveScreenshot` baselines (for the app UI, not skill output) |
+
+> **Closest thing to a reusable skill-testing framework**: `affaan-m/everything-claude-code` ships `eval-harness` (an eval-driven-development framework), `agent-eval` (pass@k + YAML task defs), and `skill-comply` (tests whether the agent still obeys SKILL.md under a neutral prompt) — but these are tools **shipped to users**, not wired into its own CI gate.
+
+### L0–L5 validation ladder
+
+| Layer | Meaning |
+|---|---|
+| **L0** | No validation (pure curated prose) |
+| **L1** | CHANGELOG / version discipline only |
+| **L2** | Supporting-**code** tests (script unit/integration — **never skill prose**) |
+| **L3** | **Skill-behavior** eval (eval / LLM-judge / golden transcript / contract test on skill I/O) |
+| **L4** | **CI regression gate** (blocking on PR/push) |
+| **L5** | **Meta-skill** that prescribes how to author/test/verify a skill |
+
+### Master table (21 repos)
+
+| Repo | Layers hit | Tests skill *behavior*? | Regression-prevention core |
+|---|---|---|---|
+| **GS** gstack | L1·L2·L3·L4·L5 | ✅ only full loop | `eval-baselines.json` + regression judge + version/docs gates |
+| **L30** last30days | L1·L2·L3·L4 | ✅ most complete two-tier | blocking contract suite + cross-git-ref LLM-judge A/B |
+| **caveman** | L1·L2·L3 | ✅ tests token *effect* | committed `snapshots/results.json` + `skill_md_sha256` pin |
+| **A** anthropics | L3·L5 | ✅ statistical (not committed) | old-vs-new snapshot head-to-head + train/test split |
+| **O** superpowers | L1·L2·L3·L5 | ✅ adversarial behavioral TDD | verify-before-done + re-runnable behavior tests + 94% PR rejection |
+| **OAI** openai | L2·L3\*·L5 | ◑ golden (not gated) | eval JSON + QA rubric (manual rerun) |
+| **CH** marketingskills | L1·L2·L3\*·L4 | ◑ designed, not gated | per-skill SemVer + frontmatter CI (197 evals not in gate) |
+| **AM** affaan-m | L1·L2·L4·L5 | ✖ eval tooling shipped to users | matrix CI guards code + metadata only |
+| **UA** Understand-Anything | L2·L3·L4 | ◑ script golden | byte-level **determinism** assert + blocking CI |
+| **OS** OpenSpec | L1·L2·L3·L4 | ◑ tests **delivery/install** | **migration + drift** tests |
+| **CO** career-ops | L1·L2·L3\*·L4 | ◑ grep prose contract | blocking CI + branch protection + CodeRabbit |
+| **NX** open-design | L1·L2·L3·L4·L5\* | ✖ tests engine/UI | 240 tests + Playwright screenshot baselines |
+| **AD** addyosmani | L2·L4·L5 | ✖ guards packaging/install | `claude plugin validate` + real install |
+| **V** vercel-labs | L2·L4·L5 | ✖ guards rules build | path-filtered single-skill gate |
+| **AA** agency-agents | L2·L4 | ✖ frontmatter lint | `lint-agents.sh` blocks PR |
+| **NL** ui-ux-pro-max | L1·L2 | ✖ conda CI near-no-op | `skill.json` version + LLM-reviewer bot |
+| **C** ComposioHQ | L4 | ✖ guards list hygiene | diff-aware PR gate (bounded README region) |
+| **M** mattpocock | L1·L5 | ✖ | `write-a-skill` checklist + `deprecated/` folder lifecycle |
+| **TS** taste-skill | L1 | ✖ human/observational | failures → named bans + pre-flight checklist |
+| **MA** karpathy | L0 | ✖ | none (only a subjective README "how to know it's working") |
+| **K** obsidian | L0 | ✖ | none |
+
+> `*` = L3\* eval suite designed but not in CI; L5\* is informal (review-lane / red-spec docs rather than a meta-skill). ◑ = present but non-blocking / only code-or-contract level. ✖ = layer absent or guards packaging only.
+
+### The few that truly test "skill behavior" (by rigor)
+
+1. **GS gstack** — the only full loop, gated in CI: `skill-e2e-*.test.ts` actually runs the skill via `claude -p`/Agent SDK against golden fixtures; `llm-judge.ts` scores 1–5 + a **planted-bug detection rate**; `evals.yml` runs a 12-suite matrix in Docker and posts a pass/fail+cost PR comment (diff-selection keeps it ~$4/run).
+2. **L30 last30days** — deterministic contract suite blocks in CI + an **offline** Gemini-judge A/B (cross-git-ref, Precision@5/nDCG@5), with an ADR explicitly arguing why the judge eval **stays out** of the blocking gate (cost / judge non-determinism → flaky).
+3. **caveman** — the only one testing *effect*: three arms `baseline`/`terse`/`skill`, with the honest metric being **skill−terse** (strips credit for generic terseness); commits the result snapshot + `skill_md_sha256` pinned to an exact SKILL.md.
+4. **anthropics `skill-creator`** — same-turn with/without (or new/old-snapshot) paired subagents + a judge subagent + mean±stddev + a 60/40 train/test split against overfitting (author-time tool, not committed or gated).
+5. **obra/superpowers** — adversarial TDD-for-skills: let a fresh subagent *without* the skill fail under pressure → log its rationalizations verbatim → write the minimal skill to close them → rerun; real behavior tests plant a SQL-injection bug and assert the skill triggers and the bug is caught (no CI; enforced via 94% PR rejection governance).
+6. **OAI / CH** — golden-transcript eval JSON (query + expected_behavior + success_criteria / assertion checklist), **well-designed but not wired into CI**.
+
+### Regression-prevention toolbox
+
+| Mechanism | Who | One-liner |
+|---|---|---|
+| **Baseline-comparison eval** | GS·A·L30·caveman | Quantifies "did this version get worse?" — the hardest guard |
+| **CI blocking gate** | GS·L30·OS·UA·CO·AM·NX·AD·V·AA·C | But most gate code/packaging/frontmatter; only GS·L30 gate to **behavior** |
+| **Determinism / golden pinning** | UA (byte-level) · caveman (snapshot+sha) · L30 (mock-JSON) | Same input must yield same output; logic drift shows as a diff |
+| **Migration + drift tests** | OS (best) | Tests "are the skill files on disk still correct after an upgrade" |
+| **Prose-contract assertions** | CO (grep gate phrases) · GS (command existence) · AD (hook JSON) | Stops load-bearing SKILL.md instructions from being silently edited |
+| **Version / CHANGELOG discipline** | GS · OS (changesets) · CO (Release-Please) · CH | Every fix traces to the test that locks it |
+| **Governance gate (human)** | O (94% PR rejection + mandatory eval evidence) · anthropics | Editing the Red-Flags table requires before/after eval evidence |
+| **Accumulated anti-pattern list** | TS | A prose repo's guard: each stumble becomes a permanent named ban |
+
+### Worth stealing (especially for regression-testing your own skills)
+
+- Steal **GS**: representative prompts → golden fixtures → run via `claude -p` → LLM-judge → store a baseline → compare new vs baseline, with diff-selection + a cost cap, in CI.
+- Steal **caveman's control arm**: measure the **marginal** difference of "with the skill vs an equivalent terse instruction" so you don't credit the skill for what the model already does.
+- Steal **L30's ADR discipline**: deterministic contracts in the blocking gate; expensive/non-deterministic LLM-judge evals kept manual via `workflow_dispatch`.
+- Steal **OpenSpec's migration + drift tests**: treat "the skill files that end up on the user's disk after an upgrade" as a tested contract.
+
 ## 🎨 Notebook Layout
 
 `scoring.ipynb` is **pre-rendered** — each code cell source is just `# Title` and the visualization is baked into `outputs[].data['text/html']`. **GitHub renders it directly without a kernel.**
