@@ -9,3 +9,6 @@ scoring.html
 __pycache__/
 *.pyc
 .DS_Store
+
+# Local tool output (not part of the repo)
+.understand-anything/

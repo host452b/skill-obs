@@ -594,7 +594,7 @@ CV is a **single-point viral repo**:
 3. **CV's niche is unique**: no other prompt-engineering / token-efficiency specialist in cohort. For users specifically worried about token costs, CV is the **only option** — its value isn't strictly proportional to total score.
 4. **9-platform support includes antigravity**: CV is the first repo in cohort to explicitly support antigravity. If your workflow goes through antigravity, **CV is uniquely fitting**.
 
-### 13.5 Comparison with `agent_summary.en.md` 5-model evaluation
+### 13.5 Comparison with the Five-Model evaluation ([Appendix B](#agent-summary))
 
 CV is too new (created 2026-04-04), so **the 5-model evaluation in §1-§6 (collected before v1.2) does not cover CV**. To do a v1.4 full LLM re-evaluation, you'd need to re-prompt all 5 models on CV's operational value. The current v1.4 #6 is **this repo's internal scoring** — not the 5-model consensus.
 
@@ -651,3 +651,655 @@ This round expands the cohort from 16 to 21 repos with five additions: **UA** `E
 5. **Runtime caveats from v1.2-v1.4 still apply** (query contamination, launch-wave velocity bias, HN sparsity) to the carried-over 16-repo data.
 
 > For the full 21-dim × 21-repo colored matrix + Δ v1.4→v1.5: open `scoring.ipynb` (renders directly on GitHub, no execution needed).
+
+
+---
+
+<a id="task-guide"></a>
+
+## Appendix A — Task → Repo Decision Guide
+
+> 🔄 **v1.2 sync (2026-05-13)**: cohort expanded to **15 repos**, adding `garrytan/gstack` (GS) and `msitarzewski/agency-agents` (AA). See §1 bottom, §3.7-3.8, §5 recommended stacks, §6 gap update. **AA fills the game-dev gap** (20 game-dev agents).
+> 🔄 **v1.5 sync (2026-06-17)**: cohort expanded to **21 repos**, adding `Egonex-AI/Understand-Anything` (UA), `Fission-AI/OpenSpec` (OS), `santifer/career-ops` (CO), `Leonxlnx/taste-skill` (TS), `mvanhorn/last30days-skill` (L30). **UA fills the "understand existing codebase" gap, CO fills the "job-search" gap, OS fills the "spec-driven development" gap.**
+
+A task-first decision matrix across the 21 skill repos. Given a concrete AI-agent task, which repo (or stack) should you install?
+
+- §1 — Where each repo sits on the functional map
+- §2 — **AM × O × NX deep-dive**: overlaps, orthogonality, and complementary stacks (the most-asked comparison)
+- §3 — Other notable overlap pairs
+- §4 — Task → Repo lookup (~50 tasks across dev / AI / design / research / content / KM / data)
+- §5 — Recommended stacks (solo / team / role)
+- §6 — Coverage gaps (game / GPU kernel / Web3 / embedded — areas the cohort doesn't cover)
+
+---
+
+### 1. Functional positioning of the 21 repos
+
+| Code | Repo | Orthogonal niche (unique value axis) |
+|---|---|---|
+| **GS** 🆕 | `garrytan/gstack` | **Opinionated role-based setup** — Garry Tan's actual 23-role-agent setup (CEO/Designer/Eng-Mgr/Release/Doc/QA); avg SKILL.md 52KB = cohort-deepest |
+| **AM** | `affaan-m/everything-claude-code` | **General-purpose agent harness** — 60 agents + 228 skills + commands + hooks + install; king of breadth |
+| **O**  | `obra/superpowers` | **Engineering methodology** — TDD / debug / brainstorm / plan / review meta-skills; king of depth |
+| **NX** | `nexu-io/open-design` | **Design output** — 19 skills + 71 design systems; multi-platform (web/desktop/mobile/slides/PDF) creative production |
+| **AA** 🆕 | `msitarzewski/agency-agents` | **Personality-driven multi-role agency** — 222 agents across **18 domains** (incl. game-dev / spatial / academic / finance); each agent has personality + emoji + vibe |
+| **A**  | `anthropics/skills` | **Official spec + practical demos** — Defines SKILL.md standard; ships PDF / theme / doc-coauthoring reference skills |
+| **NL** | `nextlevelbuilder/ui-ux-pro-max-skill` | **Component-level UI/UX** — 161 palettes + 57 font pairs + BM25 reasoning engine; visual polish |
+| **AD** | `addyosmani/agent-skills` | **Production engineering** — General software practice with strict quality gates (Specific / Verifiable / Battle-tested / Minimal) |
+| **CH** | `coreyhaines31/marketingskills` | **Marketing vertical** — CRO / SEO / copywriting / growth; only specialist in this lane |
+| **C**  | `ComposioHQ/awesome-claude-skills` | **Awesome-list** — 864 SKILL.md index; widest discovery surface |
+| **M**  | `mattpocock/skills` | **TS engineer's lens** — /diagnose / /tdd / /grill-me; anti-failure-mode design |
+| **OAI**| `openai/skills` | **Codex companion catalog** — three-tier `.system / .curated / .experimental` |
+| **MA** | `multica-ai/andrej-karpathy-skills` | **Single-file behavioral directive** — Karpathy's 4 LLM-coding anti-pattern principles |
+| **K**  | `kepano/obsidian-skills` | **Obsidian / Markdown / Canvas** — only KM specialist |
+| **V**  | `vercel-labs/agent-skills` | **Vercel deploy + React/Next.js production** — Official authority; live `WebFetch` for fresh web rules |
+| **UA** 🆕 | `Egonex-AI/Understand-Anything` | **Codebase comprehension / knowledge-graph** — turns an existing codebase into an interactive knowledge graph (nodes/edges/layers/tour); only repo for *understanding existing code* (all others lean toward producing new code); multi-platform (claude/copilot/codex/opencode) |
+| **OS** 🆕 | `Fission-AI/OpenSpec` | **Spec-driven development** — spec→tasks→implementation workflow ("write the spec first, then implement"); a spec tool not a skill collection (0 SKILL.md, 517 docs); complements O's process methodology |
+| **CO** 🆕 | `santifer/career-ops` | **Job-search / career automation** — resume / CV / ATS / application tracking; brand-new vertical (no prior career repo); very strong engineering, 13-language READMEs |
+| **TS** 🆕 | `Leonxlnx/taste-skill` | **Design taste / aesthetic judgment** — steers agents away from generic/mediocre output; orthogonal to NX (NX governs *what to produce*, TS governs *aesthetic judgment/taste*); high lesson density (41.4%) |
+| **L30** 🆕 | `mvanhorn/last30days-skill` | **Recent-trend research** — last-30-day trends across Reddit / X / YouTube / HN / web; new research category; one 140KB SKILL.md |
+
+---
+
+### 2. AM × O × NX deep-dive
+
+> The most-asked comparison. All three are top-tier (totals 129 / 115 / 110) but occupy different axes.
+
+#### 2.1 Core positioning
+
+| | **AM** (everything-claude-code) | **O** (superpowers) | **NX** (open-design) |
+|---|---|---|---|
+| Positioning | General-purpose agent harness (capability surface) | Engineering methodology (process layer) | Design output (output layer) |
+| Value axis | **Breadth** | **Depth** | **Vertical** |
+| Question it answers | "What agents / skills / commands does our team install?" | "How do we work without screwing up?" | "How do we produce coherent, beautiful visuals?" |
+| Content body | 228 skills + 60 agents + commands + hooks | 14 deeply-polished skills (TDD / debug / plan / brainstorm…) | 19 skills + 71 design systems |
+| When to install | Team base setup | Anytime (when discipline is needed) | When you need to produce UI / visuals |
+| Enforcement | Optional reference | **Mandatory workflow** (hard gates) | Optional reference |
+
+#### 2.2 Overlaps (content collision points)
+
+| Pair | Collision zone | Specifics |
+|---|---|---|
+| AM ↔ O | **engineering methodology** | AM has reviewer/planner/python-reviewer agents; O has TDD/debugging/planning skills. AM bakes practices into **agents** (commitlint/ESLint/CoC), O bakes methodology **gates** into skill bodies (HARD-GATE / eval evidence required) |
+| AM ↔ NX | **frontend / UI boundary** | AM has some frontend-design-related skills; NX is a global design system. AM leans "implementation"; NX leans "specification" |
+| O ↔ NX | **nearly fully orthogonal** | Process layer vs output layer; minimal collision |
+
+#### 2.3 Orthogonality (independent axes — combinable)
+
+```
+                  Process / Methodology (O)
+                            │
+                            │
+  Capability ────────────── ┼────────────── Visual output
+  surface (AM)              │                  (NX)
+                            │
+                            │
+```
+
+- **AM ⊥ NX**: engineering harness vs design production — zero conflict, frequently stacked
+- **O ⊥ NX**: methodology vs output — zero conflict
+- **AM ⊥ O with intersection**: the intersection is itself complementary (AM provides "capability to do things," O provides "discipline for how to do them")
+
+#### 2.4 Complementarity (recommended stack combinations)
+
+| Stack | Use case | Synergy |
+|---|---|---|
+| **AM + O** | Best team baseline | AM fills the capability pool; O adds discipline gates. Agent has both capability and rigor. **Most common combo** |
+| **AM + NX** | Full-stack delivery (engineering + design) | AM handles engineering; NX handles visual/UI output |
+| **O + NX** | Designer who wants process discipline | O's brainstorming + writing-plans guide design decisions; NX produces |
+| **AM + O + NX** | One-stop power-user | Engineering + methodology + design fully loaded. ⚠ Cost: highest context overhead, agent choice paralysis; needs careful configuration |
+
+#### 2.5 When to install only one
+
+| Which one | Scenario |
+|---|---|
+| **AM only** | You want "one-click full setup," don't want to assemble. Or you're upgrading an existing harness |
+| **O only** | You have an existing setup you don't want to replace, but want to add TDD/debug/plan **mandatory discipline layer** |
+| **NX only** | You're a designer / marketer who doesn't need AM's 60 agents but wants design systems |
+
+---
+
+### 3. Other notable overlap pairs
+
+#### 3.1 A vs OAI — two official catalogs
+
+| Common ground | Differences |
+|---|---|
+| Both are platform official (Anthropic vs OpenAI) | A serves Claude, OAI serves Codex; A ships PDF/theme/doc-coauthoring as cross-purpose reference skills, OAI ships skill-creator + eval tooling |
+
+→ **Complementary**: pick by your host platform. If you use both agent platforms, install both; the specs cross-reference but implementations are separate.
+
+#### 3.2 AM vs AD — two broad-engineering repos
+
+| Common ground | Differences |
+|---|---|
+| Both cover general software engineering (API / testing / perf / security / refactoring / docs) | AM is **breadth + harness** (agents + commands + hooks); AD is **depth + quality** (every skill has Verification + Red Flags sections, enforces 4 principles Specific/Verifiable/Battle-tested/Minimal) |
+
+→ **Complementary with overlap**: use AM as team base, AD as the "quality gate" during reviews. Or pick one (overlap ~50%).
+
+#### 3.3 NL vs NX — two design repos
+
+| Common ground | Differences |
+|---|---|
+| Both do design | NL is **component-level UI/UX** (buttons / forms / palettes / fonts / reasoning engine); NX is **system-level + multi-platform output** (71 design systems + slides/PDF/video/mobile) |
+
+→ **Complementary**:
+- Single-platform UI component-level → **NL**
+- Cross-platform creative output / brand systems → **NX**
+- Both component and brand → install both
+
+#### 3.4 M vs MA — two individual lenses
+
+| Common ground | Differences |
+|---|---|
+| Both individual-author | M is **lightweight composable techniques** (/diagnose / /tdd / /grill-me) targeting failure modes; MA is **always-on 4 Karpathy principles** in a single file |
+
+→ **Complementary**: MA gives base discipline; M's skills trigger on demand. Together = lightest possible solo-developer baseline.
+
+#### 3.5 C vs everyone — Awesome-list overlap
+
+C is an awesome-list, so **it overlaps with everyone** (by aggregating their skills). The difference:
+- C's SKILL.md averages just 3.4 KB (vs O's 8.2 KB, AD's 10.7 KB) — **broad but shallow**
+- C has 864 SKILL.md (biggest "index" in cohort) but D10 supplementary density is just 0.03 (lowest)
+
+→ **When to use C**: discovery / browsing the skill ecosystem to see what's possible. **Not a primary install**; once you find a direction, switch to the matching specialist.
+
+#### 3.7 AM vs GS — two "all-rounder" repos, opposite philosophies (v1.2 addition)
+
+| Common ground | Differences |
+|---|---|
+| Both are "team production-grade" general harnesses | **AM = breadth + neutral** (228 skills + 60 agents; "fill the capability pool"); **GS = depth + opinion** (51 skills but avg 52KB; "Garry Tan's personally-vetted operational flow") |
+
+→ **Choice**:
+- Team is startup / accepts strong opinion → **GS** (copy YC-leader's setup verbatim)
+- Team is enterprise / needs capability diversity → **AM** (compose your own / swap components)
+- Want "AM's breadth + GS's depth" → install both: **AM as capability pool, GS as high-quality reference**
+
+#### 3.8 AM vs AA — two "big-bag" repos, different axes (v1.2 addition)
+
+| Common ground | Differences |
+|---|---|
+| Both are large-scale (AM 228 skills, AA 222 agents) | **AM = skill-centric** (each skill solves a capability); **AA = role-centric + personality** (each agent has personality + emoji + vibe, organized by *role* not *task*; 18 domains vs AM's mostly-engineering focus) |
+
+→ **Choice**:
+- You want "engineering capability pool" → **AM**
+- You want "multi-role / cross-domain agency" → **AA** (covers finance/academic/spatial-computing/game-dev that AM doesn't)
+- Use both? Possible, but trigger collisions may occur — set up priority / namespace ordering
+
+#### 3.6 V vs A vs OAI — three official authorities
+
+| | A | OAI | V |
+|---|---|---|---|
+| Official for | Claude Skills spec | Codex skill catalog | Vercel deploy + React/Next.js |
+| Scope | Horizontal (any domain) | Horizontal (any domain) | Vertical (web frontend / Vercel-native) |
+| Strength | Spec authority | Three-tier `.system/.curated/.experimental` governance model | Live WebFetch for fresh web rules |
+
+→ **Orthogonal**: all three cover entirely different "official" domains. V has no overlap with A/OAI; it's platform-specific authority.
+
+#### 3.9 UA vs O vs OS — three "process / understanding" axes (v1.5 addition)
+
+| | **UA** (Understand-Anything) | **O** (superpowers) | **OS** (OpenSpec) |
+|---|---|---|---|
+| Axis | **Understand existing code** (read / map / onboard) | **How to build** (TDD / debug / plan methodology) | **Spec-first build** (spec → tasks → implementation) |
+| Direction | Inbound: comprehend what exists | Process: discipline while building | Inbound→outbound: define intent, then implement |
+| Artifact | Interactive knowledge graph (nodes/edges/layers/tour) | Meta-skills (mandatory gates) | Spec documents + task breakdown |
+
+→ **Complementary**: UA maps an unfamiliar codebase before you touch it; OS turns a desired change into a spec; O enforces discipline while implementing. UA ⊥ NX/CO (different lifecycle stages).
+
+---
+
+### 4. Task → Repo lookup
+
+> ✅ = primary · ➕ = secondary / complementary · ⚠ = cohort weak / no specialist
+
+#### 4.1 Web · Mobile · Systems development
+
+| # | Task | Primary | Secondary | Notes |
+|---:|---|---|---|---|
+| 1 | **Web frontend (React/Next.js production)** | V ✅ | AD ➕ AM ➕ | V is Vercel official; 40+ React perf rules sorted by Impact |
+| 2 | UI components / visual polish | NL ✅ | NX ➕ | NL ships 161 palettes + 57 fonts + BM25 reasoning |
+| 3 | React Native / mobile web | V ✅ | NL ➕ | V has react-native-skills |
+| 4 | iOS / Android native | NL ✅ | A ➕ | NL covers SwiftUI; A has doc-coauthoring |
+| 5 | **Backend API / microservices** | AM ✅ | AD ➕ O ➕ | AM has API/data/architecture agents; O adds methodology gates |
+| 6 | Database / SQL optimization | AD ✅ | C ➕ | AD strong on Verification; C has DB-specific skills |
+| 7 | DevOps / CI / Deployment | AM ✅ | V ➕ | AM has hooks/commitlint/lint; V specializes in Vercel deploy |
+| 8 | Cloud IaC (Terraform/K8s) | AM ⚠ | — | ⚠ Cohort weak; rely on AM general engineering |
+| 9 | **Game development** (Web / Engine) | **AA ✅** (v1.2) | C search | 🆕 **AA has 20 game-development agents** (cohort previously had no game specialist; AA fills the gap) |
+| 10 | Web3 / Smart Contracts | ⚠ no specialist | C search | ⚠ Same as above |
+| 11 | Embedded / Rust systems | M ✅ | MA ➕ | M's first-principles + MA's anti-pattern guard |
+
+#### 4.2 AI · ML · Agent building
+
+| # | Task | Primary | Secondary | Notes |
+|---:|---|---|---|---|
+| 12 | **LLM application / Agent building** | AM ✅ | OAI ➕ A ➕ | AM is the agent-harness king; OAI for Codex; A for spec |
+| 13 | Prompt engineering | A ✅ | O ➕ | A has skill-creator; O's brainstorming helps prompt design |
+| 14 | **Skill / Agent meta-development** (writing new skills) | A ✅ | OAI ➕ AM ➕ | A defines SKILL.md spec; AM gives reference impl |
+| 15 | RAG / search systems | C search ✅ | AM ➕ | C has multiple search/research-writer skills |
+| 16 | **GPU kernel (CUDA / Triton / MPS)** | ⚠ no specialist | MA + M | ⚠ Cohort has **no GPU specialist**; MA anti-pattern + M's engineering rigor as fallback |
+| 17 | Model fine-tuning | AD ✅ | M ➕ | General production engineering; no specialist |
+| 18 | Model evaluation / benchmarking | **O ✅** | AD ➕ | O **mandates eval evidence** (gold standard) |
+| 19 | Inference optimization | AD ✅ | V (web side) | AD performance practice; V for web perf |
+| 20 | Agent-harness optimization | **AM ✅** | O ➕ | AM literally describes itself as "agent harness perf framework" |
+
+#### 4.3 Engineering methodology
+
+| # | Task | Primary | Secondary | Notes |
+|---:|---|---|---|---|
+| 21 | **TDD** | **O ✅** | AD ➕ | O's TDD skill is the gold standard |
+| 22 | **Systematic debugging** | **O ✅** | M ➕ | O's systematic-debugging + M's /diagnose |
+| 23 | Brainstorming / planning | **O ✅** | — | O's brainstorming + writing-plans suite |
+| 24 | Code review | AM ✅ | AD ➕ O ➕ | AM has multiple reviewer agents |
+| 25 | Refactoring | M ✅ | O ➕ MA ➕ | M minimizes unnecessary diffs; O plan-first; MA "surgical changes" |
+| 26 | Large-scale migration / framework upgrades | AD ✅ | M ➕ O ➕ | AD has migration patterns; O adds plan flow |
+| 27 | Performance optimization (web) | V ✅ | AD ➕ | V ships 40+ React perf rules |
+| 28 | Performance optimization (general) | AD ✅ | M ➕ | AD production engineering; M first-principles feedback |
+| 29 | Security audit | AM ✅ | AD ➕ | General engineering; no specialist |
+| 30 | Architecture decisions | O ✅ | AD ➕ AM ➕ | O's writing-plans + brainstorming |
+| 31 | Documentation writing | A ✅ | K ➕ AD ➕ | A's doc-coauthoring; K's Markdown format depth |
+| 31a | **Understand / onboard onto an existing codebase** | **UA ✅** | A ➕ | 🆕 v1.5 · UA builds an interactive knowledge graph (nodes/edges/layers/onboarding tour) from existing code — only repo specialized in *reading* code |
+| 31b | **Spec-driven development** (spec → tasks → implementation) | **OS ✅** | O ➕ | 🆕 v1.5 · OS writes the spec first then implements; O adds methodology gates |
+
+#### 4.4 Research · Experimentation
+
+| # | Task | Primary | Secondary | Notes |
+|---:|---|---|---|---|
+| 32 | **Literature review** | K ✅ | A ➕ | K syncs Obsidian notes; A outputs docs |
+| 33 | Benchmarking / evaluation | **O ✅** | M ➕ | O mandates eval evidence; M /diagnose stresses feedback loop |
+| 34 | Experimental design | O ✅ | M ➕ | O's writing-plans + brainstorming |
+| 35 | **All-night batch loop / autonomous runs** | **AM ✅** | O ➕ | AM has install scripts + hooks + cron-style commands; O has dispatching-parallel-agents + subagent-driven-development |
+| 36 | Data analysis / EDA | A ✅ | C ➕ | A has data-analysis demo skills |
+| 37 | Hypothesis testing / "running experiments" | M ✅ | O ➕ | M's /diagnose stresses first-principles; O adds discipline |
+| 38 | Paper writing | A ✅ | K ➕ | A doc-coauthoring; K note sync |
+| 39 | Reproducibility | O ✅ | MA ➕ | O mandates verification; MA goal-driven execution |
+| 39a | **Recent-trend research** (last-30-day, Reddit/X/YouTube/HN) | **L30 ✅** | C ➕ | 🆕 v1.5 · L30 specializes in last-30-day trends across social + web; C for broader discovery |
+
+#### 4.5 Design · Creative
+
+| # | Task | Primary | Secondary | Notes |
+|---:|---|---|---|---|
+| 40 | Design system | **NX ✅** | NL ➕ | NX ships 71 design systems |
+| 41 | Visual mockup | NX ✅ | NL ➕ | NX is multi-platform (web/desktop/mobile) |
+| 42 | Brand / Logo / CI | NX ✅ | — | NX has brand-identity + logo skills |
+| 43 | Typography / color | **NL ✅** | NX ➕ | NL has 161 palettes + 57 font pairs |
+| 44 | Slides / Presentation | A ✅ | NX ➕ | A's theme-factory + slide skills are canonical |
+| 45 | PDF / document generation | **A ✅** | C ➕ | A's PDF skill is the standard |
+| 46 | Icon | NX ✅ | NL ➕ | NX has icon-design with 15 styles |
+| 47 | **Taste exploration / mood board** | **NX ✅** | TS ➕ A ➕ | NX's 71 design systems = 71 "taste samples"; 🆕 TS adds aesthetic-judgment guardrails (steers away from generic output); A's theme-factory has 10 presets |
+| 48 | Print / Banner / social images | NX ✅ | — | NX banner-design with 22 styles |
+| 49 | UI/UX component level | **NL ✅** | NX ➕ | NL is the specialist |
+| 50 | Brand voice | NX ✅ | CH ➕ | NX brand identity + CH marketing voice |
+| 50a | **Aesthetic judgment / avoid generic output** | **TS ✅** | NX ➕ | 🆕 v1.5 · TS governs *taste* (steers agents away from mediocre/generic results); NX governs *what to produce* |
+
+#### 4.6 Content · Marketing
+
+| # | Task | Primary | Secondary | Notes |
+|---:|---|---|---|---|
+| 51 | Copywriting | **CH ✅** | — | CH only specialist |
+| 52 | SEO | **CH ✅** | — | CH only specialist |
+| 53 | **CRO / Landing page** | CH ✅ | V ➕ | CH page-cro + V web-design-guidelines (design + conversion) |
+| 54 | Email marketing | CH ✅ | C ➕ | CH specialist |
+| 55 | Social media | CH ✅ | C ➕ | CH + C (slack/twitter) |
+| 56 | Content research | C ✅ | CH ➕ | C's content-research-writer |
+| 57 | Growth analytics | CH ✅ | — | CH analytics skills |
+
+#### 4.7 Knowledge management · Notes
+
+| # | Task | Primary | Secondary | Notes |
+|---:|---|---|---|---|
+| 58 | **Markdown / Obsidian** | **K ✅** | — | K is Obsidian creator's repo |
+| 59 | Knowledge graphs / JSON Canvas | K ✅ | UA ➕ | K has Canvas skill; 🆕 UA builds knowledge graphs from code |
+| 60 | Personal notes | K ✅ | A ➕ | K Obsidian + A doc-coauthoring |
+| 61 | Meeting notes | C ✅ | K ➕ | C meeting-insights-analyzer |
+| 62 | Research synthesis | K ✅ | A ➕ | K notes + A doc output |
+
+#### 4.8 Productivity · Communication
+
+| # | Task | Primary | Secondary | Notes |
+|---:|---|---|---|---|
+| 63 | Email | C ✅ | — | C internal-comms |
+| 64 | Slack / chat | C ✅ | — | C slack-gif-creator etc. |
+| 65 | Project management | **O ✅** | AM ➕ | O plan management + AM commands |
+| 66 | Onboarding docs | A ✅ | UA ➕ AM ➕ | A doc-coauthoring; 🆕 UA generates onboarding guides from the codebase |
+| 66a | **Job search / resume / ATS** | **CO ✅** | — | 🆕 v1.5 · CO is the only career-automation vertical (resume/CV/ATS/application tracking) |
+
+#### 4.9 Data · Integration
+
+| # | Task | Primary | Secondary | Notes |
+|---:|---|---|---|---|
+| 67 | API integration (OAuth / REST / GraphQL) | C ✅ | AM ➕ | C's connect / connect-apps series |
+| 68 | Browser automation | C ✅ | — | C has related skills |
+| 69 | Web scraping | C ✅ | — | C has related skills |
+| 70 | Data ETL | AD ✅ | C ➕ | AD general engineering; C scattered |
+
+#### 4.10 Meta · General
+
+| # | Task | Primary | Secondary | Notes |
+|---:|---|---|---|---|
+| 71 | **5-minute drop-in CLAUDE.md** | **MA ✅** | — | Single file, zero friction |
+| 72 | Browse / discover skill ecosystem | C ✅ | — | 864 SKILL.md index |
+| 73 | Learn the SKILL.md spec | A ✅ | OAI ➕ | A is official authority |
+| 74 | Multi-agent platform support | NX ✅ | UA ➕ NL ➕ V ➕ | NX covers 9 platforms; 🆕 UA is multi-platform (claude/copilot/codex/opencode) |
+| 75 | Solo independent engineer | M ✅ | MA ➕ | M lightweight + MA anti-pattern |
+| 76 | Team / company adoption (general enterprise) | AM ✅ | AD ➕ O ➕ | AM hooks/commitlint/CoC; AD strict quality gates; O methodology enforcement |
+| 77 | 🆕 **YC / Startup opinionated setup** | **GS ✅** | AM ➕ | 🆕 v1.2 · Garry Tan's actual role setup — copy verbatim, no component picking |
+| 78 | 🆕 Multi-role / multi-domain agency-as-agents | **AA ✅** | GS ➕ AM ➕ | 🆕 v1.2 · 222 agents across 18 domains (finance / academic / spatial-computing / game-dev etc.) |
+| 79 | 🆕 Deep SKILL.md template (learning to write "thick" SKILLs) | **GS ✅** | NL ➕ | 🆕 v1.2 · GS avg SKILL.md 52KB = cohort-deepest; NL 12KB is second |
+
+---
+
+### 5. Recommended stacks
+
+> Don't over-install — context is a public resource. 3–4 repos is usually enough.
+
+| Scenario | Stack | Rationale |
+|---|---|---|
+| **Solo indie engineer (lightweight base)** | MA + M | One-line CLAUDE.md base discipline; M's skills trigger on demand |
+| **Designer / Marketer** | NX + K | NX for design output; K for notes / research |
+| **Team Dev base** | **AM + O** | Capability surface + methodology gates — **most common combo** |
+| **Web Product Team** (Vercel-native) | V + AD + O | V deploy + AD quality gate + O discipline |
+| **Web Product Team** (full-stack with design) | AM + O + NX + V | Engineering + methodology + design + Vercel |
+| **Marketing / Growth Team** | CH + V + A | CH marketing + V landing-page engineering + A document output |
+| **Researcher / Academic** | K + O + A | K notes + O eval discipline + A document output |
+| **AI Agent / Skill builder** | A + AM + O | A spec + AM reference impl + O methodology |
+| **Try / evaluate the ecosystem** | MA + C | MA zero-friction install + C ecosystem browse |
+| **Codex user** | OAI + O + A | Codex companion + methodology + spec |
+| 🆕 **YC / Startup founding team (copy-paste)** | **GS** + optional O | GS gives Garry Tan's setup verbatim; O adds methodology discipline |
+| 🆕 **Cross-domain studio / multi-role agency** | **AA** + AM | AA provides 18-domain role agents; AM adds engineering harness |
+| 🆕 **Game development** | **AA** + M | AA has 20 game-dev agents (only v1.2 coverage); M adds engineering rigor |
+| 🆕 **"Best-in-class" SKILL.md template** | **GS** + A | GS avg 52KB = deepest cohort reference; A is the spec |
+| 🆕 **Inherit / onboard onto a legacy codebase** | **UA** + O | 🆕 v1.5 · UA maps the existing code into a knowledge graph; O adds discipline before you change it |
+| 🆕 **Spec-first product team** | **OS** + O + AM | 🆕 v1.5 · OS defines spec→tasks; O adds gates; AM supplies the capability pool to implement |
+| 🆕 **Job seeker / career automation** | **CO** + A | 🆕 v1.5 · CO handles resume/ATS/tracking; A for polished document output |
+
+---
+
+### 6. Coverage gaps (areas the cohort doesn't cover)
+
+The cohort previously had **no specialist** for these domains — opportunities for future cohort additions:
+
+> ✅ **v1.2 closed**: ~~Game development~~ — **AA ships 20 game-development agents**
+> ✅ **v1.5 closed**: ~~Understand existing codebase~~ — **UA builds interactive knowledge graphs from existing code**; ~~Spec-driven development~~ — **OS ships a spec→tasks→implementation workflow**; ~~Job-search / career automation~~ — **CO is a full resume/CV/ATS/application-tracking vertical**
+
+| Gap | Best fallback | Suggestion |
+|---|---|---|
+| **GPU kernel** (CUDA / Triton / MPS) | MA + M (indirect) | ⚠ Needs specialist; MA anti-pattern + M /diagnose as discipline scaffolding |
+| **Web3 / Smart Contracts** | C search | ⚠ Needs specialist |
+| **Cloud IaC** (Terraform / K8s / Pulumi) | AM (general) | ⚠ Missing depth; AM hooks/commands work but shallow |
+| **Embedded / Rust systems** | M + MA | ⚠ Indirect via general engineering rigor |
+| **Native mobile** (iOS / Android primary) | NL (some SwiftUI) | ⚠ NL leans UI; doesn't cover native API |
+| **Computer vision / multimodal ML** | AD + M (general) | ⚠ No CV / multimodal specialist |
+| **Data engineering at scale** (Spark / Airflow / dbt) | AD (general) + C search | ⚠ Missing specialist |
+| **Database internals** (B-tree / OLAP / optimization) | AD | ⚠ Missing specialist |
+| **OS / Compiler / Linker** work | M + MA (general discipline) | ⚠ Deepest systems work, cohort doesn't cover |
+| **Quant / Trading algorithms** | M + AD | ⚠ Missing specialist |
+| **Offensive security** (pentest / red team) | AM, AD (defensive) | ⚠ No offensive specialist |
+
+> **Key observation (v1.5 update)**: the cohort is strong in *agent dev + design + web frontend + marketing + KM + multi-role agency (AA) + game-dev (AA) + **codebase comprehension (v1.5 UA) + spec-driven dev (v1.5 OS) + job-search (v1.5 CO) + design taste (v1.5 TS) + recent-trend research (v1.5 L30)***; weak in *low-level systems / GPU / multimodal ML / cloud IaC / smart contracts*. Deep systems / GPU / Web3 are still self-built territory.
+
+---
+
+### Appendix: 13-repo functional orthogonality matrix
+
+> Coverage strength per domain on a 1–5 scale. ✅ ≥ 4, ➕ ≥ 2, — = not covered.
+
+| Domain \ Repo | AM | O | NX | A | NL | AD | CH | C | M | OAI | MA | K | V | **GS** 🆕 | **AA** 🆕 |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| General engineering | ✅ | ✅ | — | ➕ | — | ✅ | — | ➕ | ✅ | ✅ | ✅ | — | — | **✅** | ➕ |
+| Web frontend | ➕ | — | — | — | ➕ | ➕ | ➕ | ➕ | — | — | — | — | **✅** | ➕ | ➕ |
+| UI/UX design | — | — | **✅** | ➕ | **✅** | — | — | ➕ | — | — | — | — | ➕ | ➕ | ➕ |
+| Design system / brand | — | — | **✅** | ➕ | ➕ | — | ➕ | — | — | — | — | — | — | ➕ | ➕ |
+| Methodology (TDD/debug/plan) | ➕ | **✅** | — | ➕ | — | ➕ | — | ➕ | ➕ | ➕ | ✅ | — | — | ➕ | — |
+| AI / agent building | **✅** | ➕ | — | ✅ | — | ➕ | — | ➕ | — | ✅ | ➕ | — | — | **✅** | **✅** |
+| Skill meta-development | ➕ | ➕ | — | **✅** | — | ➕ | ➕ | ➕ | — | **✅** | — | — | ➕ | ➕ | ➕ |
+| Marketing / growth | — | — | ➕ | — | — | — | **✅** | ➕ | — | — | — | — | ➕ | — | ➕ |
+| Knowledge management | — | — | — | ➕ | — | — | — | — | — | — | — | **✅** | — | ➕ | ➕ |
+| Document output | ➕ | — | ➕ | ✅ | — | ➕ | ➕ | ➕ | — | — | — | ➕ | — | ✅ | ➕ |
+| Performance / optimization | ➕ | — | — | — | — | ✅ | — | — | ➕ | — | ➕ | — | **✅** | ➕ | — |
+| Research / eval | ➕ | **✅** | — | ➕ | — | ➕ | — | — | ✅ | — | ➕ | ➕ | — | ➕ | ➕ |
+| Discovery / browse | — | — | — | — | — | — | — | **✅** | — | — | — | — | — | — | ➕ |
+| **Game development** 🆕 | — | — | — | — | — | — | — | — | — | — | — | — | — | — | **✅** |
+| **Multi-role agency (CEO/Designer/QA/etc)** 🆕 | ➕ | — | — | — | — | — | — | — | — | — | — | — | — | **✅** | **✅** |
+| **Cross-domain (academic/finance/spatial)** 🆕 | ➕ | — | — | — | — | — | — | ➕ | — | — | — | — | — | — | **✅** |
+
+> 🆕 **v1.5 repos** (UA / OS / CO / TS / L30) open new domain rows not in the 13-repo matrix above: **codebase comprehension** (UA), **spec-driven dev** (OS), **job-search / career** (CO), **design taste** (TS), **recent-trend research** (L30). Each is the sole occupant of its column, so they are listed in §1 rather than scored here.
+
+---
+
+_Based on §10 philosophy research + sampled docs from each repo. Task list covers AI-agent use cases including the user-requested ones (game / frontend / backend / AI GPU / research / experiments / loops / design / taste exploration) and 30+ adjacent categories. Coverage-gap section is honest about cohort limits — no forced recommendations for domains the cohort doesn't excel in._
+
+
+---
+
+<a id="agent-summary"></a>
+
+## Appendix B — Five-Model Cross-Comparison
+
+This document collects the cross-model summary of 5 AI models (Claude / ChatGPT / Gemini / Grok / Perplexity) independently evaluating this repo's 15 skill repos. **This is not my own scoring** (see `EVALUATION.en.md`) — it's a horizontal aggregation of judgments made by different models on the same cohort.
+
+> ⏱️ **Snapshot note (v1.5 update)**: This five-model comparison was collected on the **15-repo cohort** (v1.3 era), **predating the v1.5 expansion to 21 repos** (which added UA/OS/CO/TS/L30). Those 5 new repos are NOT part of this cross-model comparison; their in-repo scores live in `EVALUATION.en.md §14`. Re-running the five-model comparison is follow-up work.
+
+Related docs:
+- Scoring detail → `EVALUATION.en.md` · [`scoring.ipynb`](./scoring.ipynb)
+- Task → repo lookup → Appendix A
+
+---
+
+### TL;DR
+
+**Converged minimum viable stack** (intersection of all 5 models):
+
+1. `anthropics/skills` (foundation)
+2. `obra/superpowers` (methodology)
+3. `gstack` or `everything-claude-code` (operational, pick one)
+4. Add as needed: `nexu-io/open-design` (design), `vercel-labs/agent-skills` (Next.js)
+
+Whether to add `karpathy-skills` / `addyosmani` / `mattpocock` depends on your specific stack — **there's no must-add consensus**.
+
+---
+
+### 1. Strong consensus (all models recommend)
+
+Four foundational picks have essentially no debate:
+
+| Repo | Role | All-5 consensus |
+|---|---|---|
+| `anthropics/skills` | Spec / foundation layer | Everyone installs it |
+| `obra/superpowers` | Methodology layer (TDD, subagent-driven) | Everyone installs it |
+| `gstack` **OR** `everything-claude-code` | Operational layer (pick one) | Solo → former; team/multi-harness → latter |
+| `nexu-io/open-design` | Design extension | Add when design is a bottleneck |
+
+### 2. Strong consensus (all models avoid)
+
+| Repo | Reason |
+|---|---|
+| `msitarzewski/agency-agents` | 222 personality agents unanimously characterized as "**inspiration library, not infrastructure**". ChatGPT verbatim: "don't treat such a sprawling library as core"; Claude skipped it; Gemini warned about token cost and latency |
+| `openai/skills` (D1=1) | Dead last, unanimously skipped |
+| `kepano/obsidian-skills` | Only meaningful inside an Obsidian workflow |
+
+### 3. Main disagreements
+
+#### 3.1 `multica-ai/andrej-karpathy-skills`
+
+- **Claude / Gemini**: high-value drop-in given D1=9
+- **ChatGPT**: "personal config, not suitable for primary lib", placed in tier C
+- **Verdict**: disagreement stems from positioning — it's an **overlay, not standalone**
+
+#### 3.2 `addyosmani/agent-skills`
+
+- **ChatGPT**: A-tier must-have
+- **Grok / Claude**: not particularly emphasized
+- **Differentiator**: whether you're doing production backend
+
+#### 3.3 `ComposioHQ/awesome-claude-skills`
+
+- **Grok**: recommend as **discovery layer**
+- **Others**: think meta-list depth isn't enough; doesn't belong in workflow
+
+#### 3.4 `mattpocock/skills`
+
+- **All-5 agree**: only use in TypeScript context
+- **ChatGPT**: B-tier "daily-relevant"
+- **Claude**: treats it as a **vertical tool**
+
+#### 3.5 Recommendation methodology itself (meta-level disagreement)
+
+| Model | Style |
+|---|---|
+| ChatGPT / Claude | Give complete stacks |
+| Grok | Advocates "max 2-3 trials" |
+| Gemini | No recommendation, asks back about your scenario |
+
+### 4. Unique viewpoints / per-model differentiated insights
+
+| Model | Unique angle |
+|---|---|
+| **Claude** | Only one to do **`contribs < 20 = bus factor` analysis** (betting on person vs community), and warned the whole ecosystem is <1 year old and **not yet production-tested** |
+| **ChatGPT** | Only one to give a **strict 5-layer architecture**: Spec → Methodology → Operational → Engineering → Vertical |
+| **Gemini** | Warned about **S-tier locking into single-community methodology** risk |
+| **Grok** | Operational principle: **"fit > score"** |
+
+### 5. Converged minimum viable stack (restated)
+
+> Intersection of all 5 models — installing this gets pushback from no one.
+
+```
+┌─────────────────────────────────┐
+│ 1. anthropics/skills    (base)   │  must-have
+│ 2. obra/superpowers     (method) │  must-have
+│ 3. gstack OR ECC        (ops)    │  pick one
+├─────────────────────────────────┤
+│ 4a. open-design        (design)  │  as needed
+│ 4b. vercel-labs        (Next.js) │  as needed
+├─────────────────────────────────┤
+│  karpathy / addyosmani / mattpocock │
+│  depends on stack — no must-have    │
+│  consensus                          │
+└─────────────────────────────────┘
+```
+
+### 6. Footnote
+
+**Perplexity didn't produce actual content this round** (only emitted its search process) — this is a known failure mode under **long prompt + tabular input**, **not a data problem**.
+
+---
+
+### Comparison with our internal v1.3 scoring
+
+| Repo | 5-model consensus | v1.3 score /210 | v1.3 tier | Agreement |
+|---|---|---:|:---:|---|
+| `garrytan/gstack` | Operational (solo) | 156 | S | ✅ models' #1 & our #1 |
+| `affaan-m/everything-claude-code` | Operational (team) | 154 | S | ✅ |
+| `nexu-io/open-design` | Design as-needed | 152 | S | ✅ |
+| `obra/superpowers` | Methodology must-have | 150 | S | ✅ |
+| `msitarzewski/agency-agents` | **AVOID** | 146 | S | ⚠ we S but models avoid |
+| `anthropics/skills` | Foundation must-have | 136 | A | ✅ |
+| `addyosmani/agent-skills` | Disagreement | 128 | A | — |
+| `mattpocock/skills` | TS-only | 114 | B | ✅ |
+| `openai/skills` | **AVOID** | 113 | B | ⚠ |
+| `ComposioHQ/awesome-claude-skills` | Disagreement (discovery) | 111 | B | — |
+| `coreyhaines31/marketingskills` | (not called out) | 103 | B | — |
+| `nextlevelbuilder/ui-ux-pro-max-skill` | (not called out) | 102 | B | — |
+| `vercel-labs/agent-skills` | Next.js as-needed | 101 | B | ✅ |
+| `multica-ai/andrej-karpathy-skills` | Disagreement (overlay vs standalone) | 92 | C | ✅ models disagree / we low |
+| `kepano/obsidian-skills` | **AVOID** | 72 | D | ✅ |
+
+**Key observations**:
+- **Consensus picks ≈ our v1.3 S-tier** (4/5 overlap), except `agency-agents` — models call it an "inspiration library"; we gave S based on high D11/D12/D13/D14 but its D20=2 + D21=5 (medium) already hinted it isn't top-tier on the *task-quality* axis
+- **`openai/skills` is in the model-consensus "avoid" set** vs our B-tier (113) — we pumped it on D10=9 (supplementary) + D21=8 (lessons), but models read D1=1 (velocity bottom) as "community doesn't want it" and treat that as a hard gate
+- This is an interesting **"automated scoring vs LLM holistic judgment" divergence** — our 21-dim scoring is *feature additive*; LLM judgment is *non-linearly integrative* (e.g., "velocity too low = no investment" as a hard gate)
+
+---
+
+_This summary aggregates from 5 external LLM evaluations; for our scoring methodology see `EVALUATION.en.md` §2-§12._
+
+---
+
+### 7. Supplement: deep-essay "operational value" perspective (single-model detailed view)
+
+> Unlike §1-§6 (the 5-model horizontal intersection), this section is **another independent LLM's** detailed taxonomy + ranking through the "operational value" lens.
+> Provides: taxonomy (systemic / official-standard / vertical-augment / catalog) + 5-step evaluation + per-repo table + final ranking.
+> Note: the original text included external citations judged to be LLM-hallucinated (targets had no relation to the argument); **removed** to avoid misleading readers.
+
+Looking through the **operational value** lens (not star count alone), of these 15 skill sets the truly long-term-reusable ones fall into **4 categories**: systemic, official-standard, vertical-augment, and catalog.
+
+> **Bottom line of this perspective**: in S-tier the strongest are `gstack` and `open-design`; in A-tier the steadiest is `anthropics/skills`; in B-tier the most situationally valuable are `openai/skills`, `vercel-labs/agent-skills`, `mattpocock/skills`.
+
+#### 7.1 5-step evaluation
+
+1. First ask "**is this a system?**", not the star count; whether it covers planning, implementation, review, testing, delivery determines the ceiling.
+2. Then ask "**is this official or near-standard?**"; official repos are better as a foundation, community repos better as an acceleration layer.
+3. Then ask "**is this vertically specialized?**"; design / frontend / marketing / DX repos are often strong at one point but unsuitable as overall framework.
+4. Only then look at our scoring metrics; `Total` determines composite quality, `D1` determines first impression, `Stars/day` shows heat, `Forks/Contribs` shows ecosystem depth.
+5. So the most important question isn't "who's the most popular" — it's "**are you using it as an OS, a template library, or an inspiration library?**"
+
+#### 7.2 Per-repo evaluation table
+
+| Repo | Strengths | Weaknesses | Verdict |
+|---|---|---|---|
+| **garrytan/gstack** | Most complete system, clear role split, planning → delivery coverage | Heavy, opinionated, steep learning curve | Strongest systemic |
+| **affaan-m/everything-claude-code** | High heat, many contributors, resource-hub feel | Easy to become a junk drawer; methodology may not be unified | Strong resource hub, not necessarily systemic |
+| **nexu-io/open-design** | D1 saturated, design-focused | Design-side bias, not full-stack | Strong design vector |
+| **obra/superpowers** | Methodology-strong, good for agent capability augmentation | May be abstract; less landed than gstack | Good augmentation layer |
+| **msitarzewski/agency-agents** | Super-broad, 222 agents catches the eye | "Personality agents" risk vapor; consistency risk high | Broad but not necessarily deep |
+| **anthropics/skills** | Official, normative, good baseline | More reference impl than battle workflow | Steadiest foundation |
+| **addyosmani/agent-skills** | Engineering-oriented, production-friendly | Range narrow, more like an engineering augment pack | Good for engineering teams |
+| **mattpocock/skills** | Engineer-facing, hands-on | Few contributors, strong authorial voice | Good for TS/eng devs |
+| **openai/skills** | Official endorsement, clarifies skill abstraction | Codex-oriented; not the Claude best-practice center | Worth referencing, not primary |
+| **ComposioHQ/awesome-claude-skills** | Good for project discovery | Catalog itself provides no methodology | Navigation only |
+| **coreyhaines31/marketingskills** | Clear sub-domain | Too vertical, weak generality | Good for marketing teams |
+| **nextlevelbuilder/ui-ux-pro-max-skill** | Strong UI/UX scenarios | Tends to stay at visual layer | Patches the design gap |
+| **vercel-labs/agent-skills** | Practical Web/Next.js/Vercel scenarios | Tech-stack-locked | Good for frontend product teams |
+| **multica-ai/andrej-karpathy-skills** | Strong philosophy, strong rule sense | More principle-set than skill system | Good as CLAUDE.md thought source |
+| **kepano/obsidian-skills** | Great for Obsidian users | Narrow scenario, low general value | Typical niche repo |
+
+#### 7.3 Key evaluations
+
+1. **`gstack`**: if you want an "AI software factory", it looks more like a complete product than a skill example; the repo positions itself as 23 specialists + 8 power tools, organized as a full pipeline from thinking → planning → building → review → testing → delivery.
+2. `gstack`'s problem is exactly its completeness: strongly tied to the author's methodology, command system, and rhythm. Small teams ramp up fast; big teams will face governance cost to standardize.
+3. **`anthropics/skills`**: most suitable as an "official baseline"; explicitly the Claude-skills public reference + sample library — includes spec, template, examples across categories, plus an explicit note that much content is for demonstration/education.
+4. `anthropics/skills` downside: more "standard reference + sample repo" than an OS for running a complete R&D process.
+5. **`openai/skills`**: value lies in clear official abstraction; positioned as the Codex skills catalog, with skills defined as discoverable, composable, self-contained folders.
+6. `openai/skills` downside: ecosystem signals and Claude-compatibility mindshare are both weaker than Anthropic's side, so good for structural reference, not for primary framework on Claude.
+
+#### 7.4 Recommended selection
+
+1. If you want a "**main workflow**", pick `gstack`; it most resembles a system that can be deployed directly.
+2. If you want a "**standard foundation**", pick `anthropics/skills`; it most resembles official spec, samples, templates.
+3. If you're **design-driven product**, add `open-design` or `ui-ux-pro-max-skill`.
+4. If you're a **Next.js / Vercel team**, add `vercel-labs/agent-skills`.
+5. If you're a **multi-model team**, keep `openai/skills` for compatibility thinking, not as the sole source.
+
+#### 7.5 Final ranking (by "long-term reusability")
+
+| Rank | Repo | Lens |
+|---:|---|---|
+| 1 | `garrytan/gstack` | Heavy-duty combat system |
+| 2 | `anthropics/skills` | Official standard component |
+| 3 | `nexu-io/open-design` | Design special forces |
+| 4 | `addyosmani/agent-skills` | Engineering augment pack |
+| 5 | `vercel-labs/agent-skills` | Vercel/Next.js operational |
+| 6 | `mattpocock/skills` | TS engineer's toolbox |
+| 7 | `openai/skills` | Codex compatibility reference |
+| 8 | `obra/superpowers` | Methodology augmentation layer |
+| 9 | `everything-claude-code` | Resource hub (not necessarily systemic) |
+| 10 | `andrej-karpathy-skills` | CLAUDE.md thought source |
+| 11 | `awesome-claude-skills` | Discovery navigation |
+| 12 | `ui-ux-pro-max-skill` | UI visual patch |
+| 13 | `marketingskills` | Marketing vertical |
+| 14 | `agency-agents` | Inspiration library (not recommended primary) |
+| 15 | `obsidian-skills` | Niche |
+
+> **One-liner summary**: `gstack` is the "heavy-duty combat system", `anthropics/skills` is the "official standard component", `open-design` is "design special forces"; the rest are mostly **augment packs or navigation packs**.
+
+#### 7.6 §7 vs §1-§6 contrast
+
+| Lens | §1-§6 (5-LLM horizontal intersection) | §7 (single-LLM operational-value view) |
+|---|---|---|
+| Top operational layer recommendation | `gstack` OR `everything-claude-code` | **`gstack` only** (ECC drops to #9) |
+| Top foundation | `anthropics/skills` | Same |
+| `obra/superpowers` positioning | Must-have methodology layer | **Downgraded to #8 "augmentation"** |
+| `everything-claude-code` positioning | Operational layer alternative | **#9 "resource hub, not necessarily systemic"** |
+| `addyosmani` | Disagreement | **#4 engineering augment** (explicit eng-team recommendation) |
+| **Biggest divergence** | Whether obra & ECC are core layer | §7 thinks only gstack is the core system; everything else is auxiliary |
+
+**Interpretation**: §7's "systemic" perspective is more **confident in declaring gstack as the sole primary workflow** than §1-§6's "consensus" view; §1-§6 leans toward "obra is must-have" as a mandatory methodology layer, §7 downgrades obra. That itself is an interesting meta-data — **different LLMs disagree on what counts as a "production-ready framework" standard**.
